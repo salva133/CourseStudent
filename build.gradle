@@ -26,6 +26,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.6.3'
+    implementation group: 'org.eclipse.persistence', name: 'javax.persistence', version: '2.2.1'
+
 }
 
 tasks.named('test') {

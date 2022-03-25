@@ -1,7 +1,6 @@
 package com.learning.classes;
 
 import javax.persistence.*;
-import java.util.Iterator;
 import java.util.List;
 
 @Entity
