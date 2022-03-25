@@ -1,0 +1,376 @@
+/Users/antoniowimbauer/Library/Java/JavaVirtualMachines/openjdk-17.0.2/Contents/Home/bin/java -XX:TieredStopAtLevel=1 -noverify -Dspring.output.ansi.enabled=always -Dcom.sun.management.jmxremote -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -javaagent:/Applications/IntelliJ IDEA.app/Contents/lib/idea_rt.jar=59046:/Applications/IntelliJ IDEA.app/Contents/bin -Dfile.encoding=UTF-8 -classpath /Users/antoniowimbauer/IdeaProjects/CourseStudent/build/classes/java/main:/Users/antoniowimbauer/IdeaProjects/CourseStudent/build/resources/main:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.6.5/dced3550504fffed49b76972b4c4aed274a623ee/spring-boot-configuration-processor-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.22/9c08ea24c6eb714e2d6170e8122c069a0ba9aacf/lombok-1.18.22.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-web/2.6.5/2fe510ed31c08e65265451a407607fe53666df0a/spring-boot-starter-web-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-jpa/2.6.3/7fbfafa3b27c8f2e315fe489c2f0699a24f32082/spring-data-jpa-2.6.3.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.eclipse.persistence/javax.persistence/2.2.1/7ea990b062655a52ca5010cf8716fb3fbde46d2e/javax.persistence-2.2.1.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-json/2.6.5/aadda8a6dd94ba4c281877ebde276b8e7c6a9700/spring-boot-starter-json-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter/2.6.5/26a7cd427b33d44d1166097ad31cd49880efe695/spring-boot-starter-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-tomcat/2.6.5/912894b73814637c077cde8a06312e3abde3382f/spring-boot-starter-tomcat-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webmvc/5.3.17/d62bd1ef6a9aee74557bd59fb96030fd52cf2fc1/spring-webmvc-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/5.3.17/66fdc6bbaba2fd7242046131895353d9669a19ad/spring-web-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.data/spring-data-commons/2.6.3/767ebf330da425ac4ab4b14391a60d9ed3ba18b7/spring-data-commons-2.6.3.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-orm/5.3.17/5636b1b924f38ab3b3ab25bcd7003cadc334340a/spring-orm-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/5.3.17/756201e2e2488fc164ae15b2e561f96960162577/spring-context-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/5.3.17/b7aaf5dd40a64b3419ff779746fcaf7bea92d29d/spring-aop-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-tx/5.3.17/d41d39725d3ae613b6649094002120ab27ba532/spring-tx-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/5.3.17/3d9c415cb47c96a81b1267665f513e4676af53b4/spring-beans-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/5.3.17/e709af88b40e1b3df193df3460faef44da41fd51/spring-core-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.36/6c62681a2f655b49963a5983b8b0950a6120ae14/slf4j-api-1.7.36.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.13.2/cddd9380efd4b81ea01e98be8fbdc9765a81793b/jackson-datatype-jsr310-2.13.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.module/jackson-module-parameter-names/2.13.2/c406ec37f89125d1003093d5b96d216dc967153c/jackson-module-parameter-names-2.13.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.13.2/95f59cf63c3aadc1549578254af839a9c42ae84f/jackson-datatype-jdk8-2.13.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.13.2/926e48c451166a291f1ce6c6276d9abbefa7c00f/jackson-databind-2.13.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-autoconfigure/2.6.5/c7b562cfde36709581afdcfac128979a83e8fe7d/spring-boot-autoconfigure-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot/2.6.5/7a93e397b7af3300a9692e6be82fe7410092841c/spring-boot-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-logging/2.6.5/70d21bfd3993dea813c68b29d623853a069a0af1/spring-boot-starter-logging-2.6.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/jakarta.annotation/jakarta.annotation-api/1.3.5/59eb84ee0d616332ff44aba065f3888cf002cd2d/jakarta.annotation-api-1.3.5.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.29/6d0cdafb2010f1297e574656551d7145240f6e25/snakeyaml-1.29.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-websocket/9.0.60/a88262a55ae2c4b5404149a48122523688be341a/tomcat-embed-websocket-9.0.60.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-core/9.0.60/e14045220243804544ddb168cb532f4640a220c/tomcat-embed-core-9.0.60.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.apache.tomcat.embed/tomcat-embed-el/9.0.60/46dad1a278f348ca73466e0b73132bf4c4892c06/tomcat-embed-el-9.0.60.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/5.3.17/31746d5387cfec075a5ec01adb407d6658dd59e/spring-expression-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jdbc/5.3.17/383ae54b7171f34952ff5f19c5eadf4f579271cd/spring-jdbc-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jcl/5.3.17/2d3c82d3c656d0743ed927a475745ac2394ea421/spring-jcl-5.3.17.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.13.2/ec18851f1976d5b810ae1a5fcc32520d2d38f77a/jackson-annotations-2.13.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.13.2/a6a0e0620d51833feffc67bccb51937b2345763/jackson-core-2.13.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.2.11/4741689214e9d1e8408b206506cbe76d1c6a7d60/logback-classic-1.2.11.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-to-slf4j/2.17.2/17dd0fae2747d9a28c67bc9534108823d2376b46/log4j-to-slf4j-2.17.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.slf4j/jul-to-slf4j/1.7.36/ed46d81cef9c412a88caef405b58f93a678ff2ca/jul-to-slf4j-1.7.36.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.2.11/a01230df5ca5c34540cdaa3ad5efb012f1f1f792/logback-core-1.2.11.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.17.2/f42d6afa111b4dec5d2aea0fe2197240749a4ea6/log4j-api-2.17.2.jar:/Users/antoniowimbauer/.gradle/caches/modules-2/files-2.1/com.h2database/h2/1.4.200/f7533fe7cb8e99c87a43d325a77b4b678ad9031a/h2-1.4.200.jar com.learning.coursestudent.CourseStudentApplication
+OpenJDK 64-Bit Server VM warning: Options -Xverify:none and -noverify were deprecated in JDK 13 and will likely be removed in a future release.
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.5)
+
+2022-03-25 17:48:23.720  INFO 24665 --- [           main] c.l.c.CourseStudentApplication           : Starting CourseStudentApplication using Java 17.0.2 on MBP-von-Antonio.fritz.box with PID 24665 (/Users/antoniowimbauer/IdeaProjects/CourseStudent/build/classes/java/main started by antoniowimbauer in /Users/antoniowimbauer/IdeaProjects/CourseStudent)
+2022-03-25 17:48:23.722  INFO 24665 --- [           main] c.l.c.CourseStudentApplication           : No active profile set, falling back to 1 default profile: "default"
+2022-03-25 17:48:24.285  INFO 24665 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-03-25 17:48:24.302  INFO 24665 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2022-03-25 17:48:24.759  INFO 24665 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-03-25 17:48:24.763  INFO 24665 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-03-25 17:48:24.764  INFO 24665 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.60]
+2022-03-25 17:48:24.813  INFO 24665 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-03-25 17:48:24.813  INFO 24665 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1044 ms
+2022-03-25 17:48:24.833  INFO 24665 --- [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:1e374b80-fcd2-49b5-84e7-239ac470d6ba;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2022-03-25 17:48:24.885  INFO 24665 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:1e374b80-fcd2-49b5-84e7-239ac470d6ba'
+2022-03-25 17:48:25.324  INFO 24665 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-03-25 17:48:25.337  INFO 24665 --- [           main] c.l.c.CourseStudentApplication           : Started CourseStudentApplication in 1.983 seconds (JVM running for 2.525)
+translation: en
+getFile <_text_en.prop>
+ size=5726
+  .translator=Thomas Mueller
+a.help=Help
+a.language=English
+a.lynxNotSupported=Sorry, Lynx not supported yet
+a.password=Password
+a.remoteConnectionsDisabled=Sorry, remote connections ('webAllowOthers') are disabled on this server.
+a.title=H2 Console
+a.tools=Tools
+a.user=User Name
+admin.executing=Executing
+admin.ip=IP
+admin.lastAccess=Last Access
+admin.lastQuery=Last Query
+admin.no=no
+admin.notConnected=not connected
+admin.url=URL
+admin.yes=yes
+adminAllow=Allowed clients
+adminConnection=Connection security
+adminHttp=Use unencrypted HTTP connections
+adminHttps=Use encrypted SSL (HTTPS) connections
+adminLocal=Only allow local connections
+adminLogin=Administration Login
+adminLoginCancel=Cancel
+adminLoginOk=OK
+adminLogout=Logout
+adminOthers=Allow connections from other computers
+adminPort=Port number
+adminPortWeb=Web server port number
+adminRestart=Changes take effect after restarting the server.
+adminSave=Save
+adminSessions=Active Sessions
+adminShutdown=Shutdown
+adminTitle=H2 Console Preferences
+adminTranslateHelp=Translate or improve the translation of the H2 Console.
+adminTranslateStart=Translate
+helpAction=Action
+helpAddAnotherRow=Add another row
+helpAddDrivers=Adding Database Drivers
+helpAddDriversText=Additional database drivers can be registered by adding the Jar file location of the driver to the environment variables H2DRIVERS or CLASSPATH. Example (Windows): to add the database driver library  C:/Programs/hsqldb/lib/hsqldb.jar, set the environment variable H2DRIVERS to  C:/Programs/hsqldb/lib/hsqldb.jar.
+helpAddRow=Add a new row
+helpCommandHistory=Shows the Command History
+helpCreateTable=Create a new table
+helpDeleteRow=Remove a row
+helpDisconnect=Disconnects from the database
+helpDisplayThis=Displays this Help Page
+helpDropTable=Delete the table if it exists
+helpExecuteCurrent=Executes the current SQL statement
+helpExecuteSelected=Executes the SQL statement defined by the text selection
+helpIcon=Icon
+helpImportantCommands=Important Commands
+helpOperations=Operations
+helpQuery=Query the table
+helpSampleSQL=Sample SQL Script
+helpStatements=SQL statements
+helpUpdate=Change data in a row
+helpWithColumnsIdName=with ID and NAME columns
+key.alt=Alt
+key.ctrl=Ctrl
+key.enter=Enter
+key.shift=Shift
+key.space=Space
+login.connect=Connect
+login.driverClass=Driver Class
+login.driverNotFound=Database driver not found<br />See in the Help for how to add drivers
+login.goAdmin=Preferences
+login.jdbcUrl=JDBC URL
+login.language=Language
+login.login=Login
+login.remove=Remove
+login.save=Save
+login.savedSetting=Saved Settings
+login.settingName=Setting Name
+login.testConnection=Test Connection
+login.testSuccessful=Test successful
+login.welcome=H2 Console
+result.1row=1 row
+result.autoCommitOff=Auto commit is now OFF
+result.autoCommitOn=Auto commit is now ON
+result.bytes=bytes
+result.characters=characters
+result.maxrowsSet=Max rowcount is set
+result.noRows=no rows
+result.noRunningStatement=There is currently no running statement
+result.rows=rows
+result.statementWasCanceled=The statement was canceled
+result.updateCount=Update count
+resultEdit.action=Action
+resultEdit.add=Add
+resultEdit.cancel=Cancel
+resultEdit.delete=Delete
+resultEdit.edit=Edit
+resultEdit.editResult=Edit
+resultEdit.save=Save
+toolbar.all=All
+toolbar.autoCommit=Auto commit
+toolbar.autoComplete=Auto complete
+toolbar.autoComplete.full=Full
+toolbar.autoComplete.normal=Normal
+toolbar.autoComplete.off=Off
+toolbar.autoSelect=Auto select
+toolbar.autoSelect.off=Off
+toolbar.autoSelect.on=On
+toolbar.cancelStatement=Cancel the current statement
+toolbar.clear=Clear
+toolbar.commit=Commit
+toolbar.disconnect=Disconnect
+toolbar.history=Command history
+toolbar.maxRows=Max rows
+toolbar.refresh=Refresh
+toolbar.rollback=Rollback
+toolbar.run=Run
+toolbar.runSelected=Run Selected
+toolbar.sqlStatement=SQL statement
+tools.backup=Backup
+tools.backup.help=Creates a backup of a database.
+tools.changeFileEncryption=ChangeFileEncryption
+tools.changeFileEncryption.help=Allows changing the database file encryption password and algorithm.
+tools.cipher=Cipher (AES or XTEA)
+tools.commandLine=Command line
+tools.convertTraceFile=ConvertTraceFile
+tools.convertTraceFile.help=Converts a .trace.db file to a Java application and SQL script.
+tools.createCluster=CreateCluster
+tools.createCluster.help=Creates a cluster from a standalone database.
+tools.databaseName=Database name
+tools.decryptionPassword=Decryption password
+tools.deleteDbFiles=DeleteDbFiles
+tools.deleteDbFiles.help=Deletes all files belonging to a database.
+tools.directory=Directory
+tools.encryptionPassword=Encryption password
+tools.javaDirectoryClassName=Java directory and class name
+tools.recover=Recover
+tools.recover.help=Helps recovering a corrupted database.
+tools.restore=Restore
+tools.restore.help=Restores a database backup.
+tools.result=Result
+tools.run=Run
+tools.runScript=RunScript
+tools.runScript.help=Runs a SQL script.
+tools.script=Script
+tools.script.help=Allows to convert a database to a SQL script for backup or migration.
+tools.scriptFileName=Script file name
+tools.serverList=Server list
+tools.sourceDatabaseName=Source database name
+tools.sourceDatabaseURL=Source database URL
+tools.sourceDirectory=Source directory
+tools.sourceFileName=Source file name
+tools.sourceScriptFileName=Source script file name
+tools.targetDatabaseName=Target database name
+tools.targetDatabaseURL=Target database URL
+tools.targetDirectory=Target directory
+tools.targetFileName=Target file name
+tools.targetScriptFileName=Target script file name
+tools.traceFileName=Trace file name
+tree.admin=Admin
+tree.current=Current value
+tree.hashed=Hashed
+tree.increment=Increment
+tree.indexes=Indexes
+tree.nonUnique=Non unique
+tree.sequences=Sequences
+tree.unique=Unique
+tree.users=Users
+
+mimeType=text/html
+index.do
+process index.do
+translation: en
+getFile <_text_en.prop>
+ size=5726
+  .translator=Thomas Mueller
+a.help=Help
+a.language=English
+a.lynxNotSupported=Sorry, Lynx not supported yet
+a.password=Password
+a.remoteConnectionsDisabled=Sorry, remote connections ('webAllowOthers') are disabled on this server.
+a.title=H2 Console
+a.tools=Tools
+a.user=User Name
+admin.executing=Executing
+admin.ip=IP
+admin.lastAccess=Last Access
+admin.lastQuery=Last Query
+admin.no=no
+admin.notConnected=not connected
+admin.url=URL
+admin.yes=yes
+adminAllow=Allowed clients
+adminConnection=Connection security
+adminHttp=Use unencrypted HTTP connections
+adminHttps=Use encrypted SSL (HTTPS) connections
+adminLocal=Only allow local connections
+adminLogin=Administration Login
+adminLoginCancel=Cancel
+adminLoginOk=OK
+adminLogout=Logout
+adminOthers=Allow connections from other computers
+adminPort=Port number
+adminPortWeb=Web server port number
+adminRestart=Changes take effect after restarting the server.
+adminSave=Save
+adminSessions=Active Sessions
+adminShutdown=Shutdown
+adminTitle=H2 Console Preferences
+adminTranslateHelp=Translate or improve the translation of the H2 Console.
+adminTranslateStart=Translate
+helpAction=Action
+helpAddAnotherRow=Add another row
+helpAddDrivers=Adding Database Drivers
+helpAddDriversText=Additional database drivers can be registered by adding the Jar file location of the driver to the environment variables H2DRIVERS or CLASSPATH. Example (Windows): to add the database driver library  C:/Programs/hsqldb/lib/hsqldb.jar, set the environment variable H2DRIVERS to  C:/Programs/hsqldb/lib/hsqldb.jar.
+helpAddRow=Add a new row
+helpCommandHistory=Shows the Command History
+helpCreateTable=Create a new table
+helpDeleteRow=Remove a row
+helpDisconnect=Disconnects from the database
+helpDisplayThis=Displays this Help Page
+helpDropTable=Delete the table if it exists
+helpExecuteCurrent=Executes the current SQL statement
+helpExecuteSelected=Executes the SQL statement defined by the text selection
+helpIcon=Icon
+helpImportantCommands=Important Commands
+helpOperations=Operations
+helpQuery=Query the table
+helpSampleSQL=Sample SQL Script
+helpStatements=SQL statements
+helpUpdate=Change data in a row
+helpWithColumnsIdName=with ID and NAME columns
+key.alt=Alt
+key.ctrl=Ctrl
+key.enter=Enter
+key.shift=Shift
+key.space=Space
+login.connect=Connect
+login.driverClass=Driver Class
+login.driverNotFound=Database driver not found<br />See in the Help for how to add drivers
+login.goAdmin=Preferences
+login.jdbcUrl=JDBC URL
+login.language=Language
+login.login=Login
+login.remove=Remove
+login.save=Save
+login.savedSetting=Saved Settings
+login.settingName=Setting Name
+login.testConnection=Test Connection
+login.testSuccessful=Test successful
+login.welcome=H2 Console
+result.1row=1 row
+result.autoCommitOff=Auto commit is now OFF
+result.autoCommitOn=Auto commit is now ON
+result.bytes=bytes
+result.characters=characters
+result.maxrowsSet=Max rowcount is set
+result.noRows=no rows
+result.noRunningStatement=There is currently no running statement
+result.rows=rows
+result.statementWasCanceled=The statement was canceled
+result.updateCount=Update count
+resultEdit.action=Action
+resultEdit.add=Add
+resultEdit.cancel=Cancel
+resultEdit.delete=Delete
+resultEdit.edit=Edit
+resultEdit.editResult=Edit
+resultEdit.save=Save
+toolbar.all=All
+toolbar.autoCommit=Auto commit
+toolbar.autoComplete=Auto complete
+toolbar.autoComplete.full=Full
+toolbar.autoComplete.normal=Normal
+toolbar.autoComplete.off=Off
+toolbar.autoSelect=Auto select
+toolbar.autoSelect.off=Off
+toolbar.autoSelect.on=On
+toolbar.cancelStatement=Cancel the current statement
+toolbar.clear=Clear
+toolbar.commit=Commit
+toolbar.disconnect=Disconnect
+toolbar.history=Command history
+toolbar.maxRows=Max rows
+toolbar.refresh=Refresh
+toolbar.rollback=Rollback
+toolbar.run=Run
+toolbar.runSelected=Run Selected
+toolbar.sqlStatement=SQL statement
+tools.backup=Backup
+tools.backup.help=Creates a backup of a database.
+tools.changeFileEncryption=ChangeFileEncryption
+tools.changeFileEncryption.help=Allows changing the database file encryption password and algorithm.
+tools.cipher=Cipher (AES or XTEA)
+tools.commandLine=Command line
+tools.convertTraceFile=ConvertTraceFile
+tools.convertTraceFile.help=Converts a .trace.db file to a Java application and SQL script.
+tools.createCluster=CreateCluster
+tools.createCluster.help=Creates a cluster from a standalone database.
+tools.databaseName=Database name
+tools.decryptionPassword=Decryption password
+tools.deleteDbFiles=DeleteDbFiles
+tools.deleteDbFiles.help=Deletes all files belonging to a database.
+tools.directory=Directory
+tools.encryptionPassword=Encryption password
+tools.javaDirectoryClassName=Java directory and class name
+tools.recover=Recover
+tools.recover.help=Helps recovering a corrupted database.
+tools.restore=Restore
+tools.restore.help=Restores a database backup.
+tools.result=Result
+tools.run=Run
+tools.runScript=RunScript
+tools.runScript.help=Runs a SQL script.
+tools.script=Script
+tools.script.help=Allows to convert a database to a SQL script for backup or migration.
+tools.scriptFileName=Script file name
+tools.serverList=Server list
+tools.sourceDatabaseName=Source database name
+tools.sourceDatabaseURL=Source database URL
+tools.sourceDirectory=Source directory
+tools.sourceFileName=Source file name
+tools.sourceScriptFileName=Source script file name
+tools.targetDatabaseName=Target database name
+tools.targetDatabaseURL=Target database URL
+tools.targetDirectory=Target directory
+tools.targetFileName=Target file name
+tools.targetScriptFileName=Target script file name
+tools.traceFileName=Trace file name
+tree.admin=Admin
+tree.current=Current value
+tree.hashed=Hashed
+tree.increment=Increment
+tree.indexes=Indexes
+tree.nonUnique=Non unique
+tree.sequences=Sequences
+tree.unique=Unique
+tree.users=Users
+
+return index.jsp
+getFile <index.jsp>
+ size=923
+mimeType=text/css
+stylesheet.css
+getFile <stylesheet.css>
+ size=4924
+mimeType=text/html
+login.jsp
+getFile <login.jsp>
+ size=6610
+mimeType=image/gif
+background.gif
+getFile <background.gif>
+ size=169

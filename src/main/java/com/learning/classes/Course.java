@@ -18,6 +18,11 @@ public class Course {
     public Course() {
     }
 
+    public Course(long courseId, String courseName) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+    }
+
     public long getCourseId() {
         return courseId;
     }
