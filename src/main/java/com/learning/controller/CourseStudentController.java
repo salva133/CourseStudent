@@ -2,7 +2,6 @@ package com.learning.controller;
 
 import com.learning.classes.Course;
 import com.learning.classes.Student;
-import com.learning.exceptions.ProjectException;
 import com.learning.repos.CourseRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,7 @@ public class CourseStudentController {
     }
 
     @GetMapping(value = "do-something")
-    public String doSomething() throws ProjectException {
+    public String doSomething() {
         Course course   = new Course(1, "Math");
         Student student = new Student(1, "Franz","Josef");
         courseRepository.save();
