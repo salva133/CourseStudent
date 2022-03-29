@@ -1,6 +1,6 @@
-package com.learning.repos;
+package com.learning.coursestudent.repos;
 
-import com.learning.classes.Student;
+import com.learning.coursestudent.classes.Student;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

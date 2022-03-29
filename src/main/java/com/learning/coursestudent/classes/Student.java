@@ -1,4 +1,4 @@
-package com.learning.classes;
+package com.learning.coursestudent.classes;
 
 import javax.persistence.*;
 
