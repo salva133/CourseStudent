@@ -17,7 +17,7 @@ public class CourseStudentController {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
     }
-
+/*
     @GetMapping(value = "do-something")
     public String doSomething() {
         Course course1   = new Course(1, "Math");
@@ -33,6 +33,52 @@ public class CourseStudentController {
         studentRepository.save(student2);
         studentRepository.save(student3);
         return "Courses and Students have been created.";
+    }
+*/
+    @GetMapping(value = "create-course-math")
+    public String createCourse1() {
+        String courseName = "Math";
+        Course course1   = new Course(1, courseName);
+        courseRepository.save(course1);
+        return "Course \"" +courseName+ "\" has been created";
+    }
+    @GetMapping(value = "create-course-it")
+    public String createCourse2() {
+        String courseName = "IT";
+        Course course2   = new Course(1, courseName);
+        courseRepository.save(course2);
+        return "Course \"" +courseName+ "\" has been created";
+    }
+    @GetMapping(value = "create-course-history")
+    public String createCourse3() {
+        String courseName = "History";
+        Course course3   = new Course(1, courseName);
+        courseRepository.save(course3);
+        return "Course \"" +courseName+ "\" has been created";
+    }
+    @GetMapping(value = "create-student-felixspringer")
+    public String createStudent1() {
+        String studentFirstName = "Felix";
+        String studentLastName = "Springer";
+        Student student1   = new Student(1, studentFirstName,studentLastName);
+        studentRepository.save(student1);
+        return "Student \"" +studentLastName+ ", " +studentFirstName+"\" has been created";
+    }
+    @GetMapping(value = "create-student-franzjosef")
+    public String createStudent2() {
+        String studentFirstName = "Felix";
+        String studentLastName = "Springer";
+        Student student2   = new Student(2, studentFirstName,studentLastName);
+        studentRepository.save(student2);
+        return "Student \"" +studentLastName+ ", " +studentFirstName+"\" has been created";
+    }
+    @GetMapping(value = "create-student-markford")
+    public String createStudent3() {
+        String studentFirstName = "Felix";
+        String studentLastName = "Springer";
+        Student student3   = new Student(3, studentFirstName,studentLastName);
+        studentRepository.save(student3);
+        return "Student \"" +studentLastName+ ", " +studentFirstName+"\" has been created";
     }
     /*
     @GetMapping(value = "hello")
