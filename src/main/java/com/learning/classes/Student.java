@@ -19,6 +19,12 @@ public class Student {
     public Student() {
     }
 
+    public Student(long studentId, String firstName, String lastName) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public long getStudentId() {
         return studentId;
     }
