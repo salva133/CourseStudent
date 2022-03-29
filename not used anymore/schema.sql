@@ -4,9 +4,9 @@ CREATE TABLE Course (
                         PRIMARY KEY (Course_Id)
 );
 
-CREATE TABLE Student (
+/*CREATE TABLE Student (
                          Student_Id   INTEGER      NOT NULL AUTO_INCREMENT,
                          First_Name VARCHAR(128) NOT NULL,
                          Last_Name VARCHAR(128) NOT NULL,
                          PRIMARY KEY (Student_Id)
-);
+);*/
