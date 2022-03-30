@@ -87,11 +87,3 @@ public class CourseStudentController {
     }
     */
 }
-
-
-/*
-1. Zuerst ein Objekt vom Typ Course und dann ein Student Objekt erzeugen. Dann prüfen, ob die erzeugt werden.
-2. Exception einbauen.
-3. Wenn sie nicht gespeichert werden, analysieren.
-4. Verknüpfung zu beiden Tabellen erzeugen, vorerst auskommentieren.
- */
