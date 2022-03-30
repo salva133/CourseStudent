@@ -1,6 +1,7 @@
 package com.learning.coursestudent.controller;
 
 import com.learning.coursestudent.classes.Course;
+import com.learning.coursestudent.exceptions.CreationFailedException;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
@@ -36,49 +37,75 @@ public class CourseStudentController {
     }
 */
     @GetMapping(value = "create-course-math")
-    public String createCourse1() {
+    public String createCourse1() throws CreationFailedException {
         String courseName = "Math";
-        Course course1   = new Course(1, courseName);
+        Course course1 = new Course(1, courseName);
         courseRepository.save(course1);
-        return "Course \"" +courseName+ "\" has been created";
+
+        if (course1 != null) {
+            return "Course \"" + course1.getCourseName() + "\" has been created";
+        } else {
+            throw new CreationFailedException("Creation of Course \"" + course1.getCourseName() + "\" has failed");
+        }
     }
     @GetMapping(value = "create-course-it")
-    public String createCourse2() {
+    public String createCourse2() throws CreationFailedException {
         String courseName = "IT";
         Course course2   = new Course(1, courseName);
         courseRepository.save(course2);
-        return "Course \"" +courseName+ "\" has been created";
+
+        if (course2 != null) {
+            return "Course \"" + course2.getCourseName() + "\" has been created";
+        } else {
+            throw new CreationFailedException("Creation of Course \"" + course2.getCourseName() + "\" has failed");
+        }
     }
     @GetMapping(value = "create-course-history")
-    public String createCourse3() {
+    public String createCourse3() throws CreationFailedException {
         String courseName = "History";
         Course course3   = new Course(1, courseName);
         courseRepository.save(course3);
-        return "Course \"" +courseName+ "\" has been created";
+        if (course3 != null) {
+            return "Course \"" + course3.getCourseName() + "\" has been created";
+        } else {
+            throw new CreationFailedException("Creation of Course \"" + course3.getCourseName() + "\" has failed");
+        }
     }
     @GetMapping(value = "create-student-felixspringer")
-    public String createStudent1() {
+    public String createStudent1() throws CreationFailedException {
         String studentFirstName = "Felix";
         String studentLastName = "Springer";
         Student student1   = new Student(1, studentFirstName,studentLastName);
         studentRepository.save(student1);
-        return "Student \"" +studentLastName+ ", " +studentFirstName+"\" has been created";
+        if (student1 != null) {
+            return "Student \"" + student1.getLastName() + ", " + student1.getFirstName() + "\" has been created";
+        } else {
+            throw new CreationFailedException("Creation of Student \"" + student1.getLastName() + ", " + student1.getFirstName() + "\" has failed");
+        }
     }
     @GetMapping(value = "create-student-franzjosef")
-    public String createStudent2() {
+    public String createStudent2() throws CreationFailedException {
         String studentFirstName = "Felix";
         String studentLastName = "Springer";
         Student student2   = new Student(2, studentFirstName,studentLastName);
         studentRepository.save(student2);
-        return "Student \"" +studentLastName+ ", " +studentFirstName+"\" has been created";
+        if (student2 != null) {
+            return "Student \"" + student2.getLastName() + ", " + student2.getFirstName() + "\" has been created";
+        } else {
+            throw new CreationFailedException("Creation of Student \"" + student2.getLastName() + ", " + student2.getFirstName() + "\" has failed");
+        }
     }
     @GetMapping(value = "create-student-markford")
-    public String createStudent3() {
+    public String createStudent3() throws CreationFailedException {
         String studentFirstName = "Felix";
         String studentLastName = "Springer";
         Student student3   = new Student(3, studentFirstName,studentLastName);
         studentRepository.save(student3);
-        return "Student \"" +studentLastName+ ", " +studentFirstName+"\" has been created";
+        if (student3 != null) {
+            return "Student \"" + student3.getLastName() + ", " + student3.getFirstName() + "\" has been created";
+        } else {
+            throw new CreationFailedException("Creation of Student \"" + student3.getLastName() + ", " + student3.getFirstName() + "\" has failed");
+        }
     }
     /*
     @GetMapping(value = "hello")
