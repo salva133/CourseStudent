@@ -6,8 +6,9 @@ import java.util.List;
 @Entity
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "course_generator")
+    @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
+    @Column(name = "Id", updatable = false, nullable = false)
     private long courseId;
     @Column(name = "Course_Name")
     private String courseName;

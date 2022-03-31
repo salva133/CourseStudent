@@ -5,8 +5,9 @@ import javax.persistence.*;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_generator")
+    @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
+    @Column(name = "Id", updatable = false, nullable = false)
     private long studentId;
     @Column(name = "First_Name")
     private String firstName;
