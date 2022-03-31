@@ -6,21 +6,22 @@ import java.util.List;
 @Entity
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Course_Id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "Id")
     private long courseId;
     @Column(name = "Course_Name")
     private String courseName;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Student> student;
 
     public Course() {
     }
 
-    public Course(long courseId, String courseName) {
+    public Course(long courseId, String courseName,List<Student> student) {
         this.courseId = courseId;
         this.courseName = courseName;
+        this.student = student;
     }
 
     public long getCourseId() {

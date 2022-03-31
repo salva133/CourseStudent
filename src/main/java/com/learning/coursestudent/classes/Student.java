@@ -5,8 +5,8 @@ import javax.persistence.*;
 @Entity
 public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Student_Id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "Id")
     private long studentId;
     @Column(name = "First_Name")
     private String firstName;
@@ -14,15 +14,17 @@ public class Student {
     private String lastName;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id")
     private Course course;
 
     public Student() {
     }
 
-    public Student(long studentId, String firstName, String lastName) {
+    public Student(long studentId, String firstName, String lastName,Course course) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.course = course;
     }
 
     public long getStudentId() {
