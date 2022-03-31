@@ -7,11 +7,11 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_generator")
     @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
-    @Column(name = "Id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false)
     private long studentId;
-    @Column(name = "First_Name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "Last_Name")
+    @Column(name = "last_name")
     private String lastName;
 
     @ManyToOne(fetch = FetchType.EAGER)

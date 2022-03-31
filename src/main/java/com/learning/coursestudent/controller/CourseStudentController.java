@@ -7,7 +7,6 @@ import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 public class CourseStudentController {
@@ -21,24 +20,26 @@ public class CourseStudentController {
     }
 
     @GetMapping(value = "create-everything")
-    public String createEverything() throws CreationFailedException {
+    public String createEverything() {
         Course course1 = new Course(1, "Math",null);
-        Course course2 = new Course(2, "IT",null);
-        Course course3 = new Course(3, "History",null);
-        Student student1 = new Student(1, "Felix", "Springer",null);
-        Student student2 = new Student(2, "Franz", "Josef",null);
-        Student student3 = new Student(3, "Mark", "Ford",null);
         courseRepository.save(course1);
+        Course course2 = new Course(2, "IT",null);
         courseRepository.save(course2);
+        Course course3 = new Course(3, "History",null);
         courseRepository.save(course3);
+        Student student1 = new Student(1, "Felix", "Springer",null);
         studentRepository.save(student1);
+        Student student2 = new Student(2, "Franz", "Josef",null);
         studentRepository.save(student2);
+        Student student3 = new Student(3, "Mark", "Ford",null);
         studentRepository.save(student3);
-        if (course1 != null && course2 != null && course3 != null && student1 != null && student2 != null && student3 != null) {
+        return "Courses and Students have been created.";
+
+        /*if (course1 != null && course2 != null && course3 != null && student1 != null && student2 != null && student3 != null) {
             return "Courses and Students have been created.";
         } else {
-            throw new CreationFailedException("Creation of Course \"" + course1.getCourseName() + "\" has failed");
-        }
+            throw new CreationFailedException("Creation of data has failed... somewhere");
+        }*/
     }
 
     @GetMapping(value = "create-course-all")
@@ -59,6 +60,7 @@ public class CourseStudentController {
             throw new CreationFailedException("Creation of Course \"" + course1.getCourseName() + "\" has failed");
         }
     }
+
     @GetMapping(value = "create-course-math")
     public String createCourse1() throws CreationFailedException {
         String courseName = "Math";
@@ -94,6 +96,7 @@ public class CourseStudentController {
             throw new CreationFailedException("Creation of Course \"" + course3.getCourseName() + "\" has failed");
         }
     }
+
     @GetMapping(value = "create-student-felixspringer")
     public String createStudent1() throws CreationFailedException {
         String studentFirstName = "Felix";
