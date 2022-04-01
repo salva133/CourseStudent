@@ -27,11 +27,9 @@ public class Student {
         this.course = course;
     }
 
-    public Student(long studentId, String firstName, String lastName, Course course) {
-        this.studentId = studentId;
+    public Student(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.course = course;
     }
 
     public long getStudentId() {

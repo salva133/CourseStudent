@@ -19,13 +19,11 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseName, List<Student> student) {
+    public Course(String courseName) {
         this.courseName = courseName;
-        this.student = student;
     }
 
-    public Course(long courseId, String courseName, List<Student> student) {
-        this.courseId = courseId;
+    public Course(String courseName, List<Student> student) {
         this.courseName = courseName;
         this.student = student;
     }
