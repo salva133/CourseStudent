@@ -21,7 +21,13 @@ public class Student {
     public Student() {
     }
 
-    public Student(long studentId, String firstName, String lastName,Course course) {
+    public Student(String firstName, String lastName, Course course) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.course = course;
+    }
+
+    public Student(long studentId, String firstName, String lastName, Course course) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;

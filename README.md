@@ -1,16 +1,22 @@
 # CourseStudent
- Internes Übungsszenario
+##Internes Übungsszenario
 
 
-##KW13
+###KW13 - Niedrigere Prio
 
-1. Zuerst ein Objekt vom Typ Course und dann ein Student Objekt erzeugen. Dann prüfen, ob die erzeugt werden.
-   1. Objekte werden erzeugt. Habe drei distinkte Posts pro Tabelle geschrieben.
-2. Exception einbauen.
-   1. Exception "CreationFailedException" erstellt
-3. Wenn sie nicht gespeichert werden, analysieren.
-   1. Werden auf Kommando gespeichert. Kleine Auffälligkeit: Die ID zählt unabhängig von der Tabelle hoch, heißt: 
-   Wenn der erste Datensatz auf der Course-Tabelle erzeugt wird, hat er die ID 1 (wie zu erwarten). 
-   Wird dann der erste Datensatz auf der anderen Tabelle - Student - erzeugt, bekommt dieser die ID 2. 
-   IDs sollten pro Tabelle zählen und nicht tabellenübergreifend.
-4. Verknüpfung zu beiden Tabellen erzeugen, vorerst auskommentieren.
+1. CreationFailedException durch bereits vorhandene Exception (IllegalArgumentException) ersetzen
+2. Exception Handling korrekt lernen
+3. try-catch Block nutzen
+4. Ecxeption muss explizit den Namen des Datensatzes zurückgeben
+5. Fehler muss explizit erklärt werden (eigene super(message))
+6. re-throw recherchieren und ggf. einsetzen
+
+###KW14
+
+1. EINEN Endpoint für Course und EINEN Endpoint für Student erstellen
+2. Objekt per JSON erzeugen (bei Baeldung schauen)
+3. Beim Studenten nicht die Course ID, sondern den Course Name anzeigen
+4. Student direkt mit Fremdschlüssel erzeugen
+5. Get- und PostMapping-Methoden implementieren
+   GetMapping-Methode: Nach Student mit Namen suchen/mit Kurs suchen
+   PostMapping: Kurs eintragen/ändern
