@@ -27,7 +27,6 @@ public class CourseStudentController {
         this.studentRepository = studentRepository;
     }
 /*
-
     @PostMapping(value = "create-everything")
     public String createEverything() {
         Course   course = new Course("Math");
@@ -44,11 +43,11 @@ public class CourseStudentController {
         studentRepository.save(student);
         return "Courses and Students have been created.";
     }
-*/
-    @PostMapping(value = "create-course-math")
+
+    @GetMapping(value = "create-course-math")
     public String createCourse1() {
         String courseName = "Math";
-        Course course = new Course(courseName);
+        Course course = new Course(courseName,null);
         courseRepository.save(course);
         List<Student> studentList = new ArrayList<>();
         String studentFirstName = "Felix";
@@ -63,7 +62,7 @@ public class CourseStudentController {
         studentList.add(student2);
         return "Course \"" + course.getCourseName() + "\" has been created";
     }
-/*
+
     @PostMapping(value = "create-course-it")
     public String createCourse2() {
         String courseName = "IT";
@@ -116,7 +115,7 @@ public class CourseStudentController {
     }
 */
 
-    @PostMapping(value = "course")
+    @GetMapping(value = "course")
     public String addCourse(String courseName) {
         try {
             Course course = new Course("Test");
@@ -124,7 +123,7 @@ public class CourseStudentController {
             return "Courses \"" + course.getCourseName() + "\" has been created";
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return "Course" + courseName + " could not be created.";
+            return "Course \"" + courseName + "\" could not be created.";
         }
     }
 
