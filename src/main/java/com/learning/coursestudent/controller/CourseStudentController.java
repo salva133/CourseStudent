@@ -7,7 +7,8 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
+
+import static java.lang.System.lineSeparator;
 
 @RestController
 public class CourseStudentController {
@@ -108,22 +109,18 @@ public class CourseStudentController {
     }
 */
 
-    @PostMapping(value = "course")
+    @GetMapping(value = "course")
     public String addCourse() {
         String courseName = "Test";
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            //return "Courses \"" + course.getCourseName() + "\" has been created";
-            return Course.courseToJson(course);
+            return "Courses \"" + course.getCourseName() + "\" has been created\""
+                    + lineSeparator() + Course.courseToJson(course);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return "Course \"" + courseName + "\" could not be created.";
-        } catch (HttpClientErrorException.NotFound e) {
-            return "I have no clue why this error is shown.";
         }
-
-
     }
 
     @GetMapping(value = "course/{id}")

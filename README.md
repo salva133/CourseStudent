@@ -5,7 +5,7 @@
 
 1. Exception Handling korrekt lernen
 2. try-catch Block nutzen
-3. Ecxeption muss explizit den Namen des Datensatzes zurückgeben
+3. Exception muss explizit den Namen des Datensatzes zurückgeben
 4. Fehler muss explizit erklärt werden (eigene super(message))
 5. re-throw recherchieren und ggf. einsetzen
 6. EINEN Endpoint für Course und EINEN Endpoint für Student erstellen
