@@ -1,6 +1,7 @@
 package com.learning.coursestudent.controller;
 
 import com.learning.coursestudent.classes.Course;
+import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
 import org.hibernate.ObjectNotFoundException;
@@ -116,14 +117,29 @@ public class CourseStudentController {
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            return "Courses has been created: " + lineSeparator() + returnObjectAsJSON(course);
+            return "Course has been created: " + lineSeparator() + returnObjectAsJSON(course);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return "Course \"" + courseName + "\" could not be created.";
         }
     }
 
-    @GetMapping(value = "course/{id}")
+    @GetMapping(value = "student")
+    public String addStudent() {
+        String firstName = "Larry";
+        String lastName = "McLarson";
+        String fullName = lastName + ", " + firstName;
+        try {
+            Student student = new Student(firstName,lastName,fullName);
+            studentRepository.save(student);
+            return "Student has been created: " + lineSeparator() + returnObjectAsJSON(student);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return "Student \"" + lastName + ", " + firstName + "\" could not be created.";
+        }
+    }
+
+/*    @GetMapping(value = "course/{id}")
     public ResponseEntity<String> getCourse() {
         try {
             return new ResponseEntity<>("Course has been found. That's cool.", HttpStatus.OK);
@@ -132,5 +148,5 @@ public class CourseStudentController {
             //return "Course" + courseRepository.findByCourseId(id).getCourseName() + " could not be found.";
             return new ResponseEntity<>("Course could not be found. Not good.", HttpStatus.NOT_FOUND);
         }
-    }
+    }*/
 }

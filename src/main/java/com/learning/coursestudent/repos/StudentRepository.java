@@ -10,7 +10,7 @@ import java.util.List;
 public interface StudentRepository extends CrudRepository<Student, Long> {
 
     Student findByStudentId(long studentId);
-    List<Student> findByLastName(String lastName);
-    List<Student> findByFirstName(String firstName);
+    Student findByLastName(String lastName);
+    Student findByFirstName(String firstName);
 
 }
