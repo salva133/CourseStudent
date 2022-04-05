@@ -1,21 +1,15 @@
 package com.learning.coursestudent.controller;
 
 import com.learning.coursestudent.classes.Course;
-import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Controller
+@RestController
 public class CourseStudentController {
 
     private final CourseRepository courseRepository;
@@ -114,17 +108,22 @@ public class CourseStudentController {
     }
 */
 
-    @GetMapping(value = "course")
+    @PostMapping(value = "course")
     public String addCourse() {
         String courseName = "Test";
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            return "Courses \"" + course.getCourseName() + "\" has been created";
+            //return "Courses \"" + course.getCourseName() + "\" has been created";
+            return Course.courseToJson(course);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return "Course \"" + courseName + "\" could not be created.";
+        } catch (HttpClientErrorException.NotFound e) {
+            return "I have no clue why this error is shown.";
         }
+
+
     }
 
     @GetMapping(value = "course/{id}")
