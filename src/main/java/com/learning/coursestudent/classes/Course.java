@@ -53,9 +53,4 @@ public class Course {
     public void setStudent(List<Student> student) {
         this.student = student;
     }
-
-    public static String courseToJson(Course course) {
-        Gson gson = new Gson();
-        return gson.toJson(course);
-    }
 }

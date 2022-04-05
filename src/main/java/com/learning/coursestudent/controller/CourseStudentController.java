@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.learning.coursestudent.classes.ReturnObjectAsJSON.returnObjectAsJSON;
 import static java.lang.System.lineSeparator;
 
 @RestController
@@ -115,8 +116,7 @@ public class CourseStudentController {
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            return "Courses \"" + course.getCourseName() + "\" has been created\""
-                    + lineSeparator() + Course.courseToJson(course);
+            return "Courses has been created: " + lineSeparator() + returnObjectAsJSON(course);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return "Course \"" + courseName + "\" could not be created.";
