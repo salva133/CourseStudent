@@ -63,4 +63,14 @@ class ExceptionHandlingExamples { // https://www.ibm.com/support/pages/best-prac
             }
         }
     }
+
+    void hack() {
+        // #6. A hack but it is better than suppression.
+
+        try {
+            // do work
+        } catch (Throwable t) {
+            throw new Error(t);
+        }
+    }
 }
