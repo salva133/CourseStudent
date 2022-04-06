@@ -110,11 +110,11 @@ public class CourseStudentController {
 
     @GetMapping(value = "course")
     public String addCourse() {
-        String courseName = "Test";
+        String courseName = "Math";
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            return "Course has been created: " + lineSeparator() + returnObjectAsJSON(course);
+            return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return "Course \"" + courseName + "\" could not be created.";
@@ -129,13 +129,12 @@ public class CourseStudentController {
         try {
             Student student = new Student(firstName,lastName,fullName);
             studentRepository.save(student);
-            return "Student has been created: " + lineSeparator() + returnObjectAsJSON(student);
+            return "Student \"" + fullName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(student);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return "Student \"" + lastName + ", " + firstName + "\" could not be created.";
+            return "Student \"" + fullName + "\" could not be created.";
         }
     }
-
 /*    @GetMapping(value = "course/{id}")
     public ResponseEntity<String> getCourse() {
         try {
