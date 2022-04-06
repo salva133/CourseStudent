@@ -12,6 +12,6 @@
 7. Objekt per JSON erzeugen (bei Baeldung schauen)
 8. Beim Studenten nicht die Course ID, sondern den Course Name anzeigen
 9. Student direkt mit Fremdschlüssel erzeugen
-10. Get- und PostMapping-Methoden implementieren
-    GetMapping-Methode: Nach Student mit Namen suchen/mit Kurs suchen
+10. Get- und PostMapping-Methoden implementieren,
+    GetMapping-Methode: Nach Student mit Namen suchen/mit Kurs suchen,
     PostMapping: Kurs eintragen/ändern

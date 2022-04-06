@@ -109,31 +109,41 @@ public class CourseStudentController {
 */
 
     @GetMapping(value = "course")
-    public String addCourse() {
-        String courseName = "Math";
+    public Object addCourse(String courseName) {
+        //String courseName = "Math";
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
+            //return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
+            System.out.println("Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course));
+            return course;
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return "Course \"" + courseName + "\" could not be created.";
+            //return "Course \"" + courseName + "\" could not be created.";
+            System.out.println("Course \"" + courseName + "\" could not be created.");
         }
+        return 0;
     }
 
     @GetMapping(value = "student")
-    public String addStudent() {
-        String firstName = "Larry";
-        String lastName = "McLarson";
+    public String addStudent(String firstName,String lastName,Course course) {
+        //String firstName = "Larry";
+        //String lastName = "McLarson";
         String fullName = lastName + ", " + firstName;
         try {
-            Student student = new Student(firstName,lastName,fullName);
+            Student student = new Student(firstName,lastName,fullName,course);
             studentRepository.save(student);
             return "Student \"" + fullName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(student);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             return "Student \"" + fullName + "\" could not be created.";
         }
+    }
+
+    @GetMapping(value = "mach")
+    public String mach() {
+        addStudent("Larry","McLarson", (Course) addCourse("Math"));
+        return "Done";
     }
 /*    @GetMapping(value = "course/{id}")
     public ResponseEntity<String> getCourse() {
