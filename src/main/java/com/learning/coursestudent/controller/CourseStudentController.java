@@ -4,12 +4,9 @@ import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
-import org.hibernate.ObjectNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.learning.coursestudent.classes.ReturnObjectAsJSON.returnObjectAsJSON;
+import static com.learning.coursestudent.classes.Statics.returnObjectAsJSON;
 import static java.lang.System.lineSeparator;
 
 @RestController
