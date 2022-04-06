@@ -4,7 +4,9 @@ import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
+import org.hibernate.PropertyValueException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 import static com.learning.coursestudent.classes.Statics.returnObjectAsJSON;
 import static java.lang.System.lineSeparator;
@@ -108,8 +110,8 @@ public class CourseStudentController {
     }
 */
 
-    @GetMapping(value = "course")
-    public Object addCourse(String courseName) {
+    @GetMapping(value = "/course")
+    public Course addCourse(String courseName) {
         //String courseName = "Math";
         try {
             Course course = new Course(courseName);
@@ -117,15 +119,20 @@ public class CourseStudentController {
             //return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
             System.out.println("Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course));
             return course;
-        } catch (IllegalArgumentException e) {
+        } catch (PropertyValueException e) {
             e.printStackTrace();
             //return "Course \"" + courseName + "\" could not be created.";
             System.out.println("Course \"" + courseName + "\" could not be created.");
+            return null;
         }
-        return 0;
     }
 
-    @GetMapping(value = "student")
+    @PostMapping(value = "/newCourse")
+    public Course newCourse(@RequestBody Course newCourse) {
+        return courseRepository.save(newCourse);
+    }
+
+    @GetMapping(value = "/student")
     public String addStudent(String firstName,String lastName,Course course) {
         //String firstName = "Larry";
         //String lastName = "McLarson";
@@ -140,9 +147,9 @@ public class CourseStudentController {
         }
     }
 
-    @GetMapping(value = "mach")
-    public String mach() {
-        addStudent("Larry","McLarson", (Course) addCourse("Math"));
+    @GetMapping(value = "/new")
+    public String newStudentWithCourse() {
+        addStudent("Larry","McLarson", addCourse("Math"));
         return "Done";
     }
 /*    @GetMapping(value = "course/{id}")
