@@ -1,12 +1,14 @@
 package com.learning.coursestudent.controller;
 
 import com.learning.coursestudent.classes.Course;
+import com.learning.coursestudent.classes.Statics;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
 import org.hibernate.PropertyValueException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
+
+import java.util.List;
 
 import static com.learning.coursestudent.classes.Statics.returnObjectAsJSON;
 import static java.lang.System.lineSeparator;
@@ -21,124 +23,32 @@ public class CourseStudentController {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
     }
-/*
-    @PostMapping(value = "create-everything")
-    public String createEverything() {
-        Course   course = new Course("Math");
-        courseRepository.save(course);
-                 course = new Course("IT");
-        courseRepository.save(course);
-                 course = new Course("History");
-        courseRepository.save(course);
-        Student student = new Student("Felix", "Springer");
-        studentRepository.save(student);
-                student = new Student("Franz", "Josef");
-        studentRepository.save(student);
-                student = new Student("Mark", "Ford");
-        studentRepository.save(student);
-        return "Courses and Students have been created.";
+
+    @GetMapping(value = "course")
+    public List<Course> getCourse() {
+        //Geplant
+        return null;
     }
 
-    @GetMapping(value = "create-course-math")
-    public String createCourse1() {
-        String courseName = "Math";
-        Course course = new Course(courseName,null);
-        courseRepository.save(course);
-        List<Student> studentList = new ArrayList<>();
-        String studentFirstName = "Felix";
-        String studentLastName = "Springer";
-        Student student1   = new Student(studentFirstName,studentLastName,course);
-        studentRepository.save(student1);
-        studentFirstName = "Franz";
-        studentLastName = "Josef";
-        Student student2   = new Student(studentFirstName,studentLastName,course);
-        studentRepository.save(student2);
-        studentList.add(student1);
-        studentList.add(student2);
-        return "Course \"" + course.getCourseName() + "\" has been created";
-    }
-
-    @PostMapping(value = "create-course-it")
-    public String createCourse2() {
-        String courseName = "IT";
-        Course course   = new Course(courseName);
-        courseRepository.save(course);
-
-        return "Course \"" + course.getCourseName() + "\" has been created";
-    }
-
-    @PostMapping(value = "create-course-history")
-    public String createCourse3() {
-        String courseName = "History";
-        Course course   = new Course(courseName);
-        courseRepository.save(course);
-
-        return "Course \"" + course.getCourseName() + "\" has been created";
-    }
-
-    @PostMapping(value = "create-student-felixspringer")
-    public String createStudent1() {
-        String courseName = "Math";
-        String studentFirstName = "Felix";
-        String studentLastName = "Springer";
-        Course course = new Course(courseName);
-        courseRepository.save(course);
-        Student student   = new Student(studentFirstName,studentLastName,course);
-        studentRepository.save(student);
-
-        return "Student \"" + student.getLastName() + ", " + student.getFirstName() + "\" has been created";
-    }
-
-    @PostMapping(value = "create-student-franzjosef")
-    public String createStudent2() {
-        String studentFirstName = "Franz";
-        String studentLastName = "Josef";
-        Student student   = new Student(studentFirstName,studentLastName);
-        studentRepository.save(student);
-
-        return "Student \"" + student.getLastName() + ", " + student.getFirstName() + "\" has been created";
-    }
-
-    @PostMapping(value = "create-student-markford")
-    public String createStudent3() {
-        String studentFirstName = "Felix";
-        String studentLastName = "Springer";
-        Student student   = new Student(studentFirstName,studentLastName);
-        studentRepository.save(student);
-
-        return "Student \"" + student.getLastName() + ", " + student.getFirstName() + "\" has been created";
-    }
-*/
-
-    @GetMapping(value = "/course")
-    public Course addCourse(String courseName) {
-        //String courseName = "Math";
+    @PostMapping(value = "newCourse")
+    public Course newCourse(String courseName) {
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            //return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
             System.out.println("Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course));
             return course;
         } catch (PropertyValueException e) {
             e.printStackTrace();
-            //return "Course \"" + courseName + "\" could not be created.";
             System.out.println("Course \"" + courseName + "\" could not be created.");
             return null;
         }
     }
 
-    @PostMapping(value = "/newCourse")
-    public Course newCourse(@RequestBody Course newCourse) {
-        return courseRepository.save(newCourse);
-    }
-
-    @GetMapping(value = "/student")
-    public String addStudent(String firstName,String lastName,Course course) {
-        //String firstName = "Larry";
-        //String lastName = "McLarson";
+    @PostMapping(value = "newStudent")
+    public String newStudent(String firstName,String lastName) {
         String fullName = lastName + ", " + firstName;
         try {
-            Student student = new Student(firstName,lastName,fullName,course);
+            Student student = new Student(firstName,lastName,fullName);
             studentRepository.save(student);
             return "Student \"" + fullName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(student);
         } catch (IllegalArgumentException e) {
@@ -147,19 +57,14 @@ public class CourseStudentController {
         }
     }
 
-    @GetMapping(value = "/new")
-    public String newStudentWithCourse() {
-        addStudent("Larry","McLarson", addCourse("Math"));
-        return "Done";
-    }
-/*    @GetMapping(value = "course/{id}")
-    public ResponseEntity<String> getCourse() {
-        try {
-            return new ResponseEntity<>("Course has been found. That's cool.", HttpStatus.OK);
-        } catch (ObjectNotFoundException e) {
-            e.printStackTrace();
-            //return "Course" + courseRepository.findByCourseId(id).getCourseName() + " could not be found.";
-            return new ResponseEntity<>("Course could not be found. Not good.", HttpStatus.NOT_FOUND);
-        }
+/*
+    Geplantes Feature
+    @PostMapping(value = "link-student")
+*/
+/*          Soll einen Student mit Course anlegen, nachdem newStudent und newCourse funktionieren werde ich hieran weiterarbeiten
+    @PostMapping(value = "/newStudentWithCourse")
+    public String newStudentWithCourse(@RequestBody String firstName,String lastName,String courseName) {
+        newStudent(firstName,lastName, newCourse(courseName));
+        return Statics.newStudentWithCourseSuccess(firstName,lastName,courseName);
     }*/
 }
