@@ -7,4 +7,8 @@ public class Statics {
         Gson gson = new Gson();
         return gson.toJson(object);
     }
+
+    public static String newStudentWithCourseSuccess(String firstName, String lastName, String courseName) {
+        return "Student \""+lastName+", "+firstName+"\" has been created with Course "+courseName+".";
+    }
 }
