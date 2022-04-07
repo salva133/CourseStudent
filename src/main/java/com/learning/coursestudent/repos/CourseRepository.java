@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends CrudRepository<Course, Long> {
 
-    @Query("select u from course")
+    List<Course> findAllByStudentTrue();
     List<Course> getAllCourses();
     Course getByCourseId(long courseId);
     Course getByCourseName(String courseName);
