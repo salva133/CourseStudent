@@ -25,7 +25,13 @@ public class CourseStudentController {
 
     @GetMapping(value = "course")
     public List<Course> getCourse() {
-        //Geplant
+        //return CourseRepository.getAllCourses();
+        return null;
+    }
+
+    @GetMapping(value = "student")
+    public List<Student> getStudent() {
+        //return StudentRepository.getAllStudents();
         return null;
     }
 
