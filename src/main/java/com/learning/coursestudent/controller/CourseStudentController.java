@@ -22,18 +22,17 @@ public class CourseStudentController {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
     }
-
+/*
     @GetMapping(value = "course")
     public List<Course> getCourse() {
-        //return CourseRepository.getAllCourses();
-        return null;
+        return CourseRepository.getAllCourses();
     }
 
     @GetMapping(value = "student")
     public List<Student> getStudent() {
-        //return StudentRepository.getAllStudents();
-        return null;
+        return StudentRepository.getAllStudents();
     }
+*/
 
     @PostMapping(value = "newCourse")
     public Course newCourse(String courseName) {

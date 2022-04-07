@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends CrudRepository<Student, Long> {
 
-    List<Student> getAllStudents();
     Student getByStudentId(long studentId);
     Student getByLastName(String lastName);
     Student getByFirstName(String firstName);
