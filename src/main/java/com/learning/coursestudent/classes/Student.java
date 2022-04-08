@@ -1,9 +1,10 @@
 package com.learning.coursestudent.classes;
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 
 @Entity
 public class Student {
@@ -79,5 +80,10 @@ public class Student {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String toJson(Student student) {
+        Gson gson = new Gson();
+        return gson.toJson(student);
     }
 }

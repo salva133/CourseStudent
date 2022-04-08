@@ -5,21 +5,14 @@ import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
-import org.hibernate.PropertyValueException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import static com.learning.coursestudent.classes.Statics.returnObjectAsJSON;
 import static java.lang.System.lineSeparator;
 
 @RestController
 public class CourseStudentController {
-    Logger logger = LoggerFactory.getLogger(CourseStudentController.class);
 
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
@@ -37,13 +30,13 @@ public class CourseStudentController {
 
     @PostMapping(value = "new-course")
     public String newCourse(String courseName) {
+        Course course = new Course(courseName);
         try {
-            Course course = new Course(courseName);
             courseRepository.save(course);
-            return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
-        } catch (PropertyValueException e) {
+            return "Course \"" + course.getCourseName() + "\" has been created: " + lineSeparator() + course.toJson(course);
+        } catch (Exception e) {
             e.printStackTrace();
-            return "Course \"" + courseName + "\" could not be created.";
+            return "Course \"" + course.getCourseName() + "\" could not be created.";
         }
     }
 
@@ -55,7 +48,7 @@ public class CourseStudentController {
         try {
             studentRepository.save(student);
             return "Student \"" + student.getFullName() + "\" has been created";
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "Student \"" + student.getFullName() + "\" could not be created.";
         }
