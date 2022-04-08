@@ -1,7 +1,5 @@
 package com.learning.coursestudent.classes;
 
-import com.google.gson.Gson;
-
 import javax.persistence.*;
 import java.util.List;
 
