@@ -1,6 +1,7 @@
 package com.learning.coursestudent.classes;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Student {
@@ -14,7 +15,11 @@ public class Student {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "full_name")
-    private String fullName = lastName + ", " + firstName;
+    private String fullName;
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
+    @Column(name = "age")
+    private int age;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
@@ -26,25 +31,14 @@ public class Student {
     public Student(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.fullName = lastName + ", " + firstName;
     }
 
-    public Student(String firstName, String lastName, String fullName) {
+    public Student(String firstName, String lastName, LocalDate dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.fullName = fullName;
-    }
-
-    public Student(String firstName, String lastName, Course course) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.course = course;
-    }
-
-    public Student(String firstName, String lastName, String fullName, Course course) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.fullName = fullName;
-        this.course = course;
+        this.fullName = lastName + ", " + firstName;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public long getStudentId() {

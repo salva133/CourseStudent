@@ -2,12 +2,17 @@ package com.learning.coursestudent.controller;
 
 import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.Student;
+import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
 import org.hibernate.PropertyValueException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 import static com.learning.coursestudent.classes.Statics.returnObjectAsJSON;
 import static java.lang.System.lineSeparator;
@@ -24,12 +29,13 @@ public class CourseStudentController {
         this.studentRepository = studentRepository;
     }
 
-    @GetMapping(value = "course")
-    public void getCourse() {
-        logger.info("received GET request for Course");
-    }
+    /*@GetMapping(value = "course")
+    public List<Course> getCourse() {
+        List<Course> course = CourseRepository.findAll();
+        return course;
+    }*/
 
-    @PostMapping(value = "newCourse")
+    @PostMapping(value = "new-course")
     public String newCourse(String courseName) {
         try {
             Course course = new Course(courseName);
@@ -37,33 +43,44 @@ public class CourseStudentController {
             return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
         } catch (PropertyValueException e) {
             e.printStackTrace();
-            System.out.println("Course \"" + courseName + "\" could not be created.");
             return "Course \"" + courseName + "\" could not be created.";
         }
     }
 
-    @PostMapping(value = "newStudent")
-    public String newStudent(String firstName,String lastName) {
-        String fullName = lastName + ", " + firstName;
+    @ResponseStatus
+    @PostMapping(value = "new-student")
+    public String newStudent(StudentPojo studentPojo) {
+        LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
+        Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
         try {
-            Student student = new Student(firstName,lastName,fullName);
             studentRepository.save(student);
-            return "Student \"" + fullName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(student);
+            return "Student \"" + student.getFullName() + "\" has been created";
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            return "Student \"" + fullName + "\" could not be created.";
+            return "Student \"" + student.getFullName() + "\" could not be created.";
         }
     }
 
 /*
-    Geplantes Feature
-    @PostMapping(value = "link-student")
+    //Geplant für KW15
+    @ResponseStatus
+    @PostMapping(value = "new-student-batch")
+    public String newStudentBatch(List<StudentPojo> studentPojoList) {
+        LocalDate dateOfBirth = LocalDate.parse(studentPojoList.getDateOfBirth());
+        Student student = new Student(studentPojoList.getFirstName(), studentPojoList.getLastName(), dateOfBirth);
+        try {
+            studentRepository.save(student);
+            return "Student \"" + student.getFullName() + "\" has been created";
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return "Student \"" + student.getFullName() + "\" could not be created.";
+        }
+    }
 */
-/*
-        Soll einen Student mit Course anlegen, nachdem newStudent und newCourse funktionieren werde ich hieran weiterarbeiten
-    @PostMapping(value = "/newStudentWithCourse")
+/*    // Soll einen Student mit Course anlegen, nachdem newStudent und newCourse funktionieren werde ich hieran weiterarbeiten
+    @PostMapping(value = "new-student-with-course")
     public String newStudentWithCourse(@RequestBody String firstName,String lastName,String courseName) {
         newStudent(firstName,lastName, newCourse(courseName));
-        return Statics.newStudentWithCourseSuccess(firstName,lastName,courseName);
+    //    return Statics.newStudentWithCourseSuccess(firstName,lastName,courseName);
     }*/
 }
