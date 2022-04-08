@@ -42,7 +42,7 @@ public class CourseStudentController {
 
     @ResponseStatus
     @PostMapping(value = "new-student")
-    public String newStudent(StudentPojo studentPojo) {
+    public String newStudent(StudentPojo studentPojo) { // Vielleicht ist eine Schleife hier eine gute Idee
         LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
         Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
         try {
