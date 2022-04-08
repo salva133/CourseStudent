@@ -2,6 +2,8 @@ package com.learning.coursestudent.classes;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 
 @Entity
 public class Student {
@@ -39,6 +41,8 @@ public class Student {
         this.lastName = lastName;
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dateOfBirth;
+        Period period = Period.between(dateOfBirth, LocalDate.now());
+        this.age = period.getYears();
     }
 
     public long getStudentId() {
