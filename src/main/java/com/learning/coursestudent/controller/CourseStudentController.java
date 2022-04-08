@@ -5,15 +5,16 @@ import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
 import org.hibernate.PropertyValueException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.learning.coursestudent.classes.Statics.returnObjectAsJSON;
 import static java.lang.System.lineSeparator;
 
 @RestController
 public class CourseStudentController {
+    Logger logger = LoggerFactory.getLogger(CourseStudentController.class);
 
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
@@ -22,29 +23,22 @@ public class CourseStudentController {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
     }
-/*
-    @GetMapping(value = "course")
-    public List<Course> getCourse() {
-        return CourseRepository.getAllCourses();
-    }
 
-    @GetMapping(value = "student")
-    public List<Student> getStudent() {
-        return StudentRepository.getAllStudents();
+    @GetMapping(value = "course")
+    public void getCourse() {
+        logger.info("received GET request for Course");
     }
-*/
 
     @PostMapping(value = "newCourse")
-    public Course newCourse(String courseName) {
+    public String newCourse(String courseName) {
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            System.out.println("Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course));
-            return course;
+            return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
         } catch (PropertyValueException e) {
             e.printStackTrace();
             System.out.println("Course \"" + courseName + "\" could not be created.");
-            return null;
+            return "Course \"" + courseName + "\" could not be created.";
         }
     }
 
