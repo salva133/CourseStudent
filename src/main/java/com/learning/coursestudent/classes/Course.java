@@ -19,8 +19,11 @@ public class Course {
     public Course() {
     }
 
-    public Course(long courseId, String courseName,List<Student> student) {
-        this.courseId = courseId;
+    public Course(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public Course(String courseName, List<Student> student) {
         this.courseName = courseName;
         this.student = student;
     }
