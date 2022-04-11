@@ -1,5 +1,7 @@
 package com.learning.coursestudent.classes;
 
+import com.google.gson.Gson;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -52,5 +54,10 @@ public class Course {
 
     public void setStudent(List<Student> student) {
         this.student = student;
+    }
+
+    public String toJson(Course course) {
+        Gson gson = new Gson();
+        return gson.toJson(course);
     }
 }
