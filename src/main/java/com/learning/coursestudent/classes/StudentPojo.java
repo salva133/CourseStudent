@@ -1,7 +1,5 @@
 package com.learning.coursestudent.classes;
 
-import java.time.LocalDate;
-
 public class StudentPojo {
     String firstName;
     String lastName;

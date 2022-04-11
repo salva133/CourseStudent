@@ -20,7 +20,7 @@
 - drei Studenten anlegen
 - Explizit Studenten returnen, bei dem das Alter zu niedrig ist ("Dieser Student ist zu jung")
 - Studenten unter 12 können keine Studenten sein (Custom Exception)
-####newStudentWithCourse
+####newStudentWithCourse()
 - Beim Erstellen von Studenten soll auch der Kurs angelegt werden
 - Als Darstellung soll der CourseName angezeigt werden
 - Ist der Kurs nicht über den Namen zu finden, muss eine Exception geworfen werden, aber der Datensatz soll trotzdem gespeichert werden. NULL im Fremdschlüssel ist zulässig.
