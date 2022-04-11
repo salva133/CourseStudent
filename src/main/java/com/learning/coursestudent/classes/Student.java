@@ -20,7 +20,7 @@ public class Student {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
     @Column(name = "age")
-    private int age;
+    private short age;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
@@ -41,7 +41,7 @@ public class Student {
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dateOfBirth;
         Period period = Period.between(dateOfBirth, LocalDate.now());
-        this.age = period.getYears();
+        this.age = (short) period.getYears();
     }
 
     public long getId() {
@@ -88,11 +88,11 @@ public class Student {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getAge() {
+    public short getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(short age) {
         this.age = age;
     }
 }
