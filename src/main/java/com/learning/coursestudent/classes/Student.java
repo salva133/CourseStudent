@@ -3,7 +3,6 @@ package com.learning.coursestudent.classes;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 
 @Entity
 public class Student {
@@ -11,7 +10,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_generator")
     @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
     @Column(name = "id", updatable = false, nullable = false)
-    private long studentId;
+    private long id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -45,12 +44,12 @@ public class Student {
         this.age = period.getYears();
     }
 
-    public long getStudentId() {
-        return studentId;
+    public long getId() {
+        return id;
     }
 
-    public void setStudentId(long studentId) {
-        this.studentId = studentId;
+    public void setId(long studentId) {
+        this.id = studentId;
     }
 
     public String getFirstName() {
@@ -79,5 +78,21 @@ public class Student {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }

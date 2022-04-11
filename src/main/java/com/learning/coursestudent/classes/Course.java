@@ -9,7 +9,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "course_generator")
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
     @Column(name = "id", updatable = false, nullable = false)
-    private long courseId;
+    private long id;
     @Column(name = "course_name")
     private String courseName;
 
@@ -28,12 +28,12 @@ public class Course {
         this.student = student;
     }
 
-    public long getCourseId() {
-        return courseId;
+    public long getId() {
+        return id;
     }
 
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
+    public void setId(long courseId) {
+        this.id = courseId;
     }
 
     public String getCourseName() {
