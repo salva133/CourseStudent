@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import static com.learning.coursestudent.classes.Statics.returnObjectAsJSON;
-import static java.lang.System.lineSeparator;
-
 @RestController
 public class CourseStudentController {
     short ageLimit = 12;
@@ -38,7 +35,7 @@ public class CourseStudentController {
         try {
             Course course = new Course(courseName);
             courseRepository.save(course);
-            return "Course \"" + courseName + "\" has been created: " + lineSeparator() + returnObjectAsJSON(course);
+            return "Course \"" + courseName + "\" has been created";
         } catch (PropertyValueException e) {
             e.printStackTrace();
             return "Course \"" + courseName + "\" could not be created.";
@@ -69,7 +66,7 @@ public class CourseStudentController {
         }
 
     }
-
+/*
     @PostMapping("new-student-batch")
     public String newStudentBatch(StudentPojo studentPojo) {
         LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
@@ -93,6 +90,7 @@ public class CourseStudentController {
         }
     }
 
+ */
 /*    // Soll einen Student mit Course anlegen, nachdem newStudent und newCourse funktionieren werde ich hieran weiterarbeiten
     @PostMapping(value = "new-student-with-course")
     public String newStudentWithCourse(@RequestBody String firstName,String lastName,String courseName) {
