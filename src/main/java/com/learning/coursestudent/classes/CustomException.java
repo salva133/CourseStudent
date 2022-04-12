@@ -8,7 +8,7 @@ public class CustomException extends Exception{
         return Student.class.getSimpleName()+" \""+fullName+"\" with ID \""+id+"\" cannot be younger than "+ageLimit+"!";
     }
 
-    public String DOBIsInFuture(String fullName,LocalDate dob) {
+    public String DOBIsInFutureException(String fullName, LocalDate dob) {
         return "Date of Birth \""+dob+"\" of "+Student.class.getSimpleName()+" \""+fullName+"\" cannot be in the future.";
     }
 }

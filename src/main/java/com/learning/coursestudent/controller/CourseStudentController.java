@@ -7,10 +7,13 @@ import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.repos.CourseRepository;
 import com.learning.coursestudent.repos.StudentRepository;
 import org.hibernate.PropertyValueException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 @RestController
 public class CourseStudentController {
@@ -24,12 +27,17 @@ public class CourseStudentController {
         this.studentRepository = studentRepository;
     }
 
-    /*@GetMapping(value = "course")
-    public List<Course> getCourse() {
-        List<Course> course = CourseRepository.findAll();
-        return course;
-    }*/
+    @GetMapping(value = "course")
+    public ResponseEntity<List<Course>> getAllCourses() {
+        return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
+    }
 
+    @GetMapping(value = "student")
+    public ResponseEntity<List<Student>> getAllStudents() {
+        return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
+    }
+
+    @ResponseStatus
     @PostMapping(value = "new-course")
     public String newCourse(String courseName) {
         try {
@@ -49,7 +57,7 @@ public class CourseStudentController {
         Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
 
         if (student.getDateOfBirth().isAfter(LocalDate.now())) {
-            return new CustomException().DOBIsInFuture(student.getFullName(), student.getDateOfBirth());
+            return new CustomException().DOBIsInFutureException(student.getFullName(), student.getDateOfBirth());
         }
         if (student.getAge() < ageLimit) {
             return new CustomException().StudentTooYoungException(student.getFullName(), student.getId(), ageLimit);
@@ -57,7 +65,7 @@ public class CourseStudentController {
 
         try {
             studentRepository.save(student);
-            return Student.class.getSimpleName() + " \"" + student.getFullName() + "\", born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old, has been created";
+            return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created";
         } catch (DateTimeParseException e) {
             throw new DateTimeParseException("Use the following date format: YYYY-MM-DD",studentPojo.getDateOfBirth(),0);
         } catch (Exception e) {
