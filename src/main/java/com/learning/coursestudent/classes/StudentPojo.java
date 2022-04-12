@@ -1,6 +1,9 @@
 package com.learning.coursestudent.classes;
 
-public class StudentPojo {
+import java.io.IOException;
+import java.io.InputStream;
+
+public class StudentPojo extends InputStream {
     String firstName;
     String lastName;
     String dateOfBirth;
@@ -21,5 +24,10 @@ public class StudentPojo {
 
     public String getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    @Override
+    public int read() throws IOException {
+        return 0;
     }
 }
