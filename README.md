@@ -1,10 +1,7 @@
 # CourseStudent - Internes Übungsszenario
 ##KW15
 
-- Im Falle von Exceptions: HTTP-Error Codes mit einbinden
 - @ResponseStatus einbinden für POST-Methods, vielleicht mal nachprüfen welche Annotation für HTTP-Return Codes ist
-- Recherchieren wie POJOs als JSON-Payload formatiert werden können (wie bekommen wir LocalDate von Spring Boot formatiert)
-   Link von Oleg nutzen -> https://stackoverflow.com/questions/43684306/spring-deserializes-a-localdate-in-a-requestbody-differently-from-one-in-a-req
 - Exception muss auch das Feld des illegal argument benennen
 
 ##Anforderungen für diese Woche
@@ -26,3 +23,6 @@
 - Get- und PostMapping-Methoden implementieren,
   - GetMapping-Methode: Nach Student mit Namen suchen/mit Kurs suchen,
   - PostMapping: Kurs eintragen/ändern
+  - Im Falle von Exceptions: HTTP-Error Codes mit einbinden
+  - Recherchieren wie POJOs als JSON-Payload formatiert werden können (wie bekommen wir LocalDate von Spring Boot formatiert)
+    Link von Oleg nutzen -> https://stackoverflow.com/questions/43684306/spring-deserializes-a-localdate-in-a-requestbody-differently-from-one-in-a-req
