@@ -20,7 +20,7 @@ public class Student {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
     @Column(name = "age")
-    private short age;
+    private int age;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id")
@@ -41,7 +41,8 @@ public class Student {
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dateOfBirth;
         Period period = Period.between(dateOfBirth, LocalDate.now());
-        this.age = (short) period.getYears();
+        this.age = period.getYears();
+        AgeAbove100Check();
     }
 
     public long getId() {
@@ -84,15 +85,13 @@ public class Student {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public short getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(short age) {
-        this.age = age;
+    public void AgeAbove100Check() {
+        if (age > 100) {
+            System.out.println("##### Age of \""+fullName+"\" is above 100 years. Make sure that the date of birth given is correct. If this value is intended, you can ignore this message #####");
+        }
     }
 }

@@ -14,8 +14,6 @@ public class Course {
     private long id;
     @Column(name = "course_name")
     private String courseName;
-    @Column(name = "NC")
-    private float nc;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Student> student;
