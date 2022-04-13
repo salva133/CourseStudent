@@ -16,8 +16,8 @@ public class Course {
     @Column(name = "course_name")
     private String courseName;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Student> student;
 
     public Course() {
