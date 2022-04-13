@@ -1,8 +1,8 @@
 package com.learning.coursestudent.controller;
 
 import com.learning.coursestudent.classes.*;
-import com.learning.coursestudent.repos.CourseRepository;
-import com.learning.coursestudent.repos.StudentRepository;
+import com.learning.coursestudent.repository.CourseRepository;
+import com.learning.coursestudent.repository.StudentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +54,7 @@ public class CourseStudentController {
         if (student.getAge() < ageLimit) {
             return new CustomException().StudentTooYoungException(student.getFullName(), student.getId(), ageLimit);
         }
-
+//Try-Catch
         try {
             studentRepository.save(student);
             return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth()
@@ -69,24 +69,31 @@ public class CourseStudentController {
         }
     }
 
-
-
     @PostMapping(value = "new-student-with-course")
     public String newStudentWithCourse(StudentPojo studentPojo,CoursePojo coursePojo) {
+//Student
+        LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
+        Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
+//Exception-IFs for Student
+        if (student.getDateOfBirth().isAfter(LocalDate.now())) {
+            return new CustomException().DOBIsInFutureException(student.getFullName(), student.getDateOfBirth());
+        }
+        if (student.getAge() < ageLimit) {
+            return new CustomException().StudentTooYoungException(student.getFullName(), student.getId(), ageLimit);
+        }
+//Course
+        Course course = new Course(coursePojo.getCourseName());
+//Setting Course for Student
+        student.setCourse(course);
+//Try-Catch  
         try {
-            LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
-            Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
-            Course course = new Course(coursePojo.getCourseName());
-            student.setCourse(course);
             courseRepository.save(course);
             studentRepository.save(student);
-
-            return "newStudentWithCourse complete";
-
-        } catch (IllegalStateException e) {
-            e.getCause();
+        } catch (Exception e) {
+            System.out.println(HttpStatus.EXPECTATION_FAILED);
         }
-        return String.valueOf(HttpStatus.BAD_REQUEST);
+        return Student.class.getSimpleName()+" \""+student.getFullName()+"\" - born \""+student.getDateOfBirth()+"\" and therefore "+student.getAge()+" years old - has been created with "+Course.class.getSimpleName()+" \""+course.getCourseName()+"\""+
+                System.lineSeparator()+"HTTP-Status: "+HttpStatus.CREATED;
     }
 }
 
