@@ -1,5 +1,6 @@
 package com.learning.coursestudent.classes;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.Gson;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Course {
     @Column(name = "course_name")
     private String courseName;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<Student> student;
 

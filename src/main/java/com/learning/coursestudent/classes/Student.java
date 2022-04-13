@@ -1,5 +1,7 @@
 package com.learning.coursestudent.classes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,9 +24,11 @@ public class Student {
     @Column(name = "age")
     private int age;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "course_id")
     private Course course;
+
 
     public Student() {
     }
