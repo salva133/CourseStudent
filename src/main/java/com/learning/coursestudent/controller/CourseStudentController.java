@@ -3,9 +3,11 @@ package com.learning.coursestudent.controller;
 import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -84,16 +86,30 @@ public class CourseStudentController {
 //Course
         Course course = new Course(coursePojo.getCourseName());
 //Setting Course for Student
-        student.setCourse(course);
+        try {
+            student.setCourse(course);
+        } catch (HttpClientErrorException.NotFound e) {
+            student.setCourse(null);
+            return "Course could not be found and has been set to NULL. Anyway, the course itself has been created."+
+                    System.lineSeparator()+e.getLocalizedMessage()+
+                    System.lineSeparator()+HttpStatus.NOT_FOUND;
+        }
+
 //Try-Catch  
         try {
             courseRepository.save(course);
             studentRepository.save(student);
+            return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created with " + Course.class.getSimpleName() + " \"" + course.getCourseName() + "\"" +
+                    System.lineSeparator() + "HTTP-Status: " + HttpStatus.CREATED;
+        } catch (DateTimeParseException e) {
+            return "Parsed Date or Time is invalid: " + e.getParsedString() +
+                    System.lineSeparator() + "Please verify the format of date/time values in your file." +
+                    System.lineSeparator() + HttpStatus.NOT_ACCEPTABLE;
+        } catch (InternalError e) {
+            return "The creation of the Student/Course objects has failed. Please verify the given data." + HttpStatus.INTERNAL_SERVER_ERROR;
         } catch (Exception e) {
-            System.out.println(HttpStatus.EXPECTATION_FAILED);
+            return "Holy Shit! "+HttpStatus.I_AM_A_TEAPOT;
         }
-        return Student.class.getSimpleName()+" \""+student.getFullName()+"\" - born \""+student.getDateOfBirth()+"\" and therefore "+student.getAge()+" years old - has been created with "+Course.class.getSimpleName()+" \""+course.getCourseName()+"\""+
-                System.lineSeparator()+"HTTP-Status: "+HttpStatus.CREATED;
     }
 }
 
