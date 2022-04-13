@@ -5,10 +5,6 @@
 - Exception muss auch das Feld des illegal argument benennen
 
 ##Anforderungen für diese Woche
-###newStudent()
-- Studenten unter 12 können keine Studenten sein (Custom Exception)
-- HTTPResponseCode nutzen (NOT_VALID e.g.)
-- Explizit Studenten returnen, bei dem das Alter zu niedrig ist ("Dieser Student ist zu jung")
 ###newStudentBatch()
 - drei Studenten anlegen (Tick, Trick und Track)
 - Explizit Studenten returnen, bei dem das Alter zu niedrig ist ("Dieser Student ist zu jung")
@@ -26,3 +22,8 @@
   - Im Falle von Exceptions: HTTP-Error Codes mit einbinden
   - Recherchieren wie POJOs als JSON-Payload formatiert werden können (wie bekommen wir LocalDate von Spring Boot formatiert)
     Link von Oleg nutzen -> https://stackoverflow.com/questions/43684306/spring-deserializes-a-localdate-in-a-requestbody-differently-from-one-in-a-req
+
+###newStudent()
+- Studenten unter 12 können keine Studenten sein (Custom Exception)
+- HTTPResponseCode nutzen (NOT_VALID e.g.)
+- Explizit Studenten returnen, bei dem das Alter zu niedrig ist ("Dieser Student ist zu jung")
