@@ -1,10 +1,11 @@
 package com.learning.coursestudent.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -27,6 +29,7 @@ public class CourseStudentController {
         this.studentRepository = studentRepository;
     }
 
+    //GETTER
     @GetMapping(value = "course")
     public ResponseEntity<List<Course>> getAllCourses() {
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
@@ -36,7 +39,9 @@ public class CourseStudentController {
     public ResponseEntity<List<Student>> getAllStudents() {
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
+    //GETTER
 
+    //POSTER
     @ResponseStatus
     @PostMapping(value = "new-course")
     public String newCourse(CoursePojo coursePojo) {
@@ -125,10 +130,10 @@ public class CourseStudentController {
         }
     }
 
-    //Planned feature
+        //Planned feature
     @PostMapping(value = "new-student-batch")
-    public String newStudentBatch(StudentPojo studentPojo) {
-
+    public String newStudentBatch(JsonArray selections) {
         return null;
     }
+    //POSTER
 }
