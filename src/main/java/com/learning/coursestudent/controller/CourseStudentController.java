@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -46,9 +47,16 @@ public class CourseStudentController {
 
     @ResponseStatus
     @PostMapping(value = "new-student")
-    public String newStudent(StudentPojo studentPojo) throws DateTimeParseException {
-        LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
-        Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
+    public String newStudent(StudentPojo studentPojo) {
+        LocalDate dateOfBirth;
+        Student student;
+        try {
+            dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
+        } catch (DateTimeException e) {
+            return "Verify your data because the Date of Birth you provided is not valid."+
+                    System.lineSeparator()+"Error message: "+e.getMessage();
+        }
+        student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
 //Exception-IFs
         if (student.getDateOfBirth().isAfter(LocalDate.now())) {
             return new CustomException().DOBIsInFutureException(student.getFullName(), student.getDateOfBirth());
@@ -108,13 +116,15 @@ public class CourseStudentController {
         } catch (InternalError e) {
             return "The creation of the Student/Course objects has failed. Please verify the given data." + HttpStatus.INTERNAL_SERVER_ERROR;
         } catch (Exception e) {
-            return "Holy Shit! "+HttpStatus.I_AM_A_TEAPOT;
+            return "Holy Shit! " +
+                    System.lineSeparator() + HttpStatus.I_AM_A_TEAPOT;
         }
     }
-}
 
-/*      //Planned feature
+    //Planned feature
     @PostMapping(value = "new-student-batch")
-    public String newStudentWithCourse(StudentPojo studentPojo) {
+    public String newStudentBatch(StudentPojo studentPojo) {
+
+        return null;
     }
- */
+}
