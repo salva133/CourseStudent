@@ -3,6 +3,7 @@ package com.learning.coursestudent.controller;
 import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,9 @@ public class CourseStudentController {
         } catch (DateTimeException e) {
             return "Verify your data because the Date of Birth you provided is not valid."+
                     System.lineSeparator()+"Error message: "+e.getMessage();
+        } catch (NullPointerException e) {
+            return "Exception class: "+e.getClass().getSimpleName()+
+                    System.lineSeparator()+"Exception Message: "+e.getMessage();
         }
         student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
 //Exception-IFs
