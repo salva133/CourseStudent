@@ -1,13 +1,17 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 
 @Entity
 public class Student {
+    //FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_generator")
     @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
@@ -23,13 +27,19 @@ public class Student {
     private LocalDate dateOfBirth;
     @Column(name = "age")
     private int age;
-
+    @Column(name = "creation_time")
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+    @Column(name = "update_time")
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "course_id")
     private Course course;
+    //FIELDS
 
-
+    //CONSTRUCTORS
     public Student() {
     }
 
@@ -48,7 +58,9 @@ public class Student {
         this.age = period.getYears();
         AgeAbove100Check();
     }
+    //CONSTRUCTORS
 
+    //GETTER AND SETTER
     public long getId() {
         return id;
     }
@@ -93,9 +105,20 @@ public class Student {
         return age;
     }
 
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+    //GETTER AND SETTER
+
+    //MISC CLASS METHODS
     public void AgeAbove100Check() {
         if (age > 100) {
             System.out.println("##### Age of \""+fullName+"\" is above 100 years. Make sure that the date of birth given is correct. If this value is intended, you can ignore this message #####");
         }
     }
+    //MISC CLASS METHODS
 }

@@ -2,12 +2,17 @@ package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.Gson;
+import jdk.jfr.Timestamp;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class Course {
+    //FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "course_generator")
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
@@ -15,11 +20,18 @@ public class Course {
     private long id;
     @Column(name = "course_name")
     private String courseName;
-
+    @Column(name = "creation_time")
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+    @Column(name = "update_time")
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Student> student;
+    //FIELDS
 
+    //CONSTRUCTORS
     public Course() {
     }
 
@@ -31,7 +43,9 @@ public class Course {
         this.courseName = courseName;
         this.student = student;
     }
+    //CONSTRUCTORS
 
+    //GETTER AND SETTER
     public long getId() {
         return id;
     }
@@ -56,8 +70,19 @@ public class Course {
         this.student = student;
     }
 
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+    //GETTER AND SETTER
+
+    //MISC CLASS METHODS
     public String toJson(Course course) {
         Gson gson = new Gson();
         return gson.toJson(course);
     }
+    //MISC CLASS METHODS
 }
