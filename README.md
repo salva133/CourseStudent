@@ -9,7 +9,8 @@
 - drei Studenten anlegen
 - Explizit Studenten returnen, bei dem das Alter zu niedrig ist ("Dieser Student ist zu jung")
 - Studenten unter 12 können keine Studenten sein (Custom Exception)
-##Fertig
+#
+#Fertig
 - Get- und PostMapping-Methoden implementieren,
   - GetMapping-Methode: Nach Student mit Namen suchen/mit Kurs suchen,
   - PostMapping: Kurs eintragen/ändern

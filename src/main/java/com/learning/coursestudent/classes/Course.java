@@ -18,7 +18,7 @@ public class Course {
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
-    @Column(name = "course_name")
+    @Column(name = "course_name", nullable = false)
     private String courseName;
     @Column(name = "creation_time")
     @CreationTimestamp

@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import org.hibernate.PropertyValueException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,13 +44,21 @@ public class CourseStudentController {
     //GETTER
 
     //POSTER
-    @ResponseStatus
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Given Data is invalid")
+    @ExceptionHandler(PropertyValueException.class)
     @PostMapping(value = "new-course")
     public String newCourse(CoursePojo coursePojo) {
         Course course = new Course(coursePojo.getCourseName());
-        courseRepository.save(course);
-        return "Course \"" + coursePojo.getCourseName() + "\" has been created"+
-                System.lineSeparator()+"HTTP-Status: "+HttpStatus.CREATED;
+
+        try {
+            courseRepository.save(course);
+            return "Course \"" + coursePojo.getCourseName() + "\" has been created" +
+                    System.lineSeparator() + "HTTP-Status: " + HttpStatus.CREATED;
+        } catch (PropertyValueException e) {
+            return "I am sorry, but the name of the course you provided is empty or invalid in some other way. Please re-check the data you tried to insert." +
+                    System.lineSeparator() + "Error message: " + e.getMessage() +
+                    System.lineSeparator() + "HTTP Status: " + HttpStatus.FORBIDDEN;
+        }
     }
 
     @ResponseStatus
