@@ -2,7 +2,6 @@ package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.google.gson.Gson;
-import jdk.jfr.Timestamp;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
