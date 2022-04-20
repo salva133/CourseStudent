@@ -15,20 +15,18 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false)
     private long id;
-    @Column(name = "course_name")
     private String courseName;
-    @Column(name = "creation_time")
-    @CreationTimestamp
-    private LocalDateTime creationTime;
-    @Column(name = "update_time")
-    @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private String aStringForTesting;
+    private int anIntForTesting;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
-    @Column(name = "students")
     private List<Student> student;
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
     //FIELDS
 
     //CONSTRUCTORS
@@ -43,6 +41,13 @@ public class Course {
         this.courseName = courseName;
         this.student = student;
     }
+
+    public Course(String courseName, String aStringForTesting, int anIntForTesting) {
+        this.courseName = courseName;
+        this.aStringForTesting = aStringForTesting;
+        this.anIntForTesting = anIntForTesting;
+    }
+
     //CONSTRUCTORS
 
     //GETTER AND SETTER
@@ -76,6 +81,22 @@ public class Course {
 
     public LocalDateTime getUpdateTime() {
         return updateTime;
+    }
+
+    public String getAStringForTesting() {
+        return aStringForTesting;
+    }
+
+    public void setAStringForTesting(String test1) {
+        this.aStringForTesting = test1;
+    }
+
+    public int getAnIntForTesting() {
+        return anIntForTesting;
+    }
+
+    public void setAnIntForTesting(int test2) {
+        this.anIntForTesting = test2;
     }
     //GETTER AND SETTER
 

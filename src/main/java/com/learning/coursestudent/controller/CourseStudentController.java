@@ -48,7 +48,7 @@ public class CourseStudentController {
     @ExceptionHandler(PropertyValueException.class)
     @PostMapping(value = "new-course")
     public String newCourse(CoursePojo coursePojo) {
-        Course course = new Course(coursePojo.getCourseName());
+        Course course = new Course(coursePojo.getCourseName(), coursePojo.getaStringForTesting(), coursePojo.getAnIntForTesting());
 
         try {
             courseRepository.save(course);
