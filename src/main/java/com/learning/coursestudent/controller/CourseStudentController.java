@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -42,8 +43,8 @@ public class CourseStudentController {
     //GETTER
 
     //POSTER
-    @PostMapping(value = "new-course")
-    public String newCourse(CoursePojo coursePojo) {
+    @PostMapping(value = "course")
+    public String newCourse(@RequestBody CoursePojo coursePojo) {
         Course course = new Course(coursePojo.getCourseName());
 
         try {
@@ -51,14 +52,23 @@ public class CourseStudentController {
             return "Course \"" + coursePojo.getCourseName() + "\" has been created" +
                     System.lineSeparator() + "HTTP-Status: " + HttpStatus.CREATED;
         } catch (DataIntegrityViolationException e) {
+            //Logging
+            System.out.println("DataIntegrityViolationException - Error has occurred! "+e.getMessage());
+            e.printStackTrace();
+
+
+            //Try to self repair
+
+
+            //inform client
             return "I am sorry, but the name of the course you provided is empty or invalid in some other way. Please re-check the data you tried to insert." +
                     System.lineSeparator() + "Error message: " + e.getMessage() +
                     System.lineSeparator() + "HTTP Status: " + HttpStatus.FORBIDDEN;
         }
     }
 
-    @PostMapping(value = "new-student")
-    public String newStudent(StudentPojo studentPojo) {
+    @PostMapping(value = "student")
+    public String newStudent(@RequestBody StudentPojo studentPojo) {
         LocalDate dateOfBirth;
         Student student;
         try {
@@ -136,9 +146,9 @@ public class CourseStudentController {
     }
 
     //Planned feature
-    @PostMapping(value = "new-student-batch")
+/*    @PostMapping(value = "new-student-batch")
     public String newStudentBatch(JsonArray selections) {
         return null;
-    }
+    }*/
     //POSTER
 }
