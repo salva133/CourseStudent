@@ -18,7 +18,7 @@ public class Course {
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
-    @Column(name = "course_name", nullable = false)
+    @Column(name = "course_name")
     private String courseName;
     @Column(name = "creation_time")
     @CreationTimestamp
@@ -28,6 +28,7 @@ public class Course {
     private LocalDateTime updateTime;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
+    @Column(name = "students")
     private List<Student> student;
     //FIELDS
 
