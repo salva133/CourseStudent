@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
     Student getById(long id);
+
     Student getByLastName(String lastName);
+
     Student getByFirstName(String firstName);
 }

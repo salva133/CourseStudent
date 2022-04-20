@@ -13,7 +13,7 @@ import java.time.Period;
 public class Student {
     //FIELDS
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_generator")
     @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
@@ -117,7 +117,7 @@ public class Student {
     //MISC CLASS METHODS
     public void AgeAbove100Check() {
         if (age > 100) {
-            System.out.println("##### Age of \""+fullName+"\" is above 100 years. Make sure that the date of birth given is correct. If this value is intended, you can ignore this message #####");
+            System.out.println("##### Age of \"" + fullName + "\" is above 100 years. Make sure that the date of birth given is correct. If this value is intended, you can ignore this message #####");
         }
     }
     //MISC CLASS METHODS

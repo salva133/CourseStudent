@@ -14,7 +14,7 @@ import java.util.List;
 public class Course {
     //FIELDS
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "course_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
     @Column(name = "id", updatable = false, nullable = false)
     private long id;
