@@ -1,6 +1,6 @@
 # CourseStudent - Internes Übungsszenario
 
-##KW15
+##KW16
 
 - @ResponseStatus einbinden für POST-Methods, vielleicht mal nachprüfen welche Annotation für HTTP-Return Codes ist
 - Exception muss auch das Feld des illegal argument benennen
