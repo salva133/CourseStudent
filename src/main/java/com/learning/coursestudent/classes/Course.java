@@ -1,21 +1,33 @@
 package com.learning.coursestudent.classes;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.google.gson.Gson;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class Course {
+    //FIELDS
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "course_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
-    @Column(name = "id", updatable = false, nullable = false)
-    private long courseId;
-    @Column(name = "course_name")
+    @Column(updatable = false, nullable = false)
+    private long id;
     private String courseName;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Student> student;
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
+    //FIELDS
 
+    //CONSTRUCTORS
     public Course() {
     }
 
@@ -27,13 +39,15 @@ public class Course {
         this.courseName = courseName;
         this.student = student;
     }
+    //CONSTRUCTORS
 
-    public long getCourseId() {
-        return courseId;
+    //GETTER AND SETTER
+    public long getId() {
+        return id;
     }
 
-    public void setCourseId(long courseId) {
-        this.courseId = courseId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCourseName() {
@@ -51,4 +65,20 @@ public class Course {
     public void setStudent(List<Student> student) {
         this.student = student;
     }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+    //GETTER AND SETTER
+
+    //MISC CLASS METHODS
+    public String toJson(Course course) {
+        Gson gson = new Gson();
+        return gson.toJson(course);
+    }
+    //MISC CLASS METHODS
 }

@@ -1,30 +1,37 @@
 package com.learning.coursestudent.classes;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 @Entity
 public class Student {
+    //FIELDS
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "student_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_generator")
     @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
-    @Column(name = "id", updatable = false, nullable = false)
-    private long studentId;
-    @Column(name = "first_name")
+    @Column(updatable = false, nullable = false)
+    private long id;
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
-    @Column(name = "full_name")
     private String fullName;
-    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
-    @Column(name = "age")
     private int age;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "course_id")
+    @CreationTimestamp
+    private LocalDateTime creationTime;
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
+    @ManyToOne
+    @JsonBackReference
     private Course course;
+    //FIELDS
 
+    //CONSTRUCTORS
     public Student() {
     }
 
@@ -39,14 +46,19 @@ public class Student {
         this.lastName = lastName;
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dateOfBirth;
+        Period period = Period.between(dateOfBirth, LocalDate.now());
+        this.age = period.getYears();
+        AgeAbove100Check();
+    }
+    //CONSTRUCTORS
+
+    //GETTER AND SETTER
+    public long getId() {
+        return id;
     }
 
-    public long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(long studentId) {
-        this.studentId = studentId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -76,4 +88,29 @@ public class Student {
     public void setCourse(Course course) {
         this.course = course;
     }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+    //GETTER AND SETTER
+
+    //MISC CLASS METHODS
+    public void AgeAbove100Check() {
+        if (age > 100) {
+            System.out.println("##### Age of \"" + fullName + "\" is above 100 years. Make sure that the date of birth given is correct. If this value is intended, you can ignore this message #####");
+        }
+    }
+    //MISC CLASS METHODS
 }
