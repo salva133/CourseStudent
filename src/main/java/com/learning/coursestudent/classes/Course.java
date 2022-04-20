@@ -18,8 +18,6 @@ public class Course {
     @Column(updatable = false, nullable = false)
     private long id;
     private String courseName;
-    private String aStringForTesting;
-    private int anIntForTesting;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Student> student;
@@ -41,13 +39,6 @@ public class Course {
         this.courseName = courseName;
         this.student = student;
     }
-
-    public Course(String courseName, String aStringForTesting, int anIntForTesting) {
-        this.courseName = courseName;
-        this.aStringForTesting = aStringForTesting;
-        this.anIntForTesting = anIntForTesting;
-    }
-
     //CONSTRUCTORS
 
     //GETTER AND SETTER
@@ -81,22 +72,6 @@ public class Course {
 
     public LocalDateTime getUpdateTime() {
         return updateTime;
-    }
-
-    public String getAStringForTesting() {
-        return aStringForTesting;
-    }
-
-    public void setAStringForTesting(String test1) {
-        this.aStringForTesting = test1;
-    }
-
-    public int getAnIntForTesting() {
-        return anIntForTesting;
-    }
-
-    public void setAnIntForTesting(int test2) {
-        this.anIntForTesting = test2;
     }
     //GETTER AND SETTER
 
