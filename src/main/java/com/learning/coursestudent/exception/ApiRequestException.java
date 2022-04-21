@@ -1,6 +1,8 @@
 package com.learning.coursestudent.exception;
 
-public class ApiRequestException extends RuntimeException {
+import org.springframework.dao.DataIntegrityViolationException;
+
+public class ApiRequestException extends DataIntegrityViolationException {
 
     public ApiRequestException(String message) {
         super(message);
