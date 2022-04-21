@@ -17,6 +17,7 @@ public class Course {
     @SequenceGenerator(name = "course_generator", sequenceName = "course_seq")
     @Column(updatable = false, nullable = false)
     private long id;
+    @Column(nullable = false)
     private String courseName;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
