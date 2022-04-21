@@ -3,6 +3,8 @@ package com.learning.coursestudent.classes;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -111,6 +113,17 @@ public class Student {
         if (age > 100) {
             System.out.println("##### Age of \"" + fullName + "\" is above 100 years. Make sure that the date of birth given is correct. If this value is intended, you can ignore this message #####");
         }
+    }
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String StudentTooYoungValidation(String fullName, short ageLimit) {
+        return Student.class.getSimpleName() + " \"" + fullName + "\" cannot be younger than " + ageLimit + "!"
+                + System.lineSeparator() + HttpStatus.FORBIDDEN;
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String DOBIsInFutureValidation(String fullName, LocalDate dob) {
+        return "Date of Birth \"" + dob + "\" of " + Student.class.getSimpleName() + " \"" + fullName + "\", cannot be in the future."
+                + System.lineSeparator() + HttpStatus.FORBIDDEN;
     }
     //MISC CLASS METHODS
 }
