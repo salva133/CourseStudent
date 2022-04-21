@@ -3,12 +3,13 @@
 ## KW16
 
 ### Aufgaben bis Freitag:
-- newStudents() erstellen
 - Custom Exception
-    - Student zu jung (<12y)
-    - explizit ausgeben, welchen Student die Exception betrifft
-    - die anderen gültigen Studenten sollen trotzdem erstellt werden (kein Stop der Applikation)
-    - an den Client: "X Studenten wurden erstellt, jedoch war Student Y zu jung und wurde somit nicht erstellt"
+  - Student zu jung (<12y)
+  - explizit ausgeben, welchen Student die Exception betrifft
+  - die anderen gültigen Studenten sollen trotzdem erstellt werden (kein Stop der Applikation)
+  - an den Client: "X Studenten wurden erstellt, jedoch war Student Y zu jung und wurde somit nicht erstellt"
+- newStudents() erstellen
+
 
 
 "Chaining Exceptions" (auf jeden Fall versuchen anzuwenden)
