@@ -1,6 +1,8 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.learning.coursestudent.exception.AgeException;
+import com.learning.coursestudent.exception.DateIsNullException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.http.HttpStatus;
@@ -36,20 +38,33 @@ public class Student {
     //CONSTRUCTORS
     public Student() {
     }
-
+/*
     public Student(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.fullName = lastName + ", " + firstName;
     }
+ */
 
-    public Student(String firstName, String lastName, LocalDate dateOfBirth) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.fullName = lastName + ", " + firstName;
-        this.dateOfBirth = dateOfBirth;
-        Period period = Period.between(dateOfBirth, LocalDate.now());
+    public Student(StudentPojo studentPojo, short ageLimit) throws AgeException {
+        if (studentPojo.getDateOfBirth() == null) {
+            throw new DateIsNullException("Date of Birth is null");
+        }
+        LocalDate dob = LocalDate.parse(studentPojo.getDateOfBirth());
+        if (dob.isAfter(LocalDate.now())) {
+            throw new AgeException("Date of Birth is in the Future");
+        }
+        Period period = Period.between(dob, LocalDate.now());
         this.age = period.getYears();
+        if (this.age < ageLimit) {
+            throw new AgeException("Person is too young, Limit of Age is " + ageLimit);
+        }
+
+        this.firstName = studentPojo.getFirstName();
+        this.lastName = studentPojo.getLastName();
+        this.fullName = lastName + ", " + firstName;
+        this.dateOfBirth = dob;
+
     }
     //CONSTRUCTORS
 
@@ -113,7 +128,7 @@ public class Student {
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public String DOBIsInFutureValidation(String fullName, LocalDate dob) {
+    public String dobIsInFutureValidation(String fullName, LocalDate dob) {
         return "Date of Birth \"" + dob + "\" of " + Student.class.getSimpleName() + " \"" + fullName + "\", cannot be in the future.";
     }
     //MISC CLASS METHODS

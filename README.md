@@ -1,24 +1,11 @@
 # CourseStudent - Internes Übungsszenario
 
-## KW16
+## KW17
 
-### Aufgaben bis Freitag:
-
-- Custom Exception
-    - Student zu jung (<12y)
-    - explizit ausgeben, welchen Student die Exception betrifft
-    - die anderen gültigen Studenten sollen trotzdem erstellt werden (kein Stop der Applikation)
-    - an den Client: "X Studenten wurden erstellt, jedoch war Student Y zu jung und wurde somit nicht erstellt"
-- newStudents() erstellen
-
-"Chaining Exceptions" (auf jeden Fall versuchen anzuwenden)
-https://www.baeldung.com/java-chained-exceptions
-
-"Exceptions"
-https://www.baeldung.com/java-exceptions
-
-catches nach folgendem Konzept bauen:
-
-1. Logging
-2. Try to self treat
-3. Inform client
+1. newStudent() auf den neuen Stand bringen (Prüfungen finden jetzt im Objekt statt, an newStudentBatch() orientieren (im Prinzip abkupfern))
+2. Liste mit failed records erzeugen und distinkt an den Client zurückgeben (Bsp. "5 out of 6 students have been created but the creation of "NAME" failed with "ERROR")
+   1. Selektierbar (konfigurabel) machen, ob dem Client die Fehlermeldung ausgegeben wird
+   2. Debug Flag / Debug Mode einrichten
+3. ageLimit konfigurabel machen (entweder application.properties anpassen oder eine application.yaml anlegen und dies dann nutzen)
+4. newStudentBatchWithCourse() anlegen
+5. verlinkten Course im Student auf den courseName auflösen
