@@ -1,7 +1,13 @@
 package com.learning.coursestudent.controller;
 
-import com.google.gson.JsonArray;
-import com.learning.coursestudent.classes.*;
+import com.learning.coursestudent.classes.Course;
+import com.learning.coursestudent.classes.CoursePojo;
+import com.learning.coursestudent.classes.Student;
+import com.learning.coursestudent.classes.StudentPojo;
+import com.learning.coursestudent.exception.AgeException;
+import com.learning.coursestudent.exception.AgeNotValidException;
+import com.learning.coursestudent.exception.ApiRequestException;
+import com.learning.coursestudent.exception.DateIsNullException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -9,20 +15,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @RestController
 public class CourseStudentController {
-    short ageLimit = 12;
-
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
+    short ageLimit = 12;
+    String nl = System.lineSeparator();
 
     public CourseStudentController(CourseRepository courseRepository, StudentRepository studentRepository) {
         this.courseRepository = courseRepository;
@@ -42,79 +47,102 @@ public class CourseStudentController {
     //GETTER
 
     //POSTER
-    @PostMapping(value = "new-course")
-    public String newCourse(CoursePojo coursePojo) {
+    @PostMapping(value = "course")
+    public String newCourse(@RequestBody CoursePojo coursePojo) {
         Course course = new Course(coursePojo.getCourseName());
 
         try {
             courseRepository.save(course);
-            return "Course \"" + coursePojo.getCourseName() + "\" has been created" +
-                    System.lineSeparator() + "HTTP-Status: " + HttpStatus.CREATED;
+            return "Course \"" + course.getCourseName() + "\" has been created";
         } catch (DataIntegrityViolationException e) {
-            return "I am sorry, but the name of the course you provided is empty or invalid in some other way. Please re-check the data you tried to insert." +
-                    System.lineSeparator() + "Error message: " + e.getMessage() +
-                    System.lineSeparator() + "HTTP Status: " + HttpStatus.FORBIDDEN;
+            //Logging
+
+            //Try to self repair
+            throw new ApiRequestException("");
+
+            //inform client
+
         }
     }
 
-    @PostMapping(value = "new-student")
-    public String newStudent(StudentPojo studentPojo) {
-        LocalDate dateOfBirth;
-        Student student;
-        try {
-            dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
-        } catch (DateTimeException e) {
-            return "Verify your data because the Date of Birth you provided is not valid." +
-                    System.lineSeparator() + "Error message: " + e.getMessage();
-        } catch (NullPointerException e) {
-            return "Exception class: " + e.getClass().getSimpleName() +
-                    System.lineSeparator() + "Exception Message: " + e.getMessage();
+    /*
+        @PostMapping(value = "student")
+        public String newStudent(@RequestBody StudentPojo studentPojo) throws NotCreatedException {
+            LocalDate dateOfBirth = null;
+            Student student;
+            try {
+                dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
+                if (dateOfBirth == null) {
+                    throw new DateIsNullException("Date is null");
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Caught NPE");
+                System.out.println("Verify data because the Date of Birth is null.");
+            } catch (DateTimeParseException e) {
+                System.out.println("Caught DateTimeParseException");
+                System.out.println("The date could not be parsed");
+            } catch (DateIsNullException e) {
+                System.out.println("Caught DateIsNullException");
+                System.out.println("Date is null");
+            }
+            student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
+    //Validation-IFs
+            try {
+                if (student.getDateOfBirth().isAfter(LocalDate.now())) {
+                    throw new AgeException(student.dobIsInFutureValidation(student.getFullName(), student.getDateOfBirth()));
+                }
+                if (student.getAge() < ageLimit) {
+                    throw new AgeException(student.StudentTooYoungValidation(student.getFullName(), ageLimit));
+                }
+            } catch (AgeException e) {
+                System.out.println("Caught AgeException");
+                System.out.println("The Age is not valid");
+                throw new AgeNotValidException("The Age is not valid: " + e);
+            }
+    //Try-Catch
+            try {
+                if (student.getDateOfBirth().isBefore(LocalDate.now()) && student.getAge() > ageLimit) {
+                    studentRepository.save(student);
+                    return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created";
+                } else {
+                    System.out.println("Caught AgeException");
+                    throw new AgeException("Age is not valid!");
+                }
+            } catch (AgeException e) {
+                System.out.println("Caught AgeException");
+                System.out.println("Student did not get created");
+                throw new NotCreatedException("Student did not get created", e);
+            }
         }
-        student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
-//Exception-IFs
-        if (student.getDateOfBirth().isAfter(LocalDate.now())) {
-            return new CustomException().DOBIsInFutureException(student.getFullName(), student.getId(), student.getDateOfBirth());
-        }
-        if (student.getAge() < ageLimit) {
-            return new CustomException().StudentTooYoungException(student.getFullName(), student.getId(), ageLimit);
-        }
-//Try-Catch
-        try {
-            studentRepository.save(student);
-            return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth()
-                    + "\" and therefore " + student.getAge() + " years old - has been created" +
-                    System.lineSeparator() + "HTTP-Status: " + HttpStatus.CREATED;
-        } catch (DateTimeParseException e) {
-            throw new DateTimeParseException("Data parsed is invalid: " + e.getParsedString() +
-                    System.lineSeparator() + "Use the following date format: YYYY-MM-DD", studentPojo.getDateOfBirth(), 0);
-        } catch (Exception e) {
-            return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" could not be created." +
-                    System.lineSeparator() + "HTTP Status: " + HttpStatus.NOT_ACCEPTABLE;
-        }
-    }
-
-    @PostMapping(value = "new-student-with-course")
-    public String newStudentWithCourse(StudentPojo studentPojo, CoursePojo coursePojo) {
+     */
+ /*   @PostMapping(value = "student-with-course")
+    public String newStudentWithCourse(@RequestBody StudentPojo studentPojo, CoursePojo coursePojo) {
 //Student
         LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
         Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
-//Exception-IFs for Student
-        if (student.getDateOfBirth().isAfter(LocalDate.now())) {
-            return new CustomException().DOBIsInFutureException(student.getFullName(), student.getId(), student.getDateOfBirth());
-        }
-        if (student.getAge() < ageLimit) {
-            return new CustomException().StudentTooYoungException(student.getFullName(), student.getId(), ageLimit);
+        try {
+//Validation-IFs for Student
+            if (student.getDateOfBirth().isAfter(LocalDate.now())) {
+                throw new AgeException(student.dobIsInFutureValidation(student.getFullName(), student.getDateOfBirth()));
+            }
+            if (student.getAge() < ageLimit) {
+                throw new AgeException(student.StudentTooYoungValidation(student.getFullName(), ageLimit));
+            }
+        } catch (AgeException e) {
+            System.out.println("The Age is not valid!" + e);
         }
 //Course
         Course course = new Course(coursePojo.getCourseName());
 //Setting Course for Student
         try {
-            student.setCourse(course);
-        } catch (HttpClientErrorException.NotFound e) {
+            if (course.getCourseName() != null) {
+                student.setCourse(course);
+            } else {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException e) {
             student.setCourse(null);
-            return "Course could not be found and has been set to NULL. Anyway, the course itself has been created." +
-                    System.lineSeparator() + e.getLocalizedMessage() +
-                    System.lineSeparator() + HttpStatus.NOT_FOUND;
+            return "Course could not be found and has been emptied.";
         }
 
 //Try-Catch  
@@ -122,23 +150,65 @@ public class CourseStudentController {
             courseRepository.save(course);
             studentRepository.save(student);
             return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created with " + Course.class.getSimpleName() + " \"" + course.getCourseName() + "\"" +
-                    System.lineSeparator() + "HTTP-Status: " + HttpStatus.CREATED;
+                    nl + "HTTP-Status: " + HttpStatus.CREATED;
         } catch (DateTimeParseException e) {
             return "Parsed Date or Time is invalid: " + e.getParsedString() +
-                    System.lineSeparator() + "Please verify the format of date/time values in your file." +
-                    System.lineSeparator() + HttpStatus.NOT_ACCEPTABLE;
+                    nl + "Please verify the format of date/time values in your file." +
+                    nl + HttpStatus.NOT_ACCEPTABLE;
         } catch (InternalError e) {
             return "The creation of the Student/Course objects has failed. Please verify the given data." + HttpStatus.INTERNAL_SERVER_ERROR;
         } catch (Exception e) {
             return "Holy Shit! " +
-                    System.lineSeparator() + HttpStatus.I_AM_A_TEAPOT;
+                    nl + HttpStatus.I_AM_A_TEAPOT;
         }
     }
 
-    //Planned feature
-    @PostMapping(value = "new-student-batch")
-    public String newStudentBatch(JsonArray selections) {
-        return null;
+  */
+
+
+    @PostMapping(value = "student-batch")
+    public String newStudentBatch(@RequestBody List<StudentPojo> studentPojoList) {
+
+        for (int i = 0; i < studentPojoList.size(); i++) {
+            try {
+                StudentPojo studentPojo = studentPojoList.get(i);
+                Student student = new Student(studentPojo, ageLimit);
+                studentRepository.save(student);
+                System.out.println("##record created##");
+            } catch (NullPointerException e) {
+                System.out.println("Caught NPE");
+                System.out.println("Verify data because the Date of Birth is null.");
+            } catch (DateTimeParseException e) {
+                System.out.println("Caught DateTimeParseException");
+                System.out.println("The date could not be parsed");
+            } catch (DateIsNullException e) {
+                System.out.println("Caught DateIsNullException");
+                System.out.println("Date is null");
+            } catch (AgeException e) {
+                System.out.println("Caught AgeException");
+                System.out.println("The Age is not valid");
+                e.printStackTrace();
+            }
+/*
+            try {
+                if (student.getDateOfBirth().isBefore(LocalDate.now()) && student.getAge() > ageLimit) {
+                    studentRepository.save(student);
+                    return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created";
+                } else {
+                    System.out.println("Caught AgeException");
+                    throw new AgeException("Age is not valid!");
+                }
+            } catch (AgeException e) {
+                System.out.println("Caught AgeException");
+                System.out.println("Student did not get created");
+                throw new NotCreatedException("Student did not get created", e);
+            }
+        } catch() {
+
+        }
+    }*/
+
+        }
+        return "Endpoint check";
     }
-    //POSTER
 }
