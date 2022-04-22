@@ -5,7 +5,6 @@ import com.learning.coursestudent.classes.CoursePojo;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.exception.AgeException;
-import com.learning.coursestudent.exception.AgeNotValidException;
 import com.learning.coursestudent.exception.ApiRequestException;
 import com.learning.coursestudent.exception.DateIsNullException;
 import com.learning.coursestudent.repository.CourseRepository;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
