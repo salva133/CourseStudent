@@ -50,7 +50,6 @@ public class Student {
         this.dateOfBirth = dateOfBirth;
         Period period = Period.between(dateOfBirth, LocalDate.now());
         this.age = period.getYears();
-        AgeAbove100Check();
     }
     //CONSTRUCTORS
 
@@ -108,22 +107,14 @@ public class Student {
     }
     //GETTER AND SETTER
 
-    //MISC CLASS METHODS
-    public void AgeAbove100Check() {
-        if (age > 100) {
-            System.out.println("##### Age of \"" + fullName + "\" is above 100 years. Make sure that the date of birth given is correct. If this value is intended, you can ignore this message #####");
-        }
-    }
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public String StudentTooYoungValidation(String fullName, short ageLimit) {
-        return Student.class.getSimpleName() + " \"" + fullName + "\" cannot be younger than " + ageLimit + "!"
-                + System.lineSeparator() + HttpStatus.FORBIDDEN;
+        return Student.class.getSimpleName() + " \"" + fullName + "\" cannot be younger than " + ageLimit + "!";
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public String DOBIsInFutureValidation(String fullName, LocalDate dob) {
-        return "Date of Birth \"" + dob + "\" of " + Student.class.getSimpleName() + " \"" + fullName + "\", cannot be in the future."
-                + System.lineSeparator() + HttpStatus.FORBIDDEN;
+        return "Date of Birth \"" + dob + "\" of " + Student.class.getSimpleName() + " \"" + fullName + "\", cannot be in the future.";
     }
     //MISC CLASS METHODS
 }
