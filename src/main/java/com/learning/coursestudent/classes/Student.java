@@ -1,8 +1,7 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.learning.coursestudent.exception.AgeException;
-import com.learning.coursestudent.exception.DateIsNullException;
+import com.learning.coursestudent.exception.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.http.HttpStatus;
@@ -38,7 +37,8 @@ public class Student {
     //CONSTRUCTORS
     public Student() {
     }
-/*
+
+    /*
     public Student(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,16 +48,32 @@ public class Student {
 
     public Student(StudentPojo studentPojo, short ageLimit) throws AgeException {
         if (studentPojo.getDateOfBirth() == null) {
-            throw new DateIsNullException("Date of Birth is null");
+            System.out.println("## DATE IS NULL ##");
+            System.out.println("Date of birth is null");
+            throw new DateIsNullException("Date of birth is null");
         }
-        LocalDate dob = LocalDate.parse(studentPojo.getDateOfBirth());
+        String dobStr = studentPojo.getDateOfBirth();
+        if (dobStr.length() != 10) {
+            System.out.println("dobStr is not " + 10 + " characters long, I'll try to add \"19\" to it");
+            dobStr = "19" + dobStr;
+            if (dobStr.length() != 10) {
+                System.out.println("## DATE FORMAT INVALID ##");
+                System.out.println("dobStr is still not " + 10 + " characters long");
+                throw new DateFormatException("Date of birth requires format \"YYYY-MM-DD\"");
+            }
+        }
+        LocalDate dob = LocalDate.parse(dobStr);
         if (dob.isAfter(LocalDate.now())) {
-            throw new AgeException("Date of Birth is in the Future");
+            System.out.println("## DOB IN FUTURE ##");
+            System.out.println("dob is after today, and today is " + LocalDate.now());
+            throw new dobInFutureException("Date of birth is in the future");
         }
         Period period = Period.between(dob, LocalDate.now());
         this.age = period.getYears();
         if (this.age < ageLimit) {
-            throw new AgeException("Person is too young, Limit of Age is " + ageLimit);
+            System.out.println("## STUDENT IS TOO YOUNG ##");
+            System.out.println("Age " + this.age + " is lower than age limit " + ageLimit);
+            throw new TooYoungException("Person is too young, limit of Age is " + ageLimit);
         }
 
         this.firstName = studentPojo.getFirstName();
@@ -131,5 +147,4 @@ public class Student {
     public String dobIsInFutureValidation(String fullName, LocalDate dob) {
         return "Date of Birth \"" + dob + "\" of " + Student.class.getSimpleName() + " \"" + fullName + "\", cannot be in the future.";
     }
-    //MISC CLASS METHODS
 }

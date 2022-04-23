@@ -6,6 +6,7 @@ import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.exception.AgeException;
 import com.learning.coursestudent.exception.ApiRequestException;
+import com.learning.coursestudent.exception.DateFormatException;
 import com.learning.coursestudent.exception.DateIsNullException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
@@ -63,7 +64,7 @@ public class CourseStudentController {
         }
     }
 
-    /*
+/*
         @PostMapping(value = "student")
         public String newStudent(@RequestBody StudentPojo studentPojo) throws NotCreatedException {
             LocalDate dateOfBirth = null;
@@ -113,7 +114,7 @@ public class CourseStudentController {
             }
         }
      */
- /*   @PostMapping(value = "student-with-course")
+/*   @PostMapping(value = "student-with-course")
     public String newStudentWithCourse(@RequestBody StudentPojo studentPojo, CoursePojo coursePojo) {
 //Student
         LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
@@ -174,18 +175,15 @@ public class CourseStudentController {
                 studentRepository.save(student);
                 System.out.println("##record created##");
             } catch (NullPointerException e) {
-                System.out.println("Caught NPE");
-                System.out.println("Verify data because the Date of Birth is null.");
+                System.out.println("Data is null");
             } catch (DateTimeParseException e) {
-                System.out.println("Caught DateTimeParseException");
                 System.out.println("The date could not be parsed");
             } catch (DateIsNullException e) {
-                System.out.println("Caught DateIsNullException");
                 System.out.println("Date is null");
             } catch (AgeException e) {
-                System.out.println("Caught AgeException");
                 System.out.println("The Age is not valid");
-                e.printStackTrace();
+            } catch (DateFormatException e) {
+                System.out.println("Date Format is not valid");
             }
 /*
             try {
