@@ -1,6 +1,8 @@
 package com.learning.coursestudent.exception;
 
-public class DateFormatException extends RuntimeException {
+import java.time.DateTimeException;
+
+public class DateFormatException extends DateTimeException {
     public DateFormatException(String message) {
         super(message);
     }
