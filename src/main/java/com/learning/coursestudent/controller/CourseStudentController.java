@@ -64,56 +64,28 @@ public class CourseStudentController {
         }
     }
 
-/*
-        @PostMapping(value = "student")
-        public String newStudent(@RequestBody StudentPojo studentPojo) throws NotCreatedException {
-            LocalDate dateOfBirth = null;
-            Student student;
-            try {
-                dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
-                if (dateOfBirth == null) {
-                    throw new DateIsNullException("Date is null");
-                }
-            } catch (NullPointerException e) {
-                System.out.println("Caught NPE");
-                System.out.println("Verify data because the Date of Birth is null.");
-            } catch (DateTimeParseException e) {
-                System.out.println("Caught DateTimeParseException");
-                System.out.println("The date could not be parsed");
-            } catch (DateIsNullException e) {
-                System.out.println("Caught DateIsNullException");
-                System.out.println("Date is null");
-            }
-            student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
-    //Validation-IFs
-            try {
-                if (student.getDateOfBirth().isAfter(LocalDate.now())) {
-                    throw new AgeException(student.dobIsInFutureValidation(student.getFullName(), student.getDateOfBirth()));
-                }
-                if (student.getAge() < ageLimit) {
-                    throw new AgeException(student.StudentTooYoungValidation(student.getFullName(), ageLimit));
-                }
-            } catch (AgeException e) {
-                System.out.println("Caught AgeException");
-                System.out.println("The Age is not valid");
-                throw new AgeNotValidException("The Age is not valid: " + e);
-            }
-    //Try-Catch
-            try {
-                if (student.getDateOfBirth().isBefore(LocalDate.now()) && student.getAge() > ageLimit) {
-                    studentRepository.save(student);
-                    return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created";
-                } else {
-                    System.out.println("Caught AgeException");
-                    throw new AgeException("Age is not valid!");
-                }
-            } catch (AgeException e) {
-                System.out.println("Caught AgeException");
-                System.out.println("Student did not get created");
-                throw new NotCreatedException("Student did not get created", e);
-            }
+
+    @PostMapping(value = "student")
+    public String newStudent(@RequestBody StudentPojo studentPojo) {
+
+        try {
+            Student student = new Student(studentPojo, ageLimit);
+            studentRepository.save(student);
+            System.out.println("##record created##");
+        } catch (NullPointerException e) {
+            System.out.println("Data is null");
+        } catch (DateTimeParseException e) {
+            System.out.println("The date could not be parsed");
+        } catch (DateIsNullException e) {
+            System.out.println("Date is null");
+        } catch (AgeException e) {
+            System.out.println("The Age is not valid");
+        } catch (DateFormatException e) {
+            System.out.println("Date Format is not valid");
         }
-     */
+        return "newStudent check";
+    }
+
 /*   @PostMapping(value = "student-with-course")
     public String newStudentWithCourse(@RequestBody StudentPojo studentPojo, CoursePojo coursePojo) {
 //Student
@@ -168,10 +140,11 @@ public class CourseStudentController {
     @PostMapping(value = "student-batch")
     public String newStudentBatch(@RequestBody List<StudentPojo> studentPojoList) {
 
-        for (int i = 0; i < studentPojoList.size(); i++) {
+        //for (int i = 0; i < studentPojoList.size(); i++) { // old FOR-Head
+
+        for (StudentPojo pojo : studentPojoList) {
             try {
-                StudentPojo studentPojo = studentPojoList.get(i);
-                Student student = new Student(studentPojo, ageLimit);
+                Student student = new Student(pojo, ageLimit);
                 studentRepository.save(student);
                 System.out.println("##record created##");
             } catch (NullPointerException e) {
@@ -185,7 +158,7 @@ public class CourseStudentController {
             } catch (DateFormatException e) {
                 System.out.println("Date Format is not valid");
             }
-/*
+    /*
             try {
                 if (student.getDateOfBirth().isBefore(LocalDate.now()) && student.getAge() > ageLimit) {
                     studentRepository.save(student);
@@ -202,9 +175,10 @@ public class CourseStudentController {
         } catch() {
 
         }
-    }*/
+    }
+    */
 
         }
-        return "Endpoint check";
+        return "newStudentBatch check";
     }
 }
