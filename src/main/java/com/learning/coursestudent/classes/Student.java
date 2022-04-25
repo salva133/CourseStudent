@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.learning.coursestudent.exception.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -38,15 +36,7 @@ public class Student {
     public Student() {
     }
 
-    /*
-    public Student(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.fullName = lastName + ", " + firstName;
-    }
- */
-
-    public Student(StudentPojo studentPojo, short ageLimit) throws AgeException {
+    public Student(StudentPojo studentPojo, short ageLimit) {
         if (studentPojo.getDateOfBirth() == null) {
             System.out.println("## DATE IS NULL ##");
             System.out.println("Date of birth is null");
@@ -137,14 +127,4 @@ public class Student {
         return updateTime;
     }
     //GETTER AND SETTER
-
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public String StudentTooYoungValidation(String fullName, short ageLimit) {
-        return Student.class.getSimpleName() + " \"" + fullName + "\" cannot be younger than " + ageLimit + "!";
-    }
-
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public String dobIsInFutureValidation(String fullName, LocalDate dob) {
-        return "Date of Birth \"" + dob + "\" of " + Student.class.getSimpleName() + " \"" + fullName + "\", cannot be in the future.";
-    }
 }
