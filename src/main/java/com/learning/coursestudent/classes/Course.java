@@ -22,9 +22,9 @@ public class Course {
     @JsonManagedReference
     private List<Student> student;
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private LocalDateTime zCreationTime;
     @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private LocalDateTime zUpdateTime;
     //FIELDS
 
     //CONSTRUCTORS
@@ -62,11 +62,11 @@ public class Course {
     }
 
     public LocalDateTime getCreationTime() {
-        return creationTime;
+        return zCreationTime;
     }
 
     public LocalDateTime getUpdateTime() {
-        return updateTime;
+        return zUpdateTime;
     }
     //GETTER AND SETTER
 

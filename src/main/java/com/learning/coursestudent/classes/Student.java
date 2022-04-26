@@ -27,9 +27,9 @@ public class Student {
     private LocalDate dateOfBirth;
     private int age;
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private LocalDateTime zCreationTime;
     @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private LocalDateTime zUpdateTime;
     @ManyToOne
     @JsonBackReference
     private Course course;
@@ -123,11 +123,11 @@ public class Student {
     }
 
     public LocalDateTime getCreationTime() {
-        return creationTime;
+        return zCreationTime;
     }
 
     public LocalDateTime getUpdateTime() {
-        return updateTime;
+        return zUpdateTime;
     }
     //GETTER AND SETTER
 }
