@@ -26,6 +26,8 @@ public class CourseStudentController {
     private final StudentRepository studentRepository;
     @Value("${ageLimit}")
     short ageLimit;
+    @Value("${myDebug:false}")
+    boolean myDebug;
 
     public CourseStudentController(CourseRepository courseRepository, StudentRepository studentRepository) {
         this.courseRepository = courseRepository;
