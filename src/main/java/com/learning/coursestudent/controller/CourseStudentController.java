@@ -76,6 +76,23 @@ public class CourseStudentController {
         return "newCourse check";
     }
 
+    @PostMapping(value = "course-batch")
+    public String newCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
+        for (CoursePojo pojo : coursePojoList) {
+            try {
+                Course course = new Course(pojo);
+                courseRepository.save(course);
+                System.out.println("## Course \"" + course.getCourseName() + "\" has been created ##");
+            } catch (NameExpectedException e) {
+                System.out.println("A name was expected");
+            } catch (DataIntegrityViolationException e) {
+                System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
+                throw new ApiRequestException("");
+            }
+        }
+        return "newCourse check";
+    }
+
     @PostMapping(value = "student")
     public String newStudent(@RequestBody StudentPojo studentPojo) {
 
@@ -103,9 +120,14 @@ public class CourseStudentController {
 
         for (StudentPojo pojo : studentPojoList) {
             try {
-                Student student = new Student(pojo, ageLimit, null);
+                Course course = courseRepository.findByCourseName(pojo.getCourseName());
+                Student student = new Student(pojo, ageLimit, course);
                 studentRepository.save(student);
-                System.out.println("##record created##");
+                if (course != null) {
+                    System.out.println("## Student \"" + student.getFullName() + "\" has been created and assigned to course \"" + course.getCourseName() + "\" ##");
+                } else {
+                    System.out.println("## Student \"" + student.getFullName() + "\" has been created ##");
+                }
             } catch (NullPointerException e) {
                 System.out.println("Data is null");
             } catch (DateTimeParseException e) {
