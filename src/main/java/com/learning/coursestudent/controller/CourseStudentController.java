@@ -47,6 +47,20 @@ public class CourseStudentController {
     //GETTER
 
     //POSTER
+    @PostMapping(value = "set-course")
+    public String setCourseForStudent(StudentPojo studentPojo) {
+
+        try {
+            Student student = new Student(studentPojo, ageLimit);
+            student.setCourse(courseRepository.findByCourseName(studentPojo.getCourseName()));
+            studentRepository.save(student);
+        } catch (NameExpectedException e) {
+            System.out.println("A Name for the course was expected");
+        }
+        return "setCourseForStudent check";
+    }
+
+
     @PostMapping(value = "course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
         try {
@@ -126,7 +140,11 @@ public class CourseStudentController {
     public String newStudentWithCourse(@RequestBody StudentPojo studentPojo, @RequestBody CoursePojo coursePojo) {
 
         try {
-            Student student = new Student(studentPojo, ageLimit);
+            Course course = newCourseObj(coursePojo);
+            Student student = newStudentObj(studentPojo);
+            student.setCourse(course);
+
+/*            Student student = new Student(studentPojo, ageLimit);
             studentRepository.save(student);
             System.out.println("## student saved ##");
 
@@ -135,7 +153,7 @@ public class CourseStudentController {
             System.out.println("## course saved ##");
 
             student.setCourse(course);
-            System.out.println("## course set ##");
+            System.out.println("## course set ##");*/
         } catch (NullPointerException e) {
             System.out.println("Data of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
         } catch (DateTimeParseException e) {

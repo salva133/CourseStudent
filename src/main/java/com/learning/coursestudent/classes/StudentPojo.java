@@ -4,6 +4,7 @@ public class StudentPojo {
     String firstName;
     String lastName;
     String dateOfBirth;
+    String courseName;
 
     public StudentPojo() {
 
@@ -31,5 +32,13 @@ public class StudentPojo {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }
