@@ -1,7 +1,7 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.gson.Gson;
+import com.learning.coursestudent.exception.NameExpectedException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -32,13 +32,13 @@ public class Course {
     public Course() {
     }
 
-    public Course(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public Course(String courseName, List<Student> student) {
-        this.courseName = courseName;
-        this.student = student;
+    public Course(CoursePojo coursePojo) {
+        if (coursePojo.getCourseName() == null || coursePojo.getCourseName().equals("")) {
+            System.out.println("## NAME IS NULL ##");
+            System.out.println("Name is empty");
+            throw new NameExpectedException("Name is null");
+        }
+        this.courseName = coursePojo.getCourseName();
     }
     //CONSTRUCTORS
 
@@ -76,10 +76,4 @@ public class Course {
     }
     //GETTER AND SETTER
 
-    //MISC CLASS METHODS
-    public String toJson(Course course) {
-        Gson gson = new Gson();
-        return gson.toJson(course);
-    }
-    //MISC CLASS METHODS
 }
