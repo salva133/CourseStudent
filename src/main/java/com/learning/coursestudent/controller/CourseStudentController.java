@@ -4,10 +4,7 @@ import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.CoursePojo;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
-import com.learning.coursestudent.exception.AgeException;
-import com.learning.coursestudent.exception.ApiRequestException;
-import com.learning.coursestudent.exception.DateFormatException;
-import com.learning.coursestudent.exception.DateIsNullException;
+import com.learning.coursestudent.exception.*;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,20 +46,17 @@ public class CourseStudentController {
     //POSTER
     @PostMapping(value = "course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
-        Course course = new Course(coursePojo.getCourseName());
-
         try {
+            Course course = new Course(coursePojo);
             courseRepository.save(course);
-            return "Course \"" + course.getCourseName() + "\" has been created";
+            System.out.println("Course \"" + course.getCourseName() + "\" has been created");
+        } catch (NameExpectedException e) {
+            System.out.println("A name was expected");
         } catch (DataIntegrityViolationException e) {
-            //Logging
-
-            //Try to self repair
+            System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
             throw new ApiRequestException("");
-
-            //inform client
-
         }
+        return "newCourse check";
     }
 
 
