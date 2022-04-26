@@ -2,8 +2,10 @@
 
 ## KW17 ToDo
 
-1. newStudentBatchWithCourse() anlegen
-2. Liste mit failed records erzeugen und distinkt an den Client zurückgeben (Bsp. "5 out of 6 students have been created but the creation of "NAME" failed with "ERROR")
+1. newStudentBatchWithCourse() anlegen - noch in Arbeit, Issue ist
+   offen: https://github.com/salva133/CourseStudent/issues/14
+2. Liste mit failed records erzeugen und distinkt an den Client zurückgeben (Bsp. "5 out of 6 students have been created
+   but the creation of "NAME" failed with "ERROR")
    1. Selektierbar (konfigurierbar) machen, ob dem Client die Fehlermeldung ausgegeben wird
    2. Debug Flag / Debug Mode einrichten
 3. verlinkten Course im Student auf den courseName auflösen
