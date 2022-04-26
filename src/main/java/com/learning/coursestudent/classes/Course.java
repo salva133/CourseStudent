@@ -34,9 +34,8 @@ public class Course {
 
     public Course(CoursePojo coursePojo) {
         if (coursePojo.getCourseName() == null || coursePojo.getCourseName().equals("")) {
-            System.out.println("## NAME IS NULL ##");
-            System.out.println("Name is empty");
-            throw new NameExpectedException("Name is null");
+            System.out.println("## NAME IS EMPTY OR NULL ##");
+            throw new NameExpectedException("A Name was expected");
         }
         this.courseName = coursePojo.getCourseName();
     }
