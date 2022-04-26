@@ -1,7 +1,6 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.learning.coursestudent.exception.NameExpectedException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -33,10 +32,6 @@ public class Course {
     }
 
     public Course(CoursePojo coursePojo) {
-        if (coursePojo.getCourseName() == null || coursePojo.getCourseName().equals("")) {
-            System.out.println("## NAME IS EMPTY OR NULL ##");
-            throw new NameExpectedException("A Name was expected");
-        }
         this.courseName = coursePojo.getCourseName();
     }
     //CONSTRUCTORS
