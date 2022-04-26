@@ -36,7 +36,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(StudentPojo studentPojo, short ageLimit) {
+    public Student(StudentPojo studentPojo, short ageLimit, Course course) {
         if (studentPojo.getDateOfBirth() == null) {
             System.out.println("## DATE IS NULL ##");
             System.out.println("Date of birth is null");
@@ -70,7 +70,7 @@ public class Student {
         this.lastName = studentPojo.getLastName();
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dob;
-
+        this.course = course;
     }
     //CONSTRUCTORS
 
