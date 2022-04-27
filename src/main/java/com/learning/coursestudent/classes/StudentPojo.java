@@ -1,6 +1,7 @@
 package com.learning.coursestudent.classes;
 
 public class StudentPojo {
+    long id;
     String firstName;
     String lastName;
     String dateOfBirth;
@@ -8,6 +9,14 @@ public class StudentPojo {
 
     public StudentPojo() {
 
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {

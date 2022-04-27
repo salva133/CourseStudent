@@ -48,18 +48,16 @@ public class CourseStudentController {
     //POSTER
 
     // Benötigt Überarbeitung
-    /*@PostMapping(value = "set-course")
-    public String setCourseForStudent(StudentPojo studentPojo) {
+    @PostMapping(value = "set-course")
+    public String setCourseForStudent(@RequestBody StudentPojo studentPojo) {
 
         try {
-            Student student = new Student(studentPojo, ageLimit,null);
-            student.setCourse(courseRepository.findByCourseName(studentPojo.getCourseName()));
-            studentRepository.save(student);
+            studentRepository.getById(studentPojo.getId()).setCourse(courseRepository.findByCourseName(studentPojo.getCourseName()));
         } catch (NameExpectedException e) {
             System.out.println("A Name for the course was expected");
         }
         return "setCourseForStudent check";
-    }*/
+    }
 
     @PostMapping(value = "course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
@@ -87,10 +85,10 @@ public class CourseStudentController {
                 System.out.println("A name was expected");
             } catch (DataIntegrityViolationException e) {
                 System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
-                throw new ApiRequestException("");
+                throw new ApiRequestException("Request has failed");
             }
         }
-        return "newCourse check";
+        return "Process of creating new courses has been completed";
     }
 
     @PostMapping(value = "student")
@@ -125,6 +123,7 @@ public class CourseStudentController {
                 studentRepository.save(student);
                 if (course != null) {
                     System.out.println("## Student \"" + student.getFullName() + "\" has been created and assigned to course \"" + course.getCourseName() + "\" ##");
+                    System.out.println("Record " + pojo + " has been processed");
                 } else {
                     System.out.println("## Student \"" + student.getFullName() + "\" has been created ##");
                 }
@@ -140,6 +139,6 @@ public class CourseStudentController {
                 System.out.println("Date Format is not valid");
             }
         }
-        return "newStudentBatch check";
+        return "Process of creating new students has been completed";
     }
 }
