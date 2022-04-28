@@ -75,7 +75,7 @@ public class Student {
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dob;
         this.course = course;
-        this.courseName = course.getCourseName();
+        this.courseName = course.getName();
     }
     //CONSTRUCTORS
 
