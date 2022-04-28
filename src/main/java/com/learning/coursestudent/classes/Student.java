@@ -2,7 +2,6 @@ package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.learning.coursestudent.exception.DateFormatException;
-import com.learning.coursestudent.exception.DateIsNullException;
 import com.learning.coursestudent.exception.TooYoungException;
 import com.learning.coursestudent.exception.dobInFutureException;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,9 +20,7 @@ public class Student {
     @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
     @Column(updatable = false, nullable = false)
     private long id;
-    @Column(nullable = false)
     private String firstName;
-    @Column(nullable = false)
     private String lastName;
     private String fullName;
     private LocalDate dateOfBirth;
@@ -45,7 +42,7 @@ public class Student {
         if (studentPojo.getDateOfBirth() == null) {
             System.out.println("## DATE IS NULL ##");
             System.out.println("Date of birth is null");
-            throw new DateIsNullException("Date of birth is null");
+            throw new NullPointerException("Date of birth is null");
         }
         String dobStr = studentPojo.getDateOfBirth();
         if (dobStr.length() != 10) {
