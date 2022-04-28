@@ -17,7 +17,7 @@ public class Course {
     @Column(updatable = false, nullable = false)
     private long id;
     @Column(nullable = false)
-    private String courseName;
+    private String name;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Student> student;
@@ -32,7 +32,7 @@ public class Course {
     }
 
     public Course(CoursePojo coursePojo) {
-        this.courseName = coursePojo.getCourseName();
+        this.name = coursePojo.getCourseName();
     }
     //CONSTRUCTORS
 
@@ -45,12 +45,12 @@ public class Course {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Student> getStudent() {
