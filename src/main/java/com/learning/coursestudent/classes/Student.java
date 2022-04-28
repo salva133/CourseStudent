@@ -26,13 +26,14 @@ public class Student {
     private String fullName;
     private LocalDate dateOfBirth;
     private int age;
+    @ManyToOne
+    @JsonBackReference
+    private Course course;
+    private String courseName;
     @CreationTimestamp
     private LocalDateTime zCreationTime;
     @UpdateTimestamp
     private LocalDateTime zUpdateTime;
-    @ManyToOne
-    @JsonBackReference
-    private Course course;
     //FIELDS
 
     //CONSTRUCTORS
@@ -74,6 +75,7 @@ public class Student {
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dob;
         this.course = course;
+        this.courseName = course.getCourseName();
     }
     //CONSTRUCTORS
 
@@ -120,6 +122,10 @@ public class Student {
 
     public int getAge() {
         return age;
+    }
+
+    public String getCourseName() {
+        return courseName;
     }
 
     public LocalDateTime getCreationTime() {
