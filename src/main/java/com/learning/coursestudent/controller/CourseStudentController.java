@@ -7,6 +7,7 @@ import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.exception.*;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -47,12 +48,12 @@ public class CourseStudentController {
 
     //POSTER
 
-    // Benötigt Überarbeitung
+    // Benötigt Test
     @PostMapping(value = "set-course")
     public String setCourseForStudent(@RequestBody StudentPojo studentPojo) {
 
         try {
-            studentRepository.getById(studentPojo.getId()).setCourse(courseRepository.findByCourseName(studentPojo.getCourseName()));
+            studentRepository.getById(studentPojo.getId()).setCourse(courseRepository.findByName(studentPojo.getCourseName()));
         } catch (NameExpectedException e) {
             System.out.println("A Name for the course was expected");
         }
@@ -64,7 +65,7 @@ public class CourseStudentController {
         try {
             Course course = new Course(coursePojo);
             courseRepository.save(course);
-            System.out.println("## Course \"" + course.getCourseName() + "\" has been created ##");
+            System.out.println("## Course \"" + course.getName() + "\" has been created ##");
         } catch (NameExpectedException e) {
             System.out.println("A name was expected");
         } catch (DataIntegrityViolationException e) {
@@ -80,7 +81,7 @@ public class CourseStudentController {
             try {
                 Course course = new Course(pojo);
                 courseRepository.save(course);
-                System.out.println("## Course \"" + course.getCourseName() + "\" has been created ##");
+                System.out.println("## Course \"" + course.getName() + "\" has been created ##");
             } catch (NameExpectedException e) {
                 System.out.println("A name was expected");
             } catch (DataIntegrityViolationException e) {
@@ -95,7 +96,7 @@ public class CourseStudentController {
     public String newStudent(@RequestBody StudentPojo studentPojo) {
 
         try {
-            Course course = courseRepository.findByCourseName(studentPojo.getCourseName());
+            Course course = courseRepository.findByName(studentPojo.getCourseName());
             Student student = new Student(studentPojo, ageLimit, course);
             studentRepository.save(student);
             System.out.println("## Student \"" + student.getFullName() + "\" created ##");
@@ -115,30 +116,55 @@ public class CourseStudentController {
 
     @PostMapping(value = "student-batch")
     public String newStudentBatch(@RequestBody List<StudentPojo> studentPojoList) {
-
+        int failedRecordCount = studentPojoList.size();
         for (StudentPojo pojo : studentPojoList) {
             try {
-                Course course = courseRepository.findByCourseName(pojo.getCourseName());
+                Course course = courseRepository.findByName(pojo.getCourseName());
                 Student student = new Student(pojo, ageLimit, course);
                 studentRepository.save(student);
+                --failedRecordCount;
                 if (course != null) {
-                    System.out.println("## Student \"" + student.getFullName() + "\" has been created and assigned to course \"" + course.getCourseName() + "\" ##");
-                    System.out.println("Record " + pojo + " has been processed");
+                    System.out.println("## Student \"" + student.getFullName() + "\" has been created and assigned to course \"" + course.getName() + "\" ##");
                 } else {
                     System.out.println("## Student \"" + student.getFullName() + "\" has been created ##");
                 }
-            } catch (NullPointerException e) {
-                System.out.println("Data is null");
+            } catch (AgeException e) {
+                System.out.println("The Age is not valid");
+            } catch (DataIntegrityViolationException e) {
+                System.out.println("The integrity of the data has been violated");
+            } catch (PropertyValueException e) {
+                System.out.println("Value property is invalid");
             } catch (DateTimeParseException e) {
                 System.out.println("The date could not be parsed");
             } catch (DateIsNullException e) {
                 System.out.println("Date is null");
-            } catch (AgeException e) {
-                System.out.println("The Age is not valid");
             } catch (DateFormatException e) {
                 System.out.println("Date Format is not valid");
+            } catch (NullPointerException e) {
+                System.out.println("Data is null");
             }
         }
-        return "Process of creating new students has been completed";
+
+        try {
+            if (failedRecordCount < 0) {
+                failedRecordCount = 0;
+                System.out.println("failedRecordCount was negative and has been set to 0 as fallback");
+            }
+            if (failedRecordCount > 0) {
+                return "Process of creating new students has been completed" +
+                        System.lineSeparator() + "There were " + failedRecordCount + " records which could not be created";
+            }
+            if (failedRecordCount == 1) {
+                return "Process of creating new students has been completed" +
+                        System.lineSeparator() + "There was one record which could not be created";
+            }
+            if (failedRecordCount == 0) {
+                return "Process of creating new students has been completed";
+            }
+            throw new IllegalStateException("Unexpected value: " + failedRecordCount);
+        } catch (IllegalStateException e) {
+            System.out.println("failedRecordCount has an illegal state");
+            return null;
+        }
     }
 }

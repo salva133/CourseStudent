@@ -21,7 +21,9 @@ public class Student {
     @SequenceGenerator(name = "student_generator", sequenceName = "student_seq")
     @Column(updatable = false, nullable = false)
     private long id;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
     private String fullName;
     private LocalDate dateOfBirth;
@@ -47,7 +49,8 @@ public class Student {
         }
         String dobStr = studentPojo.getDateOfBirth();
         if (dobStr.length() != 10) {
-            System.out.println("dobStr is not " + 10 + " characters long, I'll try to add \"19\" to it");
+            System.out.println("dobStr is not " + 10 + " characters long" +
+                    System.lineSeparator() + "SELF TREATMENT: trying to add \"19\" to it");
             dobStr = "19" + dobStr;
             if (dobStr.length() != 10) {
                 System.out.println("## DATE FORMAT INVALID ##");
