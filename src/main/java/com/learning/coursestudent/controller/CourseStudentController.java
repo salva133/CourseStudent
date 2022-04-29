@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class CourseStudentController {
@@ -116,9 +117,9 @@ public class CourseStudentController {
     }
 
     @PostMapping(value = "student-batch")
-    public String newStudentBatch(@RequestBody HashSet<StudentPojo> studentPojoList) {
+    public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
         int creationFailedRecordCount = studentPojoList.size();
-        HashSet<StudentPojo> creationFailedRecordList = new HashSet<>(studentPojoList);
+        Set<StudentPojo> creationFailedRecordList = new HashSet<>(studentPojoList);
         for (StudentPojo pojo : studentPojoList) {
             try {
                 Course course = courseRepository.findByName(pojo.getCourseName());
@@ -130,7 +131,7 @@ public class CourseStudentController {
                     System.out.println("## Student \"" + student.getFullName() + "\" has been created ##");
                 }
                 creationFailedRecordList.remove(pojo);
-                --creationFailedRecordCount;
+                creationFailedRecordCount--;
             } catch (AgeException e) {
                 System.out.println("The Age is not valid");
             } catch (DataIntegrityViolationException e) {
