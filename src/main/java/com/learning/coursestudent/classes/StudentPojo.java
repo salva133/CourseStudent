@@ -1,5 +1,7 @@
 package com.learning.coursestudent.classes;
 
+import java.util.Objects;
+
 public class StudentPojo {
     long id;
     String firstName;
@@ -49,5 +51,18 @@ public class StudentPojo {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentPojo that = (StudentPojo) o;
+        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(courseName, that.courseName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, dateOfBirth, courseName);
     }
 }
