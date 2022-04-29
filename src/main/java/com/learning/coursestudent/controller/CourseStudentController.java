@@ -51,7 +51,6 @@ public class CourseStudentController {
     //GETTER
 
     //POSTER
-
     // Benötigt Test
     @PostMapping(value = "set-course")
     public String setCourseForStudent(@RequestBody StudentPojo studentPojo) {
@@ -117,24 +116,20 @@ public class CourseStudentController {
     }
 
     @PostMapping(value = "student-batch")
-    public String newStudentBatch(@RequestBody List<StudentPojo> studentPojoList) {
+    public String newStudentBatch(@RequestBody HashSet<StudentPojo> studentPojoList) {
         int creationFailedRecordCount = studentPojoList.size();
-        HashSet creationFailedRecordList = new HashSet();
+        HashSet<StudentPojo> creationFailedRecordList = new HashSet<>(studentPojoList);
         for (StudentPojo pojo : studentPojoList) {
             try {
                 Course course = courseRepository.findByName(pojo.getCourseName());
                 Student student = new Student(pojo, ageLimit, course);
-                creationFailedRecordList.add(student);
-                /*if (myDebug) {
-                    System.out.println("creationFailedRecordList");
-                }*/
                 studentRepository.save(student);
-
                 if (course != null) {
                     System.out.println("## Student \"" + student.getFullName() + "\" has been created and assigned to course \"" + course.getName() + "\" ##");
                 } else {
                     System.out.println("## Student \"" + student.getFullName() + "\" has been created ##");
                 }
+                creationFailedRecordList.remove(pojo);
                 --creationFailedRecordCount;
             } catch (AgeException e) {
                 System.out.println("The Age is not valid");
