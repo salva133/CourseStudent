@@ -1,8 +1,6 @@
 package com.learning.coursestudent.exception;
 
-public class NotCreatedException extends Exception {
-    public NotCreatedException() {
-    }
+public class NotCreatedException extends ApiRequestException {
 
     public NotCreatedException(String message) {
         super(message);

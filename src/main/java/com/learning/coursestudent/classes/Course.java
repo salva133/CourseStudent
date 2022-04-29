@@ -1,7 +1,6 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.google.gson.Gson;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,27 +17,22 @@ public class Course {
     @Column(updatable = false, nullable = false)
     private long id;
     @Column(nullable = false)
-    private String courseName;
+    private String name;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Student> student;
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private LocalDateTime zCreationTime;
     @UpdateTimestamp
-    private LocalDateTime updateTime;
+    private LocalDateTime zUpdateTime;
     //FIELDS
 
     //CONSTRUCTORS
     public Course() {
     }
 
-    public Course(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public Course(String courseName, List<Student> student) {
-        this.courseName = courseName;
-        this.student = student;
+    public Course(CoursePojo coursePojo) {
+        this.name = coursePojo.getCourseName();
     }
     //CONSTRUCTORS
 
@@ -51,12 +45,12 @@ public class Course {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Student> getStudent() {
@@ -68,18 +62,12 @@ public class Course {
     }
 
     public LocalDateTime getCreationTime() {
-        return creationTime;
+        return zCreationTime;
     }
 
     public LocalDateTime getUpdateTime() {
-        return updateTime;
+        return zUpdateTime;
     }
     //GETTER AND SETTER
 
-    //MISC CLASS METHODS
-    public String toJson(Course course) {
-        Gson gson = new Gson();
-        return gson.toJson(course);
-    }
-    //MISC CLASS METHODS
 }

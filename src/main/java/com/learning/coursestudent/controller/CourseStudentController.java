@@ -5,11 +5,13 @@ import com.learning.coursestudent.classes.CoursePojo;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.exception.AgeException;
-import com.learning.coursestudent.exception.AgeNotValidException;
 import com.learning.coursestudent.exception.ApiRequestException;
-import com.learning.coursestudent.exception.DateIsNullException;
+import com.learning.coursestudent.exception.DateFormatException;
+import com.learning.coursestudent.exception.NameExpectedException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import org.hibernate.PropertyValueException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +20,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class CourseStudentController {
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
-    short ageLimit = 12;
-    String nl = System.lineSeparator();
+    @Value("${ageLimit}")
+    short ageLimit;
+    @Value("${myDebug:false}")
+    boolean myDebug;
 
     public CourseStudentController(CourseRepository courseRepository, StudentRepository studentRepository) {
         this.courseRepository = courseRepository;
@@ -47,168 +52,137 @@ public class CourseStudentController {
     //GETTER
 
     //POSTER
+    // Benötigt Test
+    @PostMapping(value = "set-course")
+    public String setCourseForStudent(@RequestBody StudentPojo studentPojo) {
+
+        try {
+            studentRepository.getById(studentPojo.getId()).setCourse(courseRepository.findByName(studentPojo.getCourseName()));
+        } catch (NameExpectedException e) {
+            System.out.println("A Name for the course was expected");
+        }
+        return "setCourseForStudent check";
+    }
+
     @PostMapping(value = "course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
-        Course course = new Course(coursePojo.getCourseName());
-
         try {
+            Course course = new Course(coursePojo);
             courseRepository.save(course);
-            return "Course \"" + course.getCourseName() + "\" has been created";
+            System.out.println("## Course \"" + course.getName() + "\" has been created ##");
+        } catch (NameExpectedException e) {
+            System.out.println("A name was expected");
         } catch (DataIntegrityViolationException e) {
-            //Logging
-
-            //Try to self repair
+            System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
             throw new ApiRequestException("");
-
-            //inform client
-
         }
+        return "newCourse check";
     }
 
-    /*
-        @PostMapping(value = "student")
-        public String newStudent(@RequestBody StudentPojo studentPojo) throws NotCreatedException {
-            LocalDate dateOfBirth = null;
-            Student student;
+    @PostMapping(value = "course-batch")
+    public String newCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
+        for (CoursePojo pojo : coursePojoList) {
             try {
-                dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
-                if (dateOfBirth == null) {
-                    throw new DateIsNullException("Date is null");
-                }
-            } catch (NullPointerException e) {
-                System.out.println("Caught NPE");
-                System.out.println("Verify data because the Date of Birth is null.");
-            } catch (DateTimeParseException e) {
-                System.out.println("Caught DateTimeParseException");
-                System.out.println("The date could not be parsed");
-            } catch (DateIsNullException e) {
-                System.out.println("Caught DateIsNullException");
-                System.out.println("Date is null");
-            }
-            student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
-    //Validation-IFs
-            try {
-                if (student.getDateOfBirth().isAfter(LocalDate.now())) {
-                    throw new AgeException(student.dobIsInFutureValidation(student.getFullName(), student.getDateOfBirth()));
-                }
-                if (student.getAge() < ageLimit) {
-                    throw new AgeException(student.StudentTooYoungValidation(student.getFullName(), ageLimit));
-                }
-            } catch (AgeException e) {
-                System.out.println("Caught AgeException");
-                System.out.println("The Age is not valid");
-                throw new AgeNotValidException("The Age is not valid: " + e);
-            }
-    //Try-Catch
-            try {
-                if (student.getDateOfBirth().isBefore(LocalDate.now()) && student.getAge() > ageLimit) {
-                    studentRepository.save(student);
-                    return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created";
-                } else {
-                    System.out.println("Caught AgeException");
-                    throw new AgeException("Age is not valid!");
-                }
-            } catch (AgeException e) {
-                System.out.println("Caught AgeException");
-                System.out.println("Student did not get created");
-                throw new NotCreatedException("Student did not get created", e);
+                Course course = new Course(pojo);
+                courseRepository.save(course);
+                System.out.println("## Course \"" + course.getName() + "\" has been created ##");
+            } catch (NameExpectedException e) {
+                System.out.println("A name was expected");
+            } catch (DataIntegrityViolationException e) {
+                System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
+                throw new ApiRequestException("Request has failed");
             }
         }
-     */
- /*   @PostMapping(value = "student-with-course")
-    public String newStudentWithCourse(@RequestBody StudentPojo studentPojo, CoursePojo coursePojo) {
-//Student
-        LocalDate dateOfBirth = LocalDate.parse(studentPojo.getDateOfBirth());
-        Student student = new Student(studentPojo.getFirstName(), studentPojo.getLastName(), dateOfBirth);
-        try {
-//Validation-IFs for Student
-            if (student.getDateOfBirth().isAfter(LocalDate.now())) {
-                throw new AgeException(student.dobIsInFutureValidation(student.getFullName(), student.getDateOfBirth()));
-            }
-            if (student.getAge() < ageLimit) {
-                throw new AgeException(student.StudentTooYoungValidation(student.getFullName(), ageLimit));
-            }
-        } catch (AgeException e) {
-            System.out.println("The Age is not valid!" + e);
-        }
-//Course
-        Course course = new Course(coursePojo.getCourseName());
-//Setting Course for Student
-        try {
-            if (course.getCourseName() != null) {
-                student.setCourse(course);
-            } else {
-                throw new NullPointerException();
-            }
-        } catch (NullPointerException e) {
-            student.setCourse(null);
-            return "Course could not be found and has been emptied.";
-        }
+        return "Process of creating new courses has been completed";
+    }
 
-//Try-Catch  
+    @PostMapping(value = "student")
+    public String newStudent(@RequestBody StudentPojo studentPojo) {
+
         try {
-            courseRepository.save(course);
+            Course course = courseRepository.findByName(studentPojo.getCourseName());
+            Student student = new Student(studentPojo, ageLimit, course);
             studentRepository.save(student);
-            return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created with " + Course.class.getSimpleName() + " \"" + course.getCourseName() + "\"" +
-                    nl + "HTTP-Status: " + HttpStatus.CREATED;
+            System.out.println("## Student \"" + student.getFullName() + "\" created ##");
+        } catch (java.lang.NullPointerException e) {
+            System.out.println("Value of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
         } catch (DateTimeParseException e) {
-            return "Parsed Date or Time is invalid: " + e.getParsedString() +
-                    nl + "Please verify the format of date/time values in your file." +
-                    nl + HttpStatus.NOT_ACCEPTABLE;
-        } catch (InternalError e) {
-            return "The creation of the Student/Course objects has failed. Please verify the given data." + HttpStatus.INTERNAL_SERVER_ERROR;
-        } catch (Exception e) {
-            return "Holy Shit! " +
-                    nl + HttpStatus.I_AM_A_TEAPOT;
+            System.out.println("The date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" could not be parsed");
+        } catch (AgeException e) {
+            System.out.println("The Age of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
+        } catch (DateFormatException e) {
+            System.out.println("Date Format of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
         }
+        return "newStudent check";
     }
-
-  */
-
 
     @PostMapping(value = "student-batch")
-    public String newStudentBatch(@RequestBody List<StudentPojo> studentPojoList) {
-
-        for (int i = 0; i < studentPojoList.size(); i++) {
+    public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
+        int creationFailedRecordCount = studentPojoList.size();
+        Set<StudentPojo> creationFailedRecordList = new HashSet<>(studentPojoList);
+        for (StudentPojo pojo : studentPojoList) {
             try {
-                StudentPojo studentPojo = studentPojoList.get(i);
-                Student student = new Student(studentPojo, ageLimit);
+                Course course = courseRepository.findByName(pojo.getCourseName());
+                Student student = new Student(pojo, ageLimit, course);
                 studentRepository.save(student);
-                System.out.println("##record created##");
-            } catch (NullPointerException e) {
-                System.out.println("Caught NPE");
-                System.out.println("Verify data because the Date of Birth is null.");
-            } catch (DateTimeParseException e) {
-                System.out.println("Caught DateTimeParseException");
-                System.out.println("The date could not be parsed");
-            } catch (DateIsNullException e) {
-                System.out.println("Caught DateIsNullException");
-                System.out.println("Date is null");
-            } catch (AgeException e) {
-                System.out.println("Caught AgeException");
-                System.out.println("The Age is not valid");
-                e.printStackTrace();
-            }
-/*
-            try {
-                if (student.getDateOfBirth().isBefore(LocalDate.now()) && student.getAge() > ageLimit) {
-                    studentRepository.save(student);
-                    return Student.class.getSimpleName() + " \"" + student.getFullName() + "\" - born \"" + student.getDateOfBirth() + "\" and therefore " + student.getAge() + " years old - has been created";
+                if (course != null) {
+                    System.out.println("## Student \"" + student.getFullName() + "\" has been created and assigned to course \"" + course.getName() + "\" ##");
                 } else {
-                    System.out.println("Caught AgeException");
-                    throw new AgeException("Age is not valid!");
+                    System.out.println("## Student \"" + student.getFullName() + "\" has been created ##");
                 }
+                creationFailedRecordList.remove(pojo);
+                creationFailedRecordCount--;
             } catch (AgeException e) {
-                System.out.println("Caught AgeException");
-                System.out.println("Student did not get created");
-                throw new NotCreatedException("Student did not get created", e);
+                System.out.println("The Age is not valid");
+            } catch (DataIntegrityViolationException e) {
+                System.out.println("The integrity of the data has been violated");
+            } catch (PropertyValueException e) {
+                System.out.println("Value property is invalid");
+            } catch (DateTimeParseException e) {
+                System.out.println("The date could not be parsed");
+            } catch (NullPointerException e) {
+                System.out.println("Value is null");
+            } catch (DateFormatException e) {
+                System.out.println("Date Format is not valid");
             }
-        } catch() {
-
         }
-    }*/
 
+        try {
+            if (creationFailedRecordCount < 0) {
+                creationFailedRecordCount = 0;
+                System.out.println("creationFailedRecordCount was negative and has been set to 0 as fallback");
+            }
+            if (myDebug) {
+                if (creationFailedRecordCount == 1) {
+                    System.out.println("Failed record: " + creationFailedRecordList);
+                    return "Process of creating new students has been completed" +
+                            System.lineSeparator() + "There was one record out of " + studentPojoList.size() + " records which could not be created" +
+                            System.lineSeparator() + "Failed record: " + creationFailedRecordList;
+                }
+                if (creationFailedRecordCount > 1) {
+                    System.out.println("Failed records: " + creationFailedRecordList);
+                    return "Process of creating new students has been completed" +
+                            System.lineSeparator() + "There were " + creationFailedRecordCount + " out of " + studentPojoList.size() + " records which could not be created" +
+                            System.lineSeparator() + "Failed records: " + creationFailedRecordList;
+                }
+            }
+            if (creationFailedRecordCount == 1) {
+                System.out.println("Failed record: " + creationFailedRecordList);
+                return "Process of creating new students has been completed" +
+                        System.lineSeparator() + "There was one record out of " + studentPojoList.size() + " records which could not be created";
+            }
+            if (creationFailedRecordCount > 1) {
+                System.out.println("Failed records: " + creationFailedRecordList);
+                return "Process of creating new students has been completed" +
+                        System.lineSeparator() + "There were " + creationFailedRecordCount + " out of " + studentPojoList.size() + " records which could not be created";
+            }
+            if (creationFailedRecordCount == 0) {
+                return "Process of creating new students has been completed";
+            }
+            throw new IllegalStateException("Unexpected value: " + creationFailedRecordCount);
+        } catch (IllegalStateException e) {
+            System.out.println("creationFailedRecordCount has an illegal state");
+            return null;
         }
-        return "Endpoint check";
     }
 }
