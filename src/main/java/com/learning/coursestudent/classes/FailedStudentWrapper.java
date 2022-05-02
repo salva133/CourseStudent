@@ -1,13 +1,10 @@
 package com.learning.coursestudent.classes;
 
-public class FailedStudentWrapper extends Throwable {
+public class FailedStudentWrapper {
     private final StudentPojo pojo;
     private final Exception exception;
 
     public FailedStudentWrapper(StudentPojo pojo, Exception exception) {
-        String errorMessage = exception.getMessage();
-        String pojoName = pojo.getLastName() + ", " + pojo.getFirstName();
-
         this.pojo = pojo;
         this.exception = exception;
     }
