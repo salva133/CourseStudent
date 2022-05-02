@@ -2,8 +2,8 @@ package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.learning.coursestudent.exception.DateFormatException;
+import com.learning.coursestudent.exception.DobInFutureException;
 import com.learning.coursestudent.exception.TooYoungException;
-import com.learning.coursestudent.exception.dobInFutureException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -59,7 +59,7 @@ public class Student {
         if (dob.isAfter(LocalDate.now())) {
             System.out.println("## DOB IN FUTURE ##");
             System.out.println("dob is after today, and today is " + LocalDate.now());
-            throw new dobInFutureException("Date of birth is in the future");
+            throw new DobInFutureException("Date of birth is in the future");
         }
         Period period = Period.between(dob, LocalDate.now());
         this.age = period.getYears();
