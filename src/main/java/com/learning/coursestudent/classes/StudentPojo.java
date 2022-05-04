@@ -54,14 +54,8 @@ public class StudentPojo {
     }
 
     @Override
-    public String toString() { // Inhaltlich überarbeiten
-        return "{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", courseName='" + courseName + '\'' +
-                '}';
+    public String toString() {
+        return "Name = \"" + lastName + ", " + firstName + "\"";
     }
 
     @Override
