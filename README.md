@@ -14,6 +14,8 @@
 
 - Googlen, wie man Repos testet
 
+- Mocking recherchieren
+
 
 FRAGE AN MICH: Wie schreibt man einen Integration Test
 HINWEIS: Annotation vor der Klasse
