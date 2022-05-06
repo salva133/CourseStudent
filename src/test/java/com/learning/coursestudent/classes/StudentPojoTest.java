@@ -2,7 +2,7 @@ package com.learning.coursestudent.classes;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class StudentPojoTest {
 
@@ -24,7 +24,7 @@ class StudentPojoTest {
 
         //THEN
         var resultExpected = true;
-        assertNotEquals(resultExpected,resultActual);
+        assertNotEquals(resultExpected, resultActual);
 
     }
 }

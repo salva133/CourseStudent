@@ -1,6 +1,9 @@
 package com.learning.coursestudent.controller;
 
-import com.learning.coursestudent.classes.*;
+import com.learning.coursestudent.classes.Course;
+import com.learning.coursestudent.classes.CoursePojo;
+import com.learning.coursestudent.classes.Student;
+import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.exception.AgeException;
 import com.learning.coursestudent.exception.ApiRequestException;
 import com.learning.coursestudent.exception.DateFormatException;
@@ -8,7 +11,6 @@ import com.learning.coursestudent.exception.NameExpectedException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import com.learning.coursestudent.service.StudentService;
-import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.format.DateTimeParseException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -116,6 +117,6 @@ public class CourseStudentController {
 
     @PostMapping(value = "student-batch")
     public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
-        return new StudentService(studentRepository,courseRepository).createStudentBatch(studentPojoList);
+        return new StudentService(studentRepository, courseRepository).createStudentBatch(studentPojoList);
     }
 }
