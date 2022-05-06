@@ -7,4 +7,16 @@ class StudentServiceTest {
     @Test
     void createStudentBatch() {
     }
+
+    @Test
+    void getAllStudents() {
+    }
+
+    @Test
+    void createStudent() {
+    }
+
+    @Test
+    void testCreateStudentBatch() {
+    }
 }

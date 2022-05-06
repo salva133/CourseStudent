@@ -11,10 +11,14 @@ import com.learning.coursestudent.repository.StudentRepository;
 import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -30,6 +34,29 @@ public class StudentService {
     public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
+    }
+
+    public ResponseEntity<List<Student>> getAllStudents() {
+        return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
+    }
+
+    public String createStudent(@RequestBody StudentPojo studentPojo) {
+
+        try {
+            Course course = courseRepository.findByName(studentPojo.getCourseName());
+            Student student = new Student(studentPojo, ageLimit, course);
+            studentRepository.save(student);
+            System.out.println("## Student \"" + student.getFullName() + "\" created ##");
+        } catch (java.lang.NullPointerException e) {
+            System.out.println("Value of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
+        } catch (DateTimeParseException e) {
+            System.out.println("The date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" could not be parsed");
+        } catch (AgeException e) {
+            System.out.println("The Age of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
+        } catch (DateFormatException e) {
+            System.out.println("Date Format of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
+        }
+        return "newStudent check";
     }
 
     public String createStudentBatch(Set<StudentPojo> studentPojoList) {
@@ -92,4 +119,3 @@ public class StudentService {
         return "Process of creating new students has been completed";
     }
 }
-
