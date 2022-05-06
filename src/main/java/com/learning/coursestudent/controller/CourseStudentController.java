@@ -26,7 +26,7 @@ import java.util.Set;
 public class CourseStudentController {
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
-    @Value("${ageLimit}")
+    @Value("${ageLimit:12}")
     short ageLimit;
     @Value("${myDebug:false}")
     boolean myDebug;
