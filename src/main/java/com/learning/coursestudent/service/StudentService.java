@@ -8,6 +8,7 @@ import com.learning.coursestudent.exception.AgeException;
 import com.learning.coursestudent.exception.DateFormatException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.PropertyValueException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
 
     final StudentRepository studentRepository;
@@ -30,11 +32,6 @@ public class StudentService {
     short ageLimit;
     @Value("${myDebug:false}")
     boolean myDebug;
-
-    public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
-        this.studentRepository = studentRepository;
-        this.courseRepository = courseRepository;
-    }
 
     public ResponseEntity<List<Student>> getAllStudents() {
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
