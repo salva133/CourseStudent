@@ -10,9 +10,9 @@
 
 - Mocking recherchieren
 
-  FRAGE AN MICH: Wie schreibt man einen Integration Test
-  HINWEIS: Annotation vor der Klasse
-  HINWEIS: Für das Testing mit Repo-Methoden gibt es auch elegantere Lösungen
+FRAGE AN MICH: Wie schreibt man einen Integration-Test?  
+HINWEIS: Annotation vor der Klasse  
+HINWEIS: Für das Testing mit Repo-Methoden gibt es auch elegantere Lösungen
 
 ## KW19 Fertig
 
