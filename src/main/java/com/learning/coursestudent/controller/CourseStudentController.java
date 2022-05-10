@@ -4,8 +4,6 @@ import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.CoursePojo;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
-import com.learning.coursestudent.repository.CourseRepository;
-import com.learning.coursestudent.repository.StudentRepository;
 import com.learning.coursestudent.service.CourseService;
 import com.learning.coursestudent.service.StudentService;
 import org.springframework.http.ResponseEntity;
@@ -19,45 +17,40 @@ import java.util.Set;
 
 @RestController
 public class CourseStudentController {
-    private final CourseRepository courseRepository;
-    private final StudentRepository studentRepository;
-
-    public CourseStudentController(CourseRepository courseRepository, StudentRepository studentRepository) {
-        this.courseRepository = courseRepository;
-        this.studentRepository = studentRepository;
-    }
+    private StudentService studentService;
+    private CourseService courseService;
 
     //GETTER
     @GetMapping(value = "course")
     public ResponseEntity<List<Course>> getAllCourses() {
-        return null; // Needs correct return from Service;
+        return courseService.getAllCourses();
     }
 
     @GetMapping(value = "student")
     public ResponseEntity<List<Student>> getAllStudents() {
-        return null; // Needs correct return from Service
+        return studentService.getAllStudents();
     }
     //GETTER
 
     //POSTER
     @PostMapping(value = "course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
-        return new CourseService(courseRepository).createCourse(coursePojo); // Needs Überarbeitung because not elegant genug
+        return courseService.createCourse(coursePojo);
     }
 
     @PostMapping(value = "course-batch")
     public String newCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
-        return new CourseService(courseRepository).createCourseBatch(coursePojoList); // Needs Überarbeitung because not elegant genug
+        return courseService.createCourseBatch(coursePojoList);
     }
 
     @PostMapping(value = "student")
     public String newStudent(@RequestBody StudentPojo studentPojo) {
-        return new StudentService(studentRepository, courseRepository).createStudent(studentPojo); // Needs Überarbeitung because not elegant genug
+        return studentService.createStudent(studentPojo);
     }
 
     @PostMapping(value = "student-batch")
     public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
-        return new StudentService(studentRepository, courseRepository).createStudentBatch(studentPojoList); // Needs Überarbeitung because not elegant genug
+        return studentService.createStudentBatch(studentPojoList);
     }
     //POSTER
 }
