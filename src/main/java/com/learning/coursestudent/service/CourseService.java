@@ -22,6 +22,10 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
+    public CourseService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
+
     public ResponseEntity<List<Course>> getAllCourses() {
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
     }
