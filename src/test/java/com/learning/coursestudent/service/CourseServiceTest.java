@@ -9,10 +9,10 @@ class CourseServiceTest {
     }
 
     @Test
-    void createCourseBatch() {
+    void createCourse() {
     }
 
     @Test
-    void createCourse() {
+    void createCourseBatch() {
     }
 }

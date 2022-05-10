@@ -5,10 +5,6 @@ import org.junit.jupiter.api.Test;
 class StudentServiceTest {
 
     @Test
-    void createStudentBatch() {
-    }
-
-    @Test
     void getAllStudents() {
     }
 
@@ -17,6 +13,6 @@ class StudentServiceTest {
     }
 
     @Test
-    void testCreateStudentBatch() {
+    void createStudentBatch() {
     }
 }
