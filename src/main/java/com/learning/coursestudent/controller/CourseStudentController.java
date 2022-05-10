@@ -6,6 +6,7 @@ import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import com.learning.coursestudent.service.CourseService;
 import com.learning.coursestudent.service.StudentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,17 +42,17 @@ public class CourseStudentController {
     //POSTER
     @PostMapping(value = "course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
-        return null; // Needs correct return from Service
+        return new CourseService(courseRepository).createCourse(coursePojo); // Needs Überarbeitung because not elegant genug
     }
 
     @PostMapping(value = "course-batch")
     public String newCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
-        return null; // Needs correct return from Service
+        return new CourseService(courseRepository).createCourseBatch(coursePojoList); // Needs Überarbeitung because not elegant genug
     }
 
     @PostMapping(value = "student")
     public String newStudent(@RequestBody StudentPojo studentPojo) {
-        return null; // Needs correct return from Service
+        return new StudentService(studentRepository, courseRepository).createStudent(studentPojo); // Needs Überarbeitung because not elegant genug
     }
 
     @PostMapping(value = "student-batch")

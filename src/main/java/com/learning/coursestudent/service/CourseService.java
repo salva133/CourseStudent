@@ -20,8 +20,26 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
+    public CourseService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
+    }
+
     public ResponseEntity<List<Course>> getAllCourses() {
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
+    }
+
+    public String createCourse(@RequestBody CoursePojo coursePojo) {
+        try {
+            Course course = new Course(coursePojo);
+            courseRepository.save(course);
+            System.out.println("## Course \"" + course.getName() + "\" has been created ##");
+        } catch (NameExpectedException e) {
+            System.out.println("A name was expected");
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
+            throw new ApiRequestException("");
+        }
+        return "newCourse check";
     }
 
     public String createCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
@@ -38,19 +56,5 @@ public class CourseService {
             }
         }
         return "Process of creating new courses has been completed";
-    }
-
-    public String createCourse(@RequestBody CoursePojo coursePojo) {
-        try {
-            Course course = new Course(coursePojo);
-            courseRepository.save(course);
-            System.out.println("## Course \"" + course.getName() + "\" has been created ##");
-        } catch (NameExpectedException e) {
-            System.out.println("A name was expected");
-        } catch (DataIntegrityViolationException e) {
-            System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
-            throw new ApiRequestException("");
-        }
-        return "newCourse check";
     }
 }
