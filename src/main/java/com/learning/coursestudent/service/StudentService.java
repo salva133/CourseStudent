@@ -59,7 +59,7 @@ public class StudentService {
         return "newStudent check";
     }
 
-    public String createStudentBatch(Set<StudentPojo> studentPojoList) {
+    public String createStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
         Set<FailedStudentWrapper> creationFailedRecordList = new HashSet<>();
         for (StudentPojo pojo : studentPojoList) {
             try {
