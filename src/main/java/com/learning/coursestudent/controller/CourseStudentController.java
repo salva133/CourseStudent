@@ -4,6 +4,7 @@ import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.CoursePojo;
 import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
+import com.learning.coursestudent.exception.ArgumentNullException;
 import com.learning.coursestudent.service.CourseService;
 import com.learning.coursestudent.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class CourseStudentController {
 
     @Autowired
     public CourseStudentController(StudentService studentService, CourseService courseService) {
+        if (studentService == null) {
+            throw new ArgumentNullException("studentService is null");
+        }
+        if (courseService == null) {
+            throw new ArgumentNullException("courseService is null");
+        }
         this.studentService = studentService;
         this.courseService = courseService;
     }
