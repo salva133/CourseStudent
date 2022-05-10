@@ -56,7 +56,7 @@ public class CourseStudentController {
 
     @PostMapping(value = "student-batch")
     public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
-        return new StudentService(studentRepository, courseRepository).createStudentBatch(studentPojoList);
+        return new StudentService(studentRepository, courseRepository).createStudentBatch(studentPojoList); // Needs Überarbeitung because not elegant genug
     }
     //POSTER
 }
