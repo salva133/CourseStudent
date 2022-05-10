@@ -10,6 +10,7 @@ import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.PropertyValueException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class StudentService {
 
+    @Autowired
     final StudentRepository studentRepository;
+    @Autowired
     final CourseRepository courseRepository;
     @Value("${ageLimit:12}")
     short ageLimit;
