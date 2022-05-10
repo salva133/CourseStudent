@@ -6,6 +6,7 @@ import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.service.CourseService;
 import com.learning.coursestudent.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,15 @@ import java.util.Set;
 
 @RestController
 public class CourseStudentController {
-    private StudentService studentService;
-    private CourseService courseService;
+
+    private final StudentService studentService;
+    private final CourseService courseService;
+
+    @Autowired
+    public CourseStudentController(StudentService studentService, CourseService courseService) {
+        this.studentService = studentService;
+        this.courseService = courseService;
+    }
 
     //GETTER
     @GetMapping(value = "course")
