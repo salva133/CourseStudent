@@ -26,8 +26,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class StudentService {
 
-    final StudentRepository studentRepository;
-    final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
     @Value("${ageLimit:12}")
     short ageLimit;
     @Value("${myDebug:false}")

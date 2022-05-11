@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseService {
 
-    CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     public ResponseEntity<List<Course>> getAllCourses() {
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
@@ -35,7 +35,7 @@ public class CourseService {
             System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
             throw new ApiRequestException("");
         }
-        return "newCourse check";
+        return "Process of creating new course has been completed";
     }
 
     public String createCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
