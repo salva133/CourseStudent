@@ -15,10 +15,6 @@ FRAGE AN MICH: Wie schreibt man einen Integration-Test?
 HINWEIS: Annotation vor der Klasse  
 HINWEIS: Für das Testing mit Repo-Methoden gibt es auch elegantere Lösungen
 
-
-Refactoring-Aufgaben:
-1. ID in StudentPojo entfernen
-
 ## KW19 Fertig
 
 - Für "return new StudentService(studentRepository,courseRepository).createStudentBatch(studentPojoList);" eine "
@@ -27,3 +23,7 @@ Refactoring-Aufgaben:
 - Die Repositories-Properties rauswerfen (werden auf die Services umgelegt)
 - Schreibe eine Test-Klasse für StudentService
 - Aus dem CourseStudentController alle Methoden extrahieren und zur Service-Klasse verschieben
+
+Refactoring-Aufgaben:
+
+1. ID in StudentPojo entfernen
