@@ -3,6 +3,7 @@ package com.learning.coursestudent.classes;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.learning.coursestudent.exception.DateFormatException;
 import com.learning.coursestudent.exception.DobInFutureException;
+import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.exception.TooYoungException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -42,7 +43,7 @@ public class Student {
         if (studentPojo.getDateOfBirth() == null) {
             System.out.println("## DATE IS NULL ##");
             System.out.println("Date of birth is null");
-            throw new NullPointerException("Date of birth is null");
+            throw new NullDateException("Date of birth is null");
         }
         String dobStr = studentPojo.getDateOfBirth();
         if (dobStr.length() != 10) {
