@@ -3,7 +3,6 @@ package com.learning.coursestudent.classes;
 import java.util.Objects;
 
 public class StudentPojo {
-    long id;
     String firstName;
     String lastName;
     String dateOfBirth;
@@ -11,14 +10,6 @@ public class StudentPojo {
 
     public StudentPojo() {
 
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -63,11 +54,11 @@ public class StudentPojo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentPojo that = (StudentPojo) o;
-        return id == that.id && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(courseName, that.courseName);
+        return firstName.equals(that.firstName) && lastName.equals(that.lastName) && dateOfBirth.equals(that.dateOfBirth) && courseName.equals(that.courseName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, courseName);
+        return Objects.hash(firstName, lastName, dateOfBirth, courseName);
     }
 }
