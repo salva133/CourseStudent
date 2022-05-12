@@ -5,6 +5,7 @@
 - Schreibe einen Test für Methode "createStudentBatch"
     - übergebe an die Test-Methode das Set
     - Prüfen, ob Daten gespeichert wurden (Repository-Methoden verwenden (FindBy...))
+    - Exceptions testen (assertThrow)
 
 - Googlen, wie man Repos testet
 
@@ -13,6 +14,10 @@
 FRAGE AN MICH: Wie schreibt man einen Integration-Test?  
 HINWEIS: Annotation vor der Klasse  
 HINWEIS: Für das Testing mit Repo-Methoden gibt es auch elegantere Lösungen
+
+
+Refactoring-Aufgaben:
+1. ID in StudentPojo entfernen
 
 ## KW19 Fertig
 

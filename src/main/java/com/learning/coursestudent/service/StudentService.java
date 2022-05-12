@@ -26,8 +26,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class StudentService {
 
-    private final StudentRepository studentRepository;
-    private final CourseRepository courseRepository;
+    final StudentRepository studentRepository;
+    final CourseRepository courseRepository;
     @Value("${ageLimit:12}")
     short ageLimit;
     @Value("${myDebug:false}")
@@ -46,14 +46,18 @@ public class StudentService {
             System.out.println("## Student \"" + student.getFullName() + "\" created ##");
         } catch (java.lang.NullPointerException e) {
             System.out.println("Value of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
+            throw e;
         } catch (DateTimeParseException e) {
             System.out.println("The date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" could not be parsed");
+            throw e;
         } catch (AgeException e) {
             System.out.println("The Age of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
+            throw e;
         } catch (DateFormatException e) {
             System.out.println("Date Format of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
+            throw e;
         }
-        return "newStudent check";
+        return "Process of creating new student has been completed";
     }
 
     public String createStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {

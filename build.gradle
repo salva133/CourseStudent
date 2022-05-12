@@ -28,8 +28,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+//    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.2'
+//    testImplementation group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
 }
 
 tasks.named('test') {
