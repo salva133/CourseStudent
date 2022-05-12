@@ -1,12 +1,9 @@
 package com.learning.coursestudent.exception;
 
-public class NotCreatedException extends ApiRequestException {
+public class NotCreatedException extends NullPointerException {
 
-    public NotCreatedException(String message) {
-        super(message);
+    public NotCreatedException(String s) {
+        super(s);
     }
 
-    public NotCreatedException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
