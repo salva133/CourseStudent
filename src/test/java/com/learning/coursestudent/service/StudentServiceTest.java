@@ -3,6 +3,7 @@ package com.learning.coursestudent.service;
 import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.CoursePojo;
 import com.learning.coursestudent.classes.StudentPojo;
+import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
@@ -31,13 +32,12 @@ class StudentServiceTest {
         StudentPojo studentPojo = new StudentPojo();
         studentPojo.setFirstName("Star");
         studentPojo.setLastName("Lord");
-        studentPojo.setId(1);
         studentPojo.setCourseName("Algebra");
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
         when(courseRepository.findByName(any())).thenReturn(new Course(coursePojo));
 
-        assertThrows(NullPointerException.class, () -> service.createStudent(studentPojo));
+        assertThrows(NullDateException.class, () -> service.createStudent(studentPojo));
     }
 }

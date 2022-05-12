@@ -6,6 +6,7 @@ import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.classes.StudentPojo;
 import com.learning.coursestudent.exception.AgeException;
 import com.learning.coursestudent.exception.DateFormatException;
+import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,8 +45,8 @@ public class StudentService {
             Student student = new Student(studentPojo, ageLimit, course);
             studentRepository.save(student);
             System.out.println("## Student \"" + student.getFullName() + "\" created ##");
-        } catch (java.lang.NullPointerException e) {
-            System.out.println("Value of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
+        } catch (NullDateException e) {
+            System.out.println("Date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
             throw e;
         } catch (DateTimeParseException e) {
             System.out.println("The date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" could not be parsed");
