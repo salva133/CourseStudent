@@ -26,15 +26,6 @@ class StudentServiceTest {
     @InjectMocks
     private StudentService service;
 
-/*
-    @BeforeEach
-    void setUpStudentServiceTest() {
-        StudentPojo pojo = new StudentPojo();
-        pojo.setLastName("Hansen");
-        service.createStudent(pojo);
-    }
-*/
-
     @Test
     void should_throw_npe_when_dob_is_null() {
         StudentPojo studentPojo = new StudentPojo();
