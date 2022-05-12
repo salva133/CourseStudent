@@ -120,4 +120,8 @@ public class StudentService {
         }
         return "Process of creating new students has been completed";
     }
+
+    public void setAgeLimit(short ageLimit) {
+        this.ageLimit = ageLimit;
+    }
 }

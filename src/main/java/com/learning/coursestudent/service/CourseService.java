@@ -2,7 +2,6 @@ package com.learning.coursestudent.service;
 
 import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.CoursePojo;
-import com.learning.coursestudent.exception.ApiRequestException;
 import com.learning.coursestudent.exception.NameExpectedException;
 import com.learning.coursestudent.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,6 @@ public class CourseService {
             System.out.println("A name was expected");
         } catch (DataIntegrityViolationException e) {
             System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
-            throw new ApiRequestException("");
         }
         return "Process of creating new course has been completed";
     }
@@ -48,7 +46,6 @@ public class CourseService {
                 System.out.println("A name was expected");
             } catch (DataIntegrityViolationException e) {
                 System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
-                throw new ApiRequestException("Request has failed");
             }
         }
         return "Process of creating new courses has been completed";
