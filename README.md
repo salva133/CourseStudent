@@ -1,19 +1,35 @@
 # CourseStudent - Internes Übungsszenario
 
-## KW19 ToDo
+## KW20 ToDo
 
-- Schreibe einen Test für Methode "createStudentBatch"
-  - übergebe an die Test-Methode das Set
-  - Prüfen, ob Daten gespeichert wurden (Repository-Methoden verwenden (FindBy...))
-  - Googlen, wie man Repos testet
-  - Mocking recherchieren
+1. fachliche Logik entwicklen (Notizbuch für Ansätze prüfen)
 
+- Liste der Kursteilnehmer erzeugen
+- Unit Test schreiben
+    - falls das nicht klappt (oder als Fleißarbeit) mit Integration Test fortfahren
+        - Integration Test  (Link: https://www.baeldung.com/spring-boot-testing
 
-FRAGE AN MICH: Wie schreibt man einen Integration-Test?  
-HINWEIS: Annotation vor der Klasse  
-HINWEIS: Für das Testing mit Repo-Methoden gibt es auch elegantere Lösungen
+2. Integration Test für Methode "createStudentBatch"
+    - übergebe an die Test-Methode das Set
+    - Prüfen, ob Daten gespeichert wurden (Repository-Methoden verwenden (FindBy...))
+3. Integration Test für API (MockMVC)
 
-## KW19 Fertig
+- Wie wird eine Exception an die API weitergegeben?
+
+3. Exceptions mit HttpStatus mappen
+
+- HTTP-Status.BAD_REQUEST z.B.
+
+4. Authorization entwickeln/implementieren
+
+- user:password als Anfang
+- Tokenbasierter Zugang recherchieren
+
+Refactoring:
+
+- HTTP-Status.CREATED an Methoden mappen
+
+## Fertig
 
 - Exceptions testen (assertThrow)
 - Für "return new StudentService(studentRepository,courseRepository).createStudentBatch(studentPojoList);" eine "
@@ -22,7 +38,9 @@ HINWEIS: Für das Testing mit Repo-Methoden gibt es auch elegantere Lösungen
 - Die Repositories-Properties rauswerfen (werden auf die Services umgelegt)
 - Schreibe eine Test-Klasse für StudentService
 - Aus dem CourseStudentController alle Methoden extrahieren und zur Service-Klasse verschieben
+- Googlen, wie man Repos testet
+- Mocking recherchieren
 
-Refactoring-Aufgaben:
+  Refactoring-Aufgaben:
 
 1. ID in StudentPojo entfernen
