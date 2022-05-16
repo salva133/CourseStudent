@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Course {
+public class Course extends University {
     //FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")

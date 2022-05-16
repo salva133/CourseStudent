@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 
 @Entity
-public class Student {
+public class Student extends University {
     //FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_generator")
