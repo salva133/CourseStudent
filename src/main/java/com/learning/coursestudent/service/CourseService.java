@@ -4,6 +4,7 @@ import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.CoursePojo;
 import com.learning.coursestudent.exception.NameExpectedException;
 import com.learning.coursestudent.repository.CourseRepository;
+import com.sun.istack.logging.Logger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseService {
 
+    final static Logger logger = Logger.getLogger(CourseService.class);
     private final CourseRepository courseRepository;
 
     public ResponseEntity<List<Course>> getAllCourses() {
@@ -29,11 +31,11 @@ public class CourseService {
         try {
             Course course = new Course(coursePojo);
             courseRepository.save(course);
-            System.out.println("## Course \"" + course.getName() + "\" has been created ##");
+            logger.severe("## Course \"" + course.getName() + "\" has been created ##");
         } catch (NameExpectedException e) {
-            System.out.println("A name was expected");
+            logger.severe("A name was expected");
         } catch (DataIntegrityViolationException e) {
-            System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
+            logger.severe("Data integrity has been violated, rethrowing to ApiRequestException");
         }
         return "Process of creating new course has been completed";
     }
@@ -44,9 +46,9 @@ public class CourseService {
             try {
                 Course course = new Course(pojo);
                 courseRepository.save(course);
-                System.out.println("## Course \"" + course.getName() + "\" has been created ##");
+                logger.severe("## Course \"" + course.getName() + "\" has been created ##");
             } catch (NameExpectedException e) {
-                System.out.println("A name was expected");
+                logger.severe("A name was expected");
             }
         }
         return "Process of creating new courses has been completed";
