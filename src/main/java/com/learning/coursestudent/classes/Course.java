@@ -1,6 +1,7 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.learning.coursestudent.exception.NameExpectedException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -32,7 +33,10 @@ public class Course extends University {
     }
 
     public Course(CoursePojo coursePojo) {
-        this.name = coursePojo.getCourseName();
+        if (coursePojo.getCourseName() != null) {
+            this.name = coursePojo.getCourseName();
+        }
+        throw new NameExpectedException("Name is " + coursePojo.getCourseName());
     }
     //CONSTRUCTORS
 
