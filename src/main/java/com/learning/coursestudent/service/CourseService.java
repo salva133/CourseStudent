@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class CourseService {
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     public String createCourse(@RequestBody CoursePojo coursePojo) {
         try {
             Course course = new Course(coursePojo);
@@ -36,6 +38,7 @@ public class CourseService {
         return "Process of creating new course has been completed";
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     public String createCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
         for (CoursePojo pojo : coursePojoList) {
             try {
@@ -44,8 +47,6 @@ public class CourseService {
                 System.out.println("## Course \"" + course.getName() + "\" has been created ##");
             } catch (NameExpectedException e) {
                 System.out.println("A name was expected");
-            } catch (DataIntegrityViolationException e) {
-                System.out.println("Data integrity has been violated, rethrowing to ApiRequestException");
             }
         }
         return "Process of creating new courses has been completed";
