@@ -2,7 +2,7 @@
 
 ## KW20 ToDo
 
-1. fachliche Logik entwicklen (Notizbuch für Ansätze prüfen)
+1. fachliche Logik entwickeln (Notizbuch für Ansätze prüfen)
 
 - Liste der Kursteilnehmer erzeugen
 - Unit Test schreiben
@@ -28,6 +28,7 @@
 Refactoring:
 
 - HTTP-Status.CREATED an Methoden mappen
+- sout durch Logger ersetzen
 
 ## Fertig
 
