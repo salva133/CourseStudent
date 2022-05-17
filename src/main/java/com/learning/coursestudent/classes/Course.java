@@ -33,10 +33,10 @@ public class Course extends University {
     }
 
     public Course(CoursePojo coursePojo) {
-        if (coursePojo.getCourseName() != null) {
-            this.name = coursePojo.getCourseName();
+        if (coursePojo.getCourseName().equals(null) || coursePojo.getCourseName().equals("")) {
+            throw new NameExpectedException("A name was expected");
         }
-        throw new NameExpectedException("Name is " + coursePojo.getCourseName());
+        this.name = coursePojo.getCourseName();
     }
     //CONSTRUCTORS
 

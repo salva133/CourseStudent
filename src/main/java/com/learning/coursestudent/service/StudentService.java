@@ -104,25 +104,25 @@ public class StudentService {
             if (creationFailedRecordList.size() == 1) {
                 logger.debug("Failed record: " + creationFailedRecordList);
                 return "Process of creating new students has been completed" +
-                        nl + "There was one record out of " + studentPojoList.size() + " records which could not be created" +
+                        nl + "Although there was one record out of " + studentPojoList.size() + " records which could not be created" +
                         nl + "Failed record: " + creationFailedRecordList;
             }
             if (creationFailedRecordList.size() > 1) {
                 logger.debug("Failed records: " + creationFailedRecordList);
                 return "Process of creating new students has been completed" +
-                        nl + "There were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created" +
+                        nl + "Although there were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created" +
                         nl + "Failed records: " + creationFailedRecordList;
             }
         }
         if (creationFailedRecordList.size() == 1) {
             logger.debug("Failed record: " + creationFailedRecordList);
             return "Process of creating new students has been completed" +
-                    nl + "There was one record out of " + studentPojoList.size() + " records which could not be created";
+                    nl + "Although there was one record out of " + studentPojoList.size() + " records which could not be created";
         }
         if (creationFailedRecordList.size() > 1) {
             logger.debug("Failed records: " + creationFailedRecordList);
             return "Process of creating new students has been completed" +
-                    nl + "There were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created";
+                    nl + "Although there were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created";
         }
         return "Process of creating new students has been completed";
     }

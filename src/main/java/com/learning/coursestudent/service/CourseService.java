@@ -6,6 +6,7 @@ import com.learning.coursestudent.exception.NameExpectedException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.sun.istack.logging.Logger;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.PropertyValueException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,11 @@ public class CourseService {
                 courseRepository.save(course);
                 logger.info("## Course \"" + course.getName() + "\" has been created ##");
             } catch (NameExpectedException e) {
-                logger.severe("A name was expected");
+                logger.severe(e.getMessage());
+            } catch (PropertyValueException e) {
+                logger.severe("Value of Property 'Name' is illegal");
+            } catch (NullPointerException e) {
+                logger.severe("Value is null");
             }
         }
         return "Process of creating new courses has been completed";
