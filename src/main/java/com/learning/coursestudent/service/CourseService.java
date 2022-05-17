@@ -46,7 +46,7 @@ public class CourseService {
             try {
                 Course course = new Course(pojo);
                 courseRepository.save(course);
-                logger.severe("## Course \"" + course.getName() + "\" has been created ##");
+                logger.info("## Course \"" + course.getName() + "\" has been created ##");
             } catch (NameExpectedException e) {
                 logger.severe("A name was expected");
             }
