@@ -1,9 +1,9 @@
 package com.learning.coursestudent.classes;
 
 public class University {
-    private final String name;
+    private final String nameOfInstitute;
 
     public University() {
-        this.name = "University of Stuff and Things";
+        this.nameOfInstitute = "University of Stuff and Things";
     }
 }

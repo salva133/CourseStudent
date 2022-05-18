@@ -33,7 +33,7 @@ public class Course extends University {
     }
 
     public Course(CoursePojo coursePojo) {
-        if (coursePojo.getCourseName().equals(null) || coursePojo.getCourseName().equals("")) {
+        if (coursePojo.getCourseName() == null || coursePojo.getCourseName().equals("")) {
             throw new NameExpectedException("A name was expected");
         }
         this.name = coursePojo.getCourseName();
@@ -73,5 +73,4 @@ public class Course extends University {
         return zUpdateTime;
     }
     //GETTER AND SETTER
-
 }

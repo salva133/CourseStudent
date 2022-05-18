@@ -76,6 +76,18 @@ public class Student extends University {
         this.dateOfBirth = dob;
         this.course = course;
     }
+
+    public Student(Student byCourse) {
+        this.id = getId();
+        this.firstName = getFirstName();
+        this.lastName = getLastName();
+        this.fullName = getFullName();
+        this.course = getCourse();
+        this.age = getAge();
+        this.dateOfBirth = getDateOfBirth();
+        this.zCreationTime = getCreationTime();
+        this.zUpdateTime = getUpdateTime();
+    }
     //CONSTRUCTORS
 
     //GETTER AND SETTER

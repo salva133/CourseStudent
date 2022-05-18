@@ -38,6 +38,11 @@ public class CourseStudentController {
     public ResponseEntity<List<Student>> getAllStudents() {
         return studentService.getAllStudents();
     }
+
+    @GetMapping(value = "student2")
+    public ResponseEntity<List<Student>> getStudentFromCourse(CoursePojo courseName) {
+        return studentService.getStudentFromCourse(courseName);
+    }
     //GETTER
 
     //POSTER
