@@ -42,24 +42,25 @@ public class StudentService {
     }
 
     public Student getStudentByLastName(String name) {
-
+        return null;
     }
 
-    public ResponseEntity<List<Student>> getStudentByCourse(@RequestBody CoursePojo coursePojo) {
-        List<Student> studentArrayListAll = new ArrayList<>(studentRepository.findAll());
 
-        for (int i = 1; i < studentRepository.findAll().size(); i++) {
+    public ResponseEntity<List<Student>> getStudentByCourse(@RequestBody CoursePojo coursePojo) {
+        return new ResponseEntity<>(studentRepository.findByCourseName(coursePojo.getCourseName()),HttpStatus.OK);
+
+/*        for (int i = 1; i < studentRepository.findAll().size(); i++) {
             try {
-                Student student = new Student(studentArrayListAll.get(i));
-                if (!student.getCourse().getName().equals(coursePojo.getCourseName())) {
-                    studentArrayListAll.remove(student);
+                Student student = studentRepository.findByCourse();
+                if (student.getCourse().getName().equals(coursePojo.getCourseName())) {
+                    studentArrayListAll.add(student);
                 }
             } catch (NullPointerException | NonUniqueResultException e) {
                 logger.log(Logger.Level.ERROR, e.getMessage());
                 return null;
             }
         }
-        return new ResponseEntity<>(studentArrayListAll, HttpStatus.OK);
+        return new ResponseEntity<>(studentArrayListAll, HttpStatus.OK);*/
     }
 
     @ResponseStatus(HttpStatus.CREATED)

@@ -39,8 +39,12 @@ public class CourseStudentRestController {
         return studentService.getAllStudents();
     }
 
+/*    public Student getStudentByLastName () {
+
+    }*/
+
     @GetMapping(value = "student2")
-    public ResponseEntity<List<Student>> getStudentFromCourse(CoursePojo courseName) {
+    public ResponseEntity<List<Student>> getStudentByCourse(CoursePojo courseName) {
         return studentService.getStudentByCourse(courseName);
     }
     //GETTER
