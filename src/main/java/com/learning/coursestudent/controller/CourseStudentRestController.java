@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-public class CourseStudentController {
+public class CourseStudentRestController {
 
     private final StudentService studentService;
     private final CourseService courseService;
 
     @Autowired
-    public CourseStudentController(StudentService studentService, CourseService courseService) {
+    public CourseStudentRestController(StudentService studentService, CourseService courseService) {
         this.studentService = studentService;
         this.courseService = courseService;
     }
