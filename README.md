@@ -7,7 +7,7 @@
 - Liste der Kursteilnehmer erzeugen
 - Unit Test schreiben
     - falls das nicht klappt (oder als Fleißarbeit) mit Integration Test fortfahren
-        - Integration Test  (Link: https://www.baeldung.com/spring-boot-testing
+        - Integration Test  (Link: https://www.baeldung.com/spring-boot-testing)
 
 2. Integration Test für Methode "createStudentBatch"
     - übergebe an die Test-Methode das Set
@@ -16,19 +16,10 @@
 
 - Wie wird eine Exception an die API weitergegeben?
 
-3. Exceptions mit HttpStatus mappen
-
-- HTTP-Status.BAD_REQUEST z.B.
-
 4. Authorization entwickeln/implementieren
 
 - user:password als Anfang
 - Tokenbasierter Zugang recherchieren
-
-Refactoring:
-
-- HTTP-Status.CREATED an Methoden mappen
-- sout durch Logger ersetzen
 
 ## Fertig
 
@@ -41,7 +32,10 @@ Refactoring:
 - Aus dem CourseStudentController alle Methoden extrahieren und zur Service-Klasse verschieben
 - Googlen, wie man Repos testet
 - Mocking recherchieren
+- Exceptions mit HttpStatus mappen
 
-  Refactoring-Aufgaben:
+Refactoring-Aufgaben:
 
-1. ID in StudentPojo entfernen
+- ID in StudentPojo entfernen
+- HTTP-Status.CREATED an Methoden mappen
+- sout durch Logger ersetzen
