@@ -38,7 +38,7 @@ public class CourseService {
         } catch (DataIntegrityViolationException e) {
             logger.severe("Data integrity has been violated, rethrowing to ApiRequestException");
         }
-        return "Process of creating new course has been completed";
+        return "Process createCourse has been finished";
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -56,6 +56,6 @@ public class CourseService {
                 logger.severe("Value is null");
             }
         }
-        return "Process of creating new courses has been completed";
+        return "Process createCourseBatch has been finished";
     }
 }

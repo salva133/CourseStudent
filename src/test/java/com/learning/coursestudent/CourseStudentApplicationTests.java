@@ -11,10 +11,6 @@ import java.util.Set;
 class CourseStudentApplicationTests {
 
     @Test
-    void contextLoads() {
-
-    }
-
     public void StudentList(Set<StudentPojo> pojo) {
         Assert.notNull(pojo, "pojo must contain at least one object");
         Assert.noNullElements(pojo, "pojo object must not contain any null value");

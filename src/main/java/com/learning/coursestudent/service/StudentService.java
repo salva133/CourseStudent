@@ -83,7 +83,7 @@ public class StudentService {
             logger.log(Logger.Level.ERROR, e.getMessage());
             throw e;
         }
-        return "Process of creating new student has been completed";
+        return "Process createStudent has been finished";
     }
 
     @ResponseStatus(HttpStatus.CREATED)
