@@ -39,6 +39,10 @@ public class Student extends University {
     public Student() {
     }
 
+    public Student(String lastName) {
+        this.lastName = lastName;
+    }
+
     public Student(StudentPojo studentPojo, short ageLimit, Course course) {
         if (studentPojo.getDateOfBirth() == null) {
             System.out.println("## DATE IS NULL ##");

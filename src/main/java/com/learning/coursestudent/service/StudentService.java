@@ -41,7 +41,11 @@ public class StudentService {
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<List<Student>> getStudentFromCourse(@RequestBody CoursePojo coursePojo) {
+    public Student getStudentByLastName(String name) {
+
+    }
+
+    public ResponseEntity<List<Student>> getStudentByCourse(@RequestBody CoursePojo coursePojo) {
         List<Student> studentArrayListAll = new ArrayList<>(studentRepository.findAll());
 
         for (int i = 1; i < studentRepository.findAll().size(); i++) {
