@@ -1,6 +1,8 @@
 package com.learning.coursestudent.classes;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.learning.coursestudent.exception.NameExpectedException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,6 +12,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Course extends University {
     //FIELDS
     @Id
@@ -20,7 +25,7 @@ public class Course extends University {
     @Column(nullable = false)
     private String name;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    
     private List<Student> student;
     @CreationTimestamp
     private LocalDateTime zCreationTime;

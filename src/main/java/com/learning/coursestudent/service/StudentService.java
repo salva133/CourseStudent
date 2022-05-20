@@ -7,7 +7,6 @@ import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.NonUniqueResultException;
 import org.hibernate.PropertyValueException;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,21 +45,12 @@ public class StudentService {
     }
 
 
-    public ResponseEntity<List<Student>> getStudentByCourse(@RequestBody CoursePojo coursePojo) {
-        return new ResponseEntity<>(studentRepository.findByCourseName(coursePojo.getCourseName()),HttpStatus.OK);
-
-/*        for (int i = 1; i < studentRepository.findAll().size(); i++) {
-            try {
-                Student student = studentRepository.findByCourse();
-                if (student.getCourse().getName().equals(coursePojo.getCourseName())) {
-                    studentArrayListAll.add(student);
-                }
-            } catch (NullPointerException | NonUniqueResultException e) {
-                logger.log(Logger.Level.ERROR, e.getMessage());
-                return null;
-            }
-        }
-        return new ResponseEntity<>(studentArrayListAll, HttpStatus.OK);*/
+    public ResponseEntity<List<StudentResponse>> getStudentByCourse(@RequestBody CoursePojo coursePojo) {
+        return new ResponseEntity<>(studentRepository
+                .findByCourseName(coursePojo.getCourseName())
+                .stream()
+                .map(StudentResponse::new)
+                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @ResponseStatus(HttpStatus.CREATED)

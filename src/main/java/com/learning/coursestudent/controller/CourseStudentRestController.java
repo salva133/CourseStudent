@@ -1,9 +1,6 @@
 package com.learning.coursestudent.controller;
 
-import com.learning.coursestudent.classes.Course;
-import com.learning.coursestudent.classes.CoursePojo;
-import com.learning.coursestudent.classes.Student;
-import com.learning.coursestudent.classes.StudentPojo;
+import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.service.CourseService;
 import com.learning.coursestudent.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +41,7 @@ public class CourseStudentRestController {
     }*/
 
     @GetMapping(value = "student2")
-    public ResponseEntity<List<Student>> getStudentByCourse(CoursePojo courseName) {
+    public ResponseEntity<List<StudentResponse>> getStudentByCourse(CoursePojo courseName) {
         return studentService.getStudentByCourse(courseName);
     }
     //GETTER

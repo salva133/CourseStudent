@@ -1,15 +1,28 @@
 package com.learning.coursestudent.classes;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class StudentResponse {
     long id;
     String firstName;
     String lastName;
-    String dateOfBirth;
+    LocalDate dateOfBirth;
     String courseName;
 
     public StudentResponse() {
+    }
+
+    public StudentResponse(long id, String firstName, String lastName, LocalDate dateOfBirth, String courseName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.courseName = courseName;
+    }
+
+    public StudentResponse(Student student) {
+        this(student.getId(), student.getFirstName(), student.getLastName(), student.getDateOfBirth(), student.getCourse().getName());
     }
 
     public long getId() {
@@ -36,11 +49,11 @@ public class StudentResponse {
         this.lastName = lastName;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
