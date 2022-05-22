@@ -1,9 +1,6 @@
 package com.learning.coursestudent.controller;
 
-import com.learning.coursestudent.classes.Course;
-import com.learning.coursestudent.classes.CoursePojo;
-import com.learning.coursestudent.classes.Student;
-import com.learning.coursestudent.classes.StudentPojo;
+import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.service.CourseService;
 import com.learning.coursestudent.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +14,13 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-public class CourseStudentController {
+public class CourseStudentRestController {
 
     private final StudentService studentService;
     private final CourseService courseService;
 
     @Autowired
-    public CourseStudentController(StudentService studentService, CourseService courseService) {
+    public CourseStudentRestController(StudentService studentService, CourseService courseService) {
         this.studentService = studentService;
         this.courseService = courseService;
     }
@@ -37,6 +34,15 @@ public class CourseStudentController {
     @GetMapping(value = "student")
     public ResponseEntity<List<Student>> getAllStudents() {
         return studentService.getAllStudents();
+    }
+
+/*    public Student getStudentByLastName () {
+
+    }*/
+
+    @GetMapping(value = "student2")
+    public ResponseEntity<List<StudentResponse>> getStudentByCourse(CoursePojo courseName) {
+        return studentService.getStudentByCourse(courseName);
     }
     //GETTER
 
