@@ -40,7 +40,7 @@ public class CourseStudentRestController {
 
     }*/
 
-    @GetMapping(value = "student2")
+    @GetMapping(value = "student-by-course")
     public ResponseEntity<List<StudentResponse>> getStudentByCourse(CoursePojo courseName) {
         return studentService.getStudentByCourse(courseName);
     }
