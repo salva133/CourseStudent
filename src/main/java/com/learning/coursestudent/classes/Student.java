@@ -1,7 +1,5 @@
 package com.learning.coursestudent.classes;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.learning.coursestudent.exception.DateFormatException;
 import com.learning.coursestudent.exception.DobInFutureException;
 import com.learning.coursestudent.exception.NullDateException;
@@ -20,7 +18,7 @@ import java.time.Period;
 
 public class Student extends University {
     final static org.jboss.logging.Logger logger = Logger.getLogger(StudentService.class);
-    
+
     //FIELDS
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_generator")
@@ -32,8 +30,8 @@ public class Student extends University {
     private String fullName;
     private LocalDate dateOfBirth;
     private int age;
+    private Gender gender;
     @ManyToOne
-
     private Course course;
     @CreationTimestamp
     private LocalDateTime zCreationTime;
@@ -44,7 +42,6 @@ public class Student extends University {
     //CONSTRUCTORS
     public Student() {
     }
-
     public Student(String lastName) {
         this.lastName = lastName;
     }
@@ -92,7 +89,6 @@ public class Student extends University {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -140,5 +136,22 @@ public class Student extends University {
     public LocalDateTime getUpdateTime() {
         return zUpdateTime;
     }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public LocalDateTime getzCreationTime() {
+        return zCreationTime;
+    }
+
+    public LocalDateTime getzUpdateTime() {
+        return zUpdateTime;
+    }
+
     //GETTER AND SETTER
 }

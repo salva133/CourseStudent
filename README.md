@@ -2,21 +2,15 @@
 
 ## KW20 ToDo
 
-1. fachliche Logik entwickeln (Notizbuch für Ansätze prüfen)
-
-- Liste der Kursteilnehmer erzeugen
-- Unit Test schreiben
-    - falls das nicht klappt (oder als Fleißarbeit) mit Integration Test fortfahren
-        - Integration Test  (Link: https://www.baeldung.com/spring-boot-testing)
-
-2. Integration Test für Methode "createStudentBatch"
+1. Integration Test für Methode "createStudentBatch"
     - übergebe an die Test-Methode das Set
     - Prüfen, ob Daten gespeichert wurden (Repository-Methoden verwenden (FindBy...))
-3. Integration Test für API (MockMVC)
+2. Integration Test für API (MockMVC)
 
 - Wie wird eine Exception an die API weitergegeben?
 
-4. Authorization entwickeln/implementieren
+3. Authorization entwickeln/implementieren
+
 
 - user:password als Anfang
 - Tokenbasierter Zugang recherchieren
@@ -33,9 +27,14 @@
 - Googlen, wie man Repos testet
 - Mocking recherchieren
 - Exceptions mit HttpStatus mappen
+- Liste der Kursteilnehmer erzeugen
+- Unit Test schreiben
+- falls das nicht klappt (oder als Fleißarbeit) mit Integration Test fortfahren
+- Integration Test  (Link: https://www.baeldung.com/spring-boot-testing)
 
-Refactoring-Aufgaben:
+Wiederkehrende oder Refactoring-Aufgaben:
 
 - ID in StudentPojo entfernen
 - HTTP-Status.CREATED an Methoden mappen
 - sout durch Logger ersetzen
+- fachliche Logik entwickeln (Notizbuch für Ansätze prüfen)
