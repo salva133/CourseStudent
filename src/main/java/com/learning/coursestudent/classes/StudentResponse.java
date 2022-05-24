@@ -1,15 +1,36 @@
 package com.learning.coursestudent.classes;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
-public class StudentPojo {
+public class StudentResponse {
+    long id;
     String firstName;
     String lastName;
-    String dateOfBirth;
+    LocalDate dateOfBirth;
     String courseName;
 
-    public StudentPojo() {
+    public StudentResponse() {
+    }
 
+    public StudentResponse(long id, String firstName, String lastName, LocalDate dateOfBirth, String courseName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.courseName = courseName;
+    }
+
+    public StudentResponse(Student student) {
+        this(student.getId(), student.getFirstName(), student.getLastName(), student.getDateOfBirth(), student.getCourse().getName());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -28,11 +49,11 @@ public class StudentPojo {
         this.lastName = lastName;
     }
 
-    public String getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -53,7 +74,7 @@ public class StudentPojo {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StudentPojo that = (StudentPojo) o;
+        StudentResponse that = (StudentResponse) o;
         return firstName.equals(that.firstName) && lastName.equals(that.lastName) && dateOfBirth.equals(that.dateOfBirth) && courseName.equals(that.courseName);
     }
 

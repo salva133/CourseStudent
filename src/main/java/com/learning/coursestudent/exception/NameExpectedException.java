@@ -1,11 +1,11 @@
 package com.learning.coursestudent.exception;
 
-public class NameExpectedException extends ApiRequestException {
-    public NameExpectedException(String message) {
-        super(message);
-    }
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-    public NameExpectedException(String message, Throwable cause) {
-        super(message, cause);
+@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+public class NameExpectedException extends NullPointerException {
+    public NameExpectedException(String s) {
+        super(s);
     }
 }
