@@ -1,40 +1,42 @@
 package com.learning.coursestudent.controller;
 
+import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.Student;
-import com.learning.coursestudent.service.StudentService;
+import com.learning.coursestudent.repository.CourseRepository;
+import com.learning.coursestudent.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.Mock;
 
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-@WebMvcTest
 class CourseStudentRestControllerTest {
 
-    @Autowired
-    MockMvc mvc;
-
-    @MockBean
-    StudentService studentService;
+    @Mock
+    StudentRepository studentRepository;
+    @Mock
+    CourseRepository courseRepository;
 
     @Test
-    public void givenStudent_whenGetStudents_thenReturnJsonArray() throws Exception {
+    void givenStudent_whenAtLeastOneStudentHasCourse_thenTrue() {
 
-        Student student = new Student("Test");
+        // given
+        Course course = new Course();
+        course.setName("Test");
+        courseRepository.save(course);
+        Student student = new Student();
+        student.setCourse(course);
+        student.setFirstName("Bob");
+        student.setLastName("the Tester");
+        studentRepository.save(student);
 
-        List<Student> allStudents = List.of(student);
+        // when
+        List<Student> studentsByCourse = studentRepository.findByCourseName(course.getName());
+        boolean exists = studentsByCourse.size() > 0;
 
-        given(studentService.getAllStudents()).willReturn((ResponseEntity<List<Student>>) allStudents);
+        // then
+        assertThat("Students with Course exist", exists);
 
-        mvc.perform(get("student"))
-                .andExpect(status().isOk());
     }
-
 }
