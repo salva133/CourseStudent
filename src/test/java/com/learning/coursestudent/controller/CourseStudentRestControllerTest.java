@@ -5,17 +5,19 @@ import com.learning.coursestudent.classes.Student;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@DataJpaTest
 class CourseStudentRestControllerTest {
 
-    @Mock
+    @Autowired
     StudentRepository studentRepository;
-    @Mock
+    @Autowired
     CourseRepository courseRepository;
 
     @Test
