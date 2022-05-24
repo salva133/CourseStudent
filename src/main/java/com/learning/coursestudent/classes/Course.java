@@ -1,7 +1,6 @@
 package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.learning.coursestudent.exception.NameExpectedException;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,7 +24,7 @@ public class Course extends University {
     @Column(nullable = false)
     private String name;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    
+
     private List<Student> student;
     @CreationTimestamp
     private LocalDateTime zCreationTime;
