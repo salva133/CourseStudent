@@ -42,6 +42,7 @@ public class Student extends University {
     //CONSTRUCTORS
     public Student() {
     }
+
     public Student(String lastName) {
         this.lastName = lastName;
     }
@@ -89,6 +90,7 @@ public class Student extends University {
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
