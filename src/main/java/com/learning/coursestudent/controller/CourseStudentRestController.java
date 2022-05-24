@@ -36,9 +36,9 @@ public class CourseStudentRestController {
         return studentService.getAllStudents();
     }
 
-/*    public Student getStudentByLastName () {
-
-    }*/
+    public ResponseEntity<List<StudentResponse>> getStudentByLastName(StudentPojo studentLastName) {
+        return studentService.getStudentByLastName(studentLastName);
+    }
 
     @GetMapping(value = "student-by-course")
     public ResponseEntity<List<StudentResponse>> getStudentByCourse(CoursePojo courseName) {

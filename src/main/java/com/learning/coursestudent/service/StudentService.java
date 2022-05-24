@@ -40,8 +40,12 @@ public class StudentService {
         return new ResponseEntity<>(studentRepository.findAll(), HttpStatus.OK);
     }
 
-    public Student getStudentByLastName(String name) {
-        return null;
+    public ResponseEntity<List<StudentResponse>> getStudentByLastName(@RequestBody StudentPojo studentPojo) {
+        return new ResponseEntity<>(studentRepository
+                .findByLastName(studentPojo.getLastName())
+                .stream()
+                .map(StudentResponse::new)
+                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
 
