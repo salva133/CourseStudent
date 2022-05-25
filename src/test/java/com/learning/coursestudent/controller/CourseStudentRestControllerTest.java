@@ -21,7 +21,38 @@ class CourseStudentRestControllerTest {
     CourseRepository courseRepository;
 
     @Test
-    void givenStudent_whenAtLeastOneStudentHasCourse_thenTrue() {
+    void given_course_when_any_course_exists_then_true() {
+        // given
+        Course course = new Course();
+        course.setName("Test");
+        courseRepository.save(course);
+
+        //when
+        List<Course> courseList = courseRepository.findAll();
+        boolean exists = courseList.size() > 0;
+
+        //then
+        assertThat("At least one course exists",exists);
+    }
+
+    @Test
+    void given_student_when_any_student_exists_then_true() {
+        // given
+        Student student = new Student();
+        student.setFirstName("Test");
+        student.setLastName("Test");
+        studentRepository.save(student);
+
+        //when
+        List<Student> studentList = studentRepository.findAll();
+        boolean exists = studentList.size() > 0;
+
+        //then
+        assertThat("At least one course exists",exists);
+    }
+
+    @Test
+    void given_student_when_at_least_one_student_has_course_then_true() {
 
         // given
         Course course = new Course();
@@ -38,7 +69,7 @@ class CourseStudentRestControllerTest {
         boolean exists = studentsByCourse.size() > 0;
 
         // then
-        assertThat("Students with Course exist", exists);
+        assertThat("Students with Course exists", exists);
 
     }
 }
