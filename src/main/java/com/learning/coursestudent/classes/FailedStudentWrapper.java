@@ -21,7 +21,7 @@ public class FailedStudentWrapper {
 
     @Override
     public String toString() {
-        return System.lineSeparator() + pojo + ", Error = " + exception.getMessage();
+        return pojo + ", Error = " + exception.getMessage() + " //";
     }
 
     @Override

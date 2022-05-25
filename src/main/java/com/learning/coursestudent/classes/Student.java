@@ -49,32 +49,30 @@ public class Student extends University {
 
     public Student(StudentPojo studentPojo, short ageLimit, Course course) {
         if (studentPojo.getDateOfBirth() == null) {
-            logger.debug("## DATE IS NULL ##");
-            logger.debug("Date of birth is null");
+            logger.error("Date of birth is null");
             throw new NullDateException("Date of birth is null");
         }
         String dobStr = studentPojo.getDateOfBirth();
         if (dobStr.length() != 10) {
-            logger.debug("dobStr is not " + 10 + " characters long" +
-                    System.lineSeparator() + "SELF TREATMENT: trying to add \"19\" to it");
+            logger.warn("dobStr is not " + 10 + " characters long but " + dobStr.length() + ", SELF TREATMENT: trying to add \"19\" to it");
             dobStr = "19" + dobStr;
             if (dobStr.length() != 10) {
-                logger.debug("## DATE FORMAT INVALID ##");
-                logger.debug("dobStr is still not " + 10 + " characters long");
+                logger.error("## DATE FORMAT INVALID ##");
+                logger.error("dobStr is still not " + 10 + " characters long");
                 throw new DateFormatException("Date of birth requires format \"YYYY-MM-DD\"");
             }
         }
         LocalDate dob = LocalDate.parse(dobStr);
         if (dob.isAfter(LocalDate.now())) {
-            logger.debug("## DOB IN FUTURE ##");
-            logger.debug("dob is after today, and today is " + LocalDate.now());
+            logger.error("## DOB IN FUTURE ##");
+            logger.error("dob is after today, and today is " + LocalDate.now());
             throw new DobInFutureException("Date of birth is in the future");
         }
         Period period = Period.between(dob, LocalDate.now());
         this.age = period.getYears();
         if (this.age < ageLimit) {
-            logger.debug("## STUDENT IS TOO YOUNG ##");
-            logger.debug("Age " + this.age + " is lower than age limit " + ageLimit);
+            logger.error("## STUDENT IS TOO YOUNG ##");
+            logger.error("Age " + this.age + " is lower than age limit " + ageLimit);
             throw new TooYoungException("Person is too young, limit of Age is " + ageLimit);
         }
 
