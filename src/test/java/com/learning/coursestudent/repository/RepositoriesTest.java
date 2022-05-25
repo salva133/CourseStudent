@@ -1,9 +1,7 @@
-package com.learning.coursestudent.controller;
+package com.learning.coursestudent.repository;
 
 import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.Student;
-import com.learning.coursestudent.repository.CourseRepository;
-import com.learning.coursestudent.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,9 +9,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @DataJpaTest
-class CourseStudentRestControllerTest {
+class RepositoriesTest {
 
     @Autowired
     StudentRepository studentRepository;
@@ -28,11 +27,10 @@ class CourseStudentRestControllerTest {
         courseRepository.save(course);
 
         //when
-        List<Course> courseList = courseRepository.findAll();
-        boolean exists = courseList.size() > 0;
+        boolean exists = courseRepository.count() > 0;
 
         //then
-        assertThat("At least one course exists",exists);
+        assertTrue("At least one course exists", exists);
     }
 
     @Test
@@ -44,11 +42,10 @@ class CourseStudentRestControllerTest {
         studentRepository.save(student);
 
         //when
-        List<Student> studentList = studentRepository.findAll();
-        boolean exists = studentList.size() > 0;
+        boolean exists = studentRepository.count() > 0;
 
         //then
-        assertThat("At least one course exists",exists);
+        assertThat("At least one course exists", exists);
     }
 
     @Test
