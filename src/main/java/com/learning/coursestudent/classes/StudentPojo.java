@@ -7,9 +7,15 @@ public class StudentPojo {
     String lastName;
     String dateOfBirth;
     String courseName;
+    String mail;
 
     public StudentPojo() {
 
+    }
+
+    public StudentPojo(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getFirstName() {
@@ -44,9 +50,12 @@ public class StudentPojo {
         this.courseName = courseName;
     }
 
-    @Override
-    public String toString() {
-        return "Name = \"" + lastName + ", " + firstName + "\"";
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     @Override
@@ -54,11 +63,17 @@ public class StudentPojo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentPojo that = (StudentPojo) o;
-        return firstName.equals(that.firstName) && lastName.equals(that.lastName) && dateOfBirth.equals(that.dateOfBirth) && courseName.equals(that.courseName);
+        return Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(courseName, that.courseName) && Objects.equals(mail, that.mail);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, dateOfBirth, courseName);
+        return Objects.hash(firstName, lastName, dateOfBirth, courseName, mail);
     }
+
+    @Override
+    public String toString() {
+        return "Name = \"" + lastName + ", " + firstName + "\"";
+    }
+
 }
