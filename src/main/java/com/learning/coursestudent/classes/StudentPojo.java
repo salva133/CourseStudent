@@ -7,6 +7,7 @@ public class StudentPojo {
     String lastName;
     String dateOfBirth;
     String courseName;
+    String mail;
 
     public StudentPojo() {
 
