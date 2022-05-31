@@ -4,11 +4,9 @@ import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.service.CourseService;
 import com.learning.coursestudent.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -36,33 +34,35 @@ public class CourseStudentRestController {
         return studentService.getAllStudents();
     }
 
-    public ResponseEntity<List<StudentResponse>> getStudentByLastName(StudentPojo studentLastName) {
+/*    public ResponseEntity<List<StudentResponse>> getStudentByLastName(StudentPojo studentLastName) {
         return studentService.getStudentByLastName(studentLastName);
-    }
+    }*/
 
-    @GetMapping(value = "student-by-course")
+    @GetMapping(value = "/student-by-course")
     public ResponseEntity<List<StudentResponse>> getStudentByCourse(CoursePojo courseName) {
         return studentService.getStudentByCourse(courseName);
     }
     //GETTER
 
     //POSTER
-    @PostMapping(value = "course")
+    @PostMapping(value = "/course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
         return courseService.createCourse(coursePojo);
     }
 
-    @PostMapping(value = "course-batch")
+    @PostMapping(value = "/course-batch")
     public String newCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
         return courseService.createCourseBatch(coursePojoList);
     }
 
-    @PostMapping(value = "student")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = "/student")
     public String newStudent(@RequestBody StudentPojo studentPojo) {
         return studentService.createStudent(studentPojo);
     }
 
-    @PostMapping(value = "student-batch")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = "/student-batch")
     public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
         return studentService.createStudentBatch(studentPojoList);
     }
