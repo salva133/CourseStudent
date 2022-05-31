@@ -1,9 +1,6 @@
 package com.learning.coursestudent.classes;
 
-import com.learning.coursestudent.exception.DateFormatException;
-import com.learning.coursestudent.exception.DobInFutureException;
-import com.learning.coursestudent.exception.NullDateException;
-import com.learning.coursestudent.exception.TooYoungException;
+import com.learning.coursestudent.exception.*;
 import com.learning.coursestudent.service.StudentService;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,6 +25,7 @@ public class Student extends University {
     private String firstName;
     private String lastName;
     private String fullName;
+    private String mail;
     private LocalDate dateOfBirth;
     private int age;
     private Gender gender;
@@ -48,6 +46,10 @@ public class Student extends University {
     }
 
     public Student(StudentPojo studentPojo, short ageLimit, Course course) {
+        if (!studentPojo.getMail().contains("@")) {
+            logger.debug("Address of record is not valid");
+            throw new InvalidMailValueException("Mail Address must contain the '@'", studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
+        }
         if (studentPojo.getDateOfBirth() == null) {
             logger.error("Date of birth is null");
             throw new NullDateException("Date of birth is null");
@@ -81,6 +83,7 @@ public class Student extends University {
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dob;
         this.course = course;
+        this.mail = studentPojo.getMail();
     }
     //CONSTRUCTORS
 
@@ -143,6 +146,14 @@ public class Student extends University {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public LocalDateTime getzCreationTime() {

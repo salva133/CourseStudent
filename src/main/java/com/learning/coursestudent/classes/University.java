@@ -6,4 +6,8 @@ public class University {
         String universityName = "University of Glasgow";
         String universitySlogan = "Via, Veritas, Vita";
     }
+
+    public String getNameOfInstitute() {
+        return nameOfInstitute;
+    }
 }
