@@ -6,4 +6,8 @@ public class University {
     public University() {
         this.nameOfInstitute = "University of Stuff and Things";
     }
+
+    public String getNameOfInstitute() {
+        return nameOfInstitute;
+    }
 }
