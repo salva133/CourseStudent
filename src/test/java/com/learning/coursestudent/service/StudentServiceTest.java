@@ -1,47 +1,49 @@
 package com.learning.coursestudent.service;
 
+import com.learning.coursestudent.classes.StudentPojo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.mockito.ArgumentMatchers.anySet;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.HashSet;
+import java.util.Set;
 
-@AutoConfigureMockMvc
+import static org.mockito.Mockito.when;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class StudentServiceTest {
 
+    private StudentPojo pojo;
+    private Set<StudentPojo> pojoList = new HashSet<>();
 
     private static final String RESPONSE = "Success";
 
-    private static final String STUDENT_REQUEST =
-            "{firstName\": \"Johnathan\",\n" +
-            "\"lastName\": \"Archer\",\n" +
-            "\"dateOfBirth\": \"1954-07-30\",\n" +
-            "\"courseName\": \"Composition}";
-
-
-    @MockBean
+    @Mock
     private StudentService studentService;
 
     @Test
-    void newStudentBatch() throws Exception {
+    void createStudent() throws Exception {
+        pojo = new StudentPojo("Test", "Test");
         //GIVEN
-        when(studentService.createStudentBatch(anySet())).thenReturn(RESPONSE);
+        when(studentService.createStudent(pojo)).thenReturn(RESPONSE);
         //WHEN
-//        String result = mvc.perform(post("/student-batch")
-//                        .content(STUDENT_REQUEST)
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isCreated())
-//                .andReturn().getResponse().getContentAsString();
+        String result = studentService.createStudent(pojo);
         //THEN
-//        assert (result.equals(RESPONSE));
+        assert (result.equals(RESPONSE));
+    }
+
+    @Test
+    void createStudentBatch() throws Exception {
+        pojoList.add(new StudentPojo("Test1", "Test1"));
+        pojoList.add(new StudentPojo("Test2", "Test2"));
+        //GIVEN
+        when(studentService.createStudentBatch(pojoList)).thenReturn(RESPONSE);
+        //WHEN
+        String result = studentService.createStudentBatch(pojoList);
+        //THEN
+        assert (result.equals(RESPONSE));
     }
 }

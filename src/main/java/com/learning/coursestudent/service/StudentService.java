@@ -47,7 +47,6 @@ public class StudentService {
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-
     public ResponseEntity<List<StudentResponse>> getStudentByCourse(@RequestBody CoursePojo coursePojo) {
         return new ResponseEntity<>(studentRepository
                 .findByCourseName(coursePojo.getCourseName())
