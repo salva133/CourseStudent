@@ -24,20 +24,25 @@ public class CourseStudentRestController {
     }
 
     //GETTER
-    @GetMapping(value = "course")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/course")
     public ResponseEntity<List<Course>> getAllCourses() {
         return courseService.getAllCourses();
     }
 
-    @GetMapping(value = "student")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/student")
     public ResponseEntity<List<Student>> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-/*    public ResponseEntity<List<StudentResponse>> getStudentByLastName(StudentPojo studentLastName) {
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/student-by-lastname")
+    public ResponseEntity<List<StudentResponse>> getStudentByLastName(StudentPojo studentLastName) {
         return studentService.getStudentByLastName(studentLastName);
-    }*/
+    }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/student-by-course")
     public ResponseEntity<List<StudentResponse>> getStudentByCourse(CoursePojo courseName) {
         return studentService.getStudentByCourse(courseName);
@@ -45,11 +50,13 @@ public class CourseStudentRestController {
     //GETTER
 
     //POSTER
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/course")
     public String newCourse(@RequestBody CoursePojo coursePojo) {
         return courseService.createCourse(coursePojo);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/course-batch")
     public String newCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
         return courseService.createCourseBatch(coursePojoList);

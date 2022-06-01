@@ -50,8 +50,8 @@ class CourseStudentRestControllerTest {
         when(studentService.createStudentBatch(anySet())).thenReturn(RESPONSE);
         //WHEN
         String result = mvc.perform(post("/student-batch")
-                        .content(STUDENT_BATCH_REQUEST)
-                        .contentType(MediaType.APPLICATION_JSON))
+                .content(STUDENT_BATCH_REQUEST)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
         //THEN
