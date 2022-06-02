@@ -10,6 +10,7 @@ import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.exception.TooYoungException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,9 +29,21 @@ class StudentServiceTest {
     private CourseRepository courseRepository;
     @Mock
     private StudentRepository studentRepository;
-
     @InjectMocks
     private StudentService service;
+
+    @BeforeEach
+    void setUp() {
+        Student student = new Student();
+        student.setFirstName("Star");
+        student.setLastName("Lord");
+    }
+
+    @Test
+    void can_get_all_students() {
+        service.getAllStudents();
+        verify(studentRepository).findAll();
+    }
 
     @Test
     void should_throw_nulldateexception_when_dob_is_null() {
@@ -92,14 +106,5 @@ class StudentServiceTest {
         assertThrows(TooYoungException.class, () -> service.createStudent(studentPojo));
     }
 
-    @Test
-    void should_get_record_when_using_findbyId_method() {
-        StudentPojo studentPojo = new StudentPojo();
-        studentPojo.setFirstName("Star");
-        studentPojo.setLastName("Lord");
-        studentPojo.setCourseName("Algebra");
-        studentPojo.setDateOfBirth("2022-05-12");
 
-        when(studentRepository.findById(1L)).thenReturn((new Student()));
-    }
 }

@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
@@ -57,7 +56,6 @@ public class StudentService {
                 .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     public String createStudent(@RequestBody StudentPojo studentPojo) {
 
         try {
@@ -85,7 +83,6 @@ public class StudentService {
         return "Process createStudent has been finished";
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     public String createStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
         Set<FailedStudentWrapper> creationFailedRecordList = new HashSet<>();
         for (StudentPojo pojo : studentPojoList) {

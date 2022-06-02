@@ -24,7 +24,6 @@ public class Course extends University {
     @Column(nullable = false)
     private String name;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-
     private List<Student> student;
     @CreationTimestamp
     private LocalDateTime zCreationTime;
