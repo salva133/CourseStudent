@@ -46,6 +46,11 @@ public class Student extends University {
         this.lastName = lastName;
     }
 
+    public Student(String lastName, Course course) {
+        this.lastName = lastName;
+        this.course = course;
+    }
+
     public Student(StudentPojo studentPojo, short ageLimit, Course course) {
         if (studentPojo.getDateOfBirth() == null) {
             logger.debug("## DATE IS NULL ##");
