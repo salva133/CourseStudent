@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class CourseService {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    public String createCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
+    public String createCourseBatch(@RequestBody Set<CoursePojo> coursePojoList) {
         for (CoursePojo pojo : coursePojoList) {
             try {
                 Course course = new Course(pojo);

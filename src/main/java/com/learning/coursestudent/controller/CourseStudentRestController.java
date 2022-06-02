@@ -56,7 +56,7 @@ public class CourseStudentRestController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/course-batch")
-    public String newCourseBatch(@RequestBody List<CoursePojo> coursePojoList) {
+    public String newCourseBatch(@RequestBody Set<CoursePojo> coursePojoList) {
         return courseService.createCourseBatch(coursePojoList);
     }
 
