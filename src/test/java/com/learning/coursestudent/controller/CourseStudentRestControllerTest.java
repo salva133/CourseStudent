@@ -22,36 +22,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CourseStudentRestControllerTest {
     private static final String RESPONSE = "Success";
 
-    private static final String STUDENT_BATCH_REQUEST = "[\n" +
-            "    {\n" +
-            "        \"firstName\": \"Johnathan\",\n" +
-            "        \"lastName\": \"Archer\",\n" +
-            "        \"dateOfBirth\": \"1954-07-30\",\n" +
-            "        \"courseName\": \"Composition\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "        \"firstName\": \"Arnold\",\n" +
-            "        \"lastName\": \"Schwarzenegger\",\n" +
-            "        \"dateOfBirth\": \"1947-07-30\",\n" +
-            "        \"courseName\": \"Composition\"\n" +
-            "    }" +
-            "]";
+    private static final String STUDENT_BATCH_REQUEST = """
+            [
+                {
+                    "firstName": "Johnathan",
+                    "lastName": "Archer",
+                    "dateOfBirth": "1954-07-30",
+                    "courseName": "Composition"
+                },
+                {
+                    "firstName": "Arnold",
+                    "lastName": "Schwarzenegger",
+                    "dateOfBirth": "1947-07-30",
+                    "courseName": "Composition"
+                }]""";
 
 
     @Autowired
     private MockMvc mvc;
 
     @MockBean
-    private StudentService studentService;
+    private StudentService service;
 
     @Test
     void newStudentBatch() throws Exception {
         //GIVEN
-        when(studentService.createStudentBatch(anySet())).thenReturn(RESPONSE);
+        when(service.createStudentBatch(anySet())).thenReturn(RESPONSE);
         //WHEN
         String result = mvc.perform(post("/student-batch")
-                .content(STUDENT_BATCH_REQUEST)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(STUDENT_BATCH_REQUEST)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andReturn().getResponse().getContentAsString();
         //THEN
