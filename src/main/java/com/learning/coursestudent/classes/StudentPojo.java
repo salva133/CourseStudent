@@ -56,6 +56,14 @@ public class StudentPojo {
         this.courseName = courseName;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
     @Override
     public String toString() {
         return "Name = \"" + lastName + ", " + firstName + "\"";
