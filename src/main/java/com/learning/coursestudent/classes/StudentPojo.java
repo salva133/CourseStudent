@@ -12,6 +12,11 @@ public class StudentPojo {
 
     }
 
+    public StudentPojo(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public StudentPojo(String firstName, String lastName, String dateOfBirth) {
         this.firstName = firstName;
         this.lastName = lastName;
