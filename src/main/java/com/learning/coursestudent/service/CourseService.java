@@ -2,6 +2,7 @@ package com.learning.coursestudent.service;
 
 import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.CoursePojo;
+import com.learning.coursestudent.classes.CourseResponse;
 import com.learning.coursestudent.exception.NameExpectedException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.sun.istack.logging.Logger;
@@ -12,23 +13,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
 public class CourseService {
 
     final static Logger logger = Logger.getLogger(CourseService.class);
-    private final CourseRepository courseRepository;
+    final CourseRepository courseRepository;
 
     public ResponseEntity<List<Course>> getAllCourses() {
         return new ResponseEntity<>(courseRepository.findAll(), HttpStatus.OK);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<List<CourseResponse>> getCourseByName(@RequestBody CoursePojo coursePojo) {
+        return new ResponseEntity<>(courseRepository
+                .findCoursesByName(coursePojo.getCourseName())
+                .stream()
+                .map(CourseResponse::new)
+                .collect(Collectors.toList()), HttpStatus.OK);
+    }
+
     public String createCourse(@RequestBody CoursePojo coursePojo) {
         try {
             Course course = new Course(coursePojo);
@@ -42,7 +51,6 @@ public class CourseService {
         return "Process createCourse has been finished";
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     public String createCourseBatch(@RequestBody Set<CoursePojo> coursePojoList) {
         for (CoursePojo pojo : coursePojoList) {
             try {
