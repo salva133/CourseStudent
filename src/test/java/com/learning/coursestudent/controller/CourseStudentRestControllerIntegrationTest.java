@@ -1,7 +1,9 @@
 package com.learning.coursestudent.controller;
 
+import com.learning.coursestudent.classes.Course;
 import com.learning.coursestudent.classes.Gender;
 import com.learning.coursestudent.classes.Student;
+import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,11 +44,24 @@ class CourseStudentRestControllerIntegrationTest {
                 }
             ]""";
 
+    private static final String COURSE_BATCH_REQUEST = """
+            [
+                {
+                    "courseName": "Composition"
+                },
+                {
+                    "courseName": "Acoustics"
+                }
+            ]""";
+
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Test
     void given_studentBatch_posted_when_getting_student_by_firstName_then_get_values() throws Exception {
@@ -83,5 +98,20 @@ class CourseStudentRestControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].lastName").value("Test"))
                 .andExpect(jsonPath("$[0].mail").value("test@test.com"))
                 .andReturn().getResponse().getContentAsString();
+    }
+
+    @Test
+    void given_courseBatch_posted_when_getting_course_by_name_then_get_values() throws Exception {
+        //GIVEN
+        mvc.perform(post("/course-batch")
+                        .content(COURSE_BATCH_REQUEST)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+        //WHEN
+        List<Course> result = courseRepository.findCoursesByName("Composition");
+        //THEN
+        assert result.size() == 1;
+        Course course = result.get(0);
+        assert course.getName().equals("Composition");
     }
 }
