@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
@@ -52,9 +54,9 @@ class RepositoriesTest {
     void given_student_when_at_least_one_student_has_course_then_true() {
 
         // given
-        Course course = new Course();
-        course.setName("Test");
-        courseRepository.save(course);
+        Set<Course> course = new HashSet<>();
+        course.add(new Course("Test"));
+        courseRepository.saveAll(course);
         Student student = new Student();
         student.setCourse(course);
         student.setFirstName("Bob");
@@ -62,7 +64,7 @@ class RepositoriesTest {
         studentRepository.save(student);
 
         // when
-        List<Student> studentsByCourse = studentRepository.findByCourseName(course.getName());
+        List<Student> studentsByCourse = studentRepository.findByCourseName("Test");
         boolean exists = studentsByCourse.size() > 0;
 
         // then

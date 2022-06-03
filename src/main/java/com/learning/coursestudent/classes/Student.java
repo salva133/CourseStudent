@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 
@@ -29,8 +31,10 @@ public class Student extends University {
     private LocalDate dateOfBirth;
     private int age;
     private Gender gender;
-    @ManyToOne
-    private Course course;
+    @ManyToMany
+    @JoinTable(name = "student_course", joinColumns = {@JoinColumn(name = "fk_student")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_course")})
+    private Set<Course> course = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime zCreationTime;
     @UpdateTimestamp
@@ -45,12 +49,12 @@ public class Student extends University {
         this.lastName = lastName;
     }
 
-    public Student(String lastName, Course course) {
+    public Student(String lastName, Set<Course> course) {
         this.lastName = lastName;
         this.course = course;
     }
 
-    public Student(StudentPojo studentPojo, short ageLimit, Course course) {
+    public Student(StudentPojo studentPojo, short ageLimit, Set<Course> course) {
         if (studentPojo.getMail() != null) {
             if (!studentPojo.getMail().contains("@")) {
                 logger.debug("Address of record is not valid");
@@ -123,11 +127,11 @@ public class Student extends University {
         return fullName;
     }
 
-    public Course getCourse() {
+    public Set<Course> getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(Set<Course> course) {
         this.course = course;
     }
 

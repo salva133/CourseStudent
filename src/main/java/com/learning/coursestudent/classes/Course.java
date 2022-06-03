@@ -2,13 +2,13 @@ package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.learning.coursestudent.exception.NameExpectedException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @JsonIdentityInfo(
@@ -23,8 +23,10 @@ public class Course extends University {
     private long id;
     @Column(nullable = false)
     private String name;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Student> student;
+    @ManyToMany
+    @JoinTable(name = "course_student", joinColumns = {@JoinColumn(name = "fk_course")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_student")})
+    private Set<Student> student = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime zCreationTime;
     @UpdateTimestamp
@@ -40,10 +42,7 @@ public class Course extends University {
     }
 
     public Course(CoursePojo coursePojo) {
-        if (coursePojo.getCourseName() == null || coursePojo.getCourseName().equals("")) {
-            throw new NameExpectedException("A name was expected");
-        }
-        this.name = coursePojo.getCourseName();
+        this(coursePojo.getCourseName());
     }
     //CONSTRUCTORS
 
@@ -64,11 +63,11 @@ public class Course extends University {
         this.name = name;
     }
 
-    public List<Student> getStudent() {
+    public Set<Student> getStudent() {
         return student;
     }
 
-    public void setStudent(List<Student> student) {
+    public void setStudent(Set<Student> student) {
         this.student = student;
     }
 

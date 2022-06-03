@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -34,7 +36,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(Collections.singleton(new Course(coursePojo)));
 
         assertThrows(NullDateException.class, () -> service.createStudent(studentPojo));
     }
@@ -49,7 +51,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(Collections.singleton(new Course(coursePojo)));
 
         assertThrows(DateFormatException.class, () -> service.createStudent(studentPojo));
     }
@@ -64,7 +66,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(Collections.singleton(new Course(coursePojo)));
 
         assertThrows(DobInFutureException.class, () -> service.createStudent(studentPojo));
     }
@@ -80,7 +82,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(Collections.singleton(new Course(coursePojo)));
 
         assertThrows(TooYoungException.class, () -> service.createStudent(studentPojo));
     }
