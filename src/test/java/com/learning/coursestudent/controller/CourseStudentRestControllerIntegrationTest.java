@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 class CourseStudentRestControllerIntegrationTest {
 
+    private static final String TESTNAME = "Test";
     private static final String STUDENT_BATCH_REQUEST = """
             [
                 {
@@ -84,8 +85,8 @@ class CourseStudentRestControllerIntegrationTest {
     @Test
     void when_student_in_repo_then_find_by_values() throws Exception {
         //WHEN
-        Student student = new Student("Test");
-        student.setFirstName("Test");
+        Student student = new Student(TESTNAME);
+        student.setFirstName(TESTNAME);
         student.setGender(Gender.MALE);
         student.setMail("test@test.com");
         studentRepository.save(student);
@@ -94,8 +95,8 @@ class CourseStudentRestControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].firstName").value("Test"))
-                .andExpect(jsonPath("$[0].lastName").value("Test"))
+                .andExpect(jsonPath("$[0].firstName").value(TESTNAME))
+                .andExpect(jsonPath("$[0].lastName").value(TESTNAME))
                 .andExpect(jsonPath("$[0].mail").value("test@test.com"))
                 .andReturn().getResponse().getContentAsString();
     }
@@ -113,5 +114,19 @@ class CourseStudentRestControllerIntegrationTest {
         assert result.size() == 1;
         Course course = result.get(0);
         assert course.getName().equals("Composition");
+    }
+
+    @Test
+    void when_course_in_repo_then_find_by_name() throws Exception {
+        //WHEN
+        Course course = new Course(TESTNAME);
+        courseRepository.save(course);
+        //THEN
+        mvc.perform(get("/course")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value(TESTNAME))
+                .andReturn().getResponse().getContentAsString();
     }
 }
