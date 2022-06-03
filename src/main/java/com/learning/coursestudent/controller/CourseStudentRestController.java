@@ -24,11 +24,13 @@ public class CourseStudentRestController {
     }
 
     //GETTER
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "course")
     public ResponseEntity<List<Course>> getAllCourses() {
         return courseService.getAllCourses();
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "student")
     public ResponseEntity<List<Student>> getAllStudents() {
         return studentService.getAllStudents();
@@ -60,11 +62,13 @@ public class CourseStudentRestController {
         return courseService.createCourseBatch(coursePojoList);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "student")
     public String newStudent(@RequestBody StudentPojo studentPojo) {
         return studentService.createStudent(studentPojo);
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "student-batch")
     public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
         return studentService.createStudentBatch(studentPojoList);
