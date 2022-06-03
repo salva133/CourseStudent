@@ -34,7 +34,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
 
         assertThrows(NullDateException.class, () -> service.createStudent(studentPojo));
     }
@@ -49,7 +49,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
 
         assertThrows(DateFormatException.class, () -> service.createStudent(studentPojo));
     }
@@ -64,7 +64,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
 
         assertThrows(DobInFutureException.class, () -> service.createStudent(studentPojo));
     }
@@ -80,7 +80,7 @@ class TestStudentException {
 
         CoursePojo coursePojo = new CoursePojo();
         coursePojo.setCourseName("Algebra");
-        when(courseRepository.findByName(any())).thenReturn(new Course(coursePojo));
+        when(courseRepository.findCourseByName(any())).thenReturn(new Course(coursePojo));
 
         assertThrows(TooYoungException.class, () -> service.createStudent(studentPojo));
     }

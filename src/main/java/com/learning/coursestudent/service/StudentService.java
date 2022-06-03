@@ -58,7 +58,7 @@ public class StudentService {
     public String createStudent(@RequestBody StudentPojo studentPojo) {
 
         try {
-            Course course = courseRepository.findByName(studentPojo.getCourseName());
+            Course course = courseRepository.findCourseByName(studentPojo.getCourseName());
             Student student = new Student(studentPojo, ageLimit, course);
             studentRepository.save(student);
             logger.log(Logger.Level.INFO, "## Student \"" + student.getFullName() + "\" created ##");
@@ -86,7 +86,7 @@ public class StudentService {
         Set<FailedStudentWrapper> creationFailedRecordList = new HashSet<>();
         for (StudentPojo pojo : studentPojoList) {
             try {
-                Course course = courseRepository.findByName(pojo.getCourseName());
+                Course course = courseRepository.findCourseByName(pojo.getCourseName());
                 Student student = new Student(pojo, ageLimit, course);
                 studentRepository.save(student);
                 if (course != null) {
