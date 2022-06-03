@@ -16,8 +16,8 @@ import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
@@ -49,7 +49,7 @@ class CourseStudentRestControllerIntegrationTest {
     private StudentRepository studentRepository;
 
     @Test
-    void newStudentBatch() throws Exception {
+    void given_studentBatch_posted_when_getting_student_by_firstName_then_get_values() throws Exception {
         //GIVEN
         mvc.perform(post("/student-batch")
                         .content(STUDENT_BATCH_REQUEST)
@@ -62,24 +62,21 @@ class CourseStudentRestControllerIntegrationTest {
         Student Arni = result.get(0);
         assert Arni.getFirstName().equals("Arnold");
         assert Arni.getLastName().equals("Schwarzenegger");
-        assert Arni.getDateOfBirth().getYear() == 1954;
-        assert Arni.getDateOfBirth().getMonthValue() == 7;
-        assert Arni.getDateOfBirth().getDayOfMonth() == 30;
-        assert Arni.getCourse().getName().equals("Composition");
+        assert Arni.getDateOfBirth().toString().equals("1947-07-30");
         assert Arni.getMail().equals("a.schwarzenegger@skynet.com");
     }
 
     @Test
-    void getStudent() throws Exception {
-        //GIVEN
+    void when_student_in_repo_then_find_by_values() throws Exception {
+        //WHEN
         Student student = new Student("Test");
         student.setFirstName("Test");
         student.setGender(Gender.MALE);
         student.setMail("test@test.com");
         studentRepository.save(student);
-        //WHEN - THEN
+        //THEN
         mvc.perform(get("/student")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
                 .andExpect(jsonPath("$[0].firstName").value("Test"))
