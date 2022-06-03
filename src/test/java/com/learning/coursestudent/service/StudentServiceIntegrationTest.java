@@ -14,6 +14,10 @@ import java.util.stream.Stream;
 
 @SpringBootTest
 public class StudentServiceIntegrationTest {
+    private static final String TESTNAME = "Test";
+    private static final String TESTNAME1 = "Test1";
+    private static final String TESTNAME2 = "Test2";
+    private static final String TESTDOB = "1993-12-10";
 
     @Autowired
     private StudentRepository repository;
@@ -22,25 +26,37 @@ public class StudentServiceIntegrationTest {
     private StudentService service;
 
     @Test
-    void find_student_by_lastName_in_studentRepository() throws Exception {
+    void find_student_by_lastName_in_studentRepository() {
         //GIVEN
-        service.createStudent(new StudentPojo("Test", "Test", "1993-12-10"));
+        service.createStudent(new StudentPojo(TESTNAME, TESTNAME, TESTDOB));
         //WHEN
-        List<Student> students = repository.findByLastName("Test");
-        Optional<Student> result = students.stream().filter(student -> student.getLastName().contains("Test")).findFirst();
+        List<Student> students = repository.findByLastName(TESTNAME);
+        Optional<Student> result = students.stream().filter(student -> student.getLastName().contains(TESTNAME)).findFirst();
         //THEN
         assert result.isPresent();
     }
 
     @Test
-    void find_students_by_lastName_in_studentRepository() throws Exception {
+    void find_students_by_lastName_in_studentRepository1() {
         //GIVEN
-        service.createStudentBatch(Set.of(new StudentPojo("Test1", "Test1", "1993-12-10"),
-                new StudentPojo("Test2", "Test2", "1993-12-10")));
+        service.createStudentBatch(Set.of(new StudentPojo(TESTNAME1, TESTNAME1, TESTDOB),
+                new StudentPojo(TESTNAME2, TESTNAME2, TESTDOB)));
         //WHEN
-        List<Student> students = repository.findByLastName("Test1");
-        Stream<Student> result = students.stream().filter(student -> student.getLastName().contains("Test1"));
+        List<Student> students = repository.findByLastName(TESTNAME1);
+        Stream<Student> result = students.stream().filter(student -> student.getLastName().contains(TESTNAME1));
         //THEN
-        assert result.anyMatch(student -> student.getLastName().contains("Test1"));
+        assert result.anyMatch(student -> student.getLastName().contains(TESTNAME1));
+    }
+
+    @Test
+    void find_students_by_lastName_in_studentRepository2() {
+        //GIVEN
+        service.createStudentBatch(Set.of(new StudentPojo(TESTNAME1, TESTNAME1, TESTDOB),
+                new StudentPojo(TESTNAME2, TESTNAME2, TESTDOB)));
+        //WHEN
+        List<Student> students = repository.findByLastName(TESTNAME2);
+        Stream<Student> result = students.stream().filter(student -> student.getLastName().contains(TESTNAME2));
+        //THEN
+        assert result.anyMatch(student -> student.getLastName().contains(TESTNAME2));
     }
 }

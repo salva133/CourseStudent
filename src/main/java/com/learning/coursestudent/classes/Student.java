@@ -51,9 +51,11 @@ public class Student extends University {
     }
 
     public Student(StudentPojo studentPojo, short ageLimit, Course course) {
-        if (!studentPojo.getMail().contains("@")) {
-            logger.debug("Address of record is not valid");
-            throw new InvalidMailValueException("Mail Address must contain the '@'", studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
+        if (studentPojo.getMail() != null) {
+            if (!studentPojo.getMail().contains("@")) {
+                logger.debug("Address of record is not valid");
+                throw new InvalidMailValueException("Mail Address must contain the '@'", studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
+            }
         }
         if (studentPojo.getDateOfBirth() == null) {
             logger.error("Date of birth is null");
