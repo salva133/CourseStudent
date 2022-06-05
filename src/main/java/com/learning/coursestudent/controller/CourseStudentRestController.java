@@ -73,5 +73,11 @@ public class CourseStudentRestController {
     public String newStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
         return studentService.createStudentBatch(studentPojoList);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value = "/student/change-course")
+    public String changeCourseForStudent(@RequestBody StudentPojo studentPojo, CoursePojo coursePojo) {
+        return studentService.setCourseForStudent(studentPojo, coursePojo);
+    }
     //POSTER
 }
