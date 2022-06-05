@@ -129,6 +129,17 @@ public class StudentService {
         return "Process of creating new students has been completed";
     }
 
+    public String setCourseForStudent(@RequestBody StudentPojo studentPojo, CoursePojo coursePojo) {
+        Student student = studentRepository.findById(studentPojo.getId());
+        try {
+            student.setCourse(courseRepository.findCourseByName(coursePojo.getCourseName()));
+            studentRepository.save(student);
+        } catch (MissingResourceException e) {
+            logger.error("Resource 'Course' is missing");
+        }
+        return "Course has been set for " + student.getFullName();
+    }
+
     public void setAgeLimit(short ageLimit) {
         this.ageLimit = ageLimit;
     }
