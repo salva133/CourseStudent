@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.MissingResourceException;
 
 @Entity
 
@@ -128,7 +129,11 @@ public class Student extends University {
     }
 
     public void setCourse(Course course) {
-        this.course = course;
+        if (course != null) {
+            this.course = course;
+        } else {
+            throw new MissingResourceException("Course is null", "Course", getFullName());
+        }
     }
 
     public LocalDate getDateOfBirth() {
