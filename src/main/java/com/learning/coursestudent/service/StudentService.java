@@ -3,7 +3,6 @@ package com.learning.coursestudent.service;
 import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.exception.AgeException;
 import com.learning.coursestudent.exception.DateFormatException;
-import com.learning.coursestudent.exception.InvalidMailValueException;
 import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
@@ -96,23 +95,9 @@ public class StudentService {
                 } else {
                     logger.log(Logger.Level.INFO, "## Student \"" + student.getFullName() + "\" has been created ##");
                 }
-            } catch (AgeException e) {
-                logger.error("The Age is not valid");
-                creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
-            } catch (DataIntegrityViolationException e) {
-                logger.error("The integrity of the data has been violated");
-                creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
-            } catch (PropertyValueException e) {
-                logger.error("Value property is invalid");
-                creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
-            } catch (DateTimeParseException e) {
-                logger.error("The date could not be parsed");
-                creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
-            } catch (NullPointerException e) {
-                logger.error("Value is null");
-                creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
-            } catch (DateFormatException e) {
-                logger.error("Date Format is not valid");
+            } catch (DateFormatException | DataIntegrityViolationException | PropertyValueException |
+                     DateTimeParseException | NullPointerException e) {
+                logger.error(e.getMessage());
                 creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
             }
         }
