@@ -3,6 +3,7 @@ package com.learning.coursestudent.service;
 import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.exception.AgeException;
 import com.learning.coursestudent.exception.DateFormatException;
+import com.learning.coursestudent.exception.InvalidMailValueException;
 import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.format.DateTimeParseException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ import java.util.stream.Collectors;
 public class StudentService {
 
     final static Logger logger = Logger.getLogger(StudentService.class);
-    private static final String nl = System.lineSeparator();
+    private static final String NEWLINE = System.lineSeparator();
     final StudentRepository studentRepository;
     final CourseRepository courseRepository;
     @Value("${ageLimit:12}")
@@ -63,20 +65,20 @@ public class StudentService {
             studentRepository.save(student);
             logger.log(Logger.Level.INFO, "## Student \"" + student.getFullName() + "\" created ##");
         } catch (NullDateException e) {
-            logger.log(Logger.Level.ERROR, "Date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
-            logger.log(Logger.Level.ERROR, e.getMessage());
+            logger.error("Date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
+            logger.error(e.getMessage());
             throw e;
         } catch (DateTimeParseException e) {
-            logger.log(Logger.Level.ERROR, "The date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" could not be parsed");
-            logger.log(Logger.Level.ERROR, e.getMessage());
+            logger.error("The date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" could not be parsed");
+            logger.error(e.getMessage());
             throw e;
         } catch (AgeException e) {
-            logger.log(Logger.Level.ERROR, "The Age of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
-            logger.log(Logger.Level.ERROR, e.getMessage());
+            logger.error("The Age of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
+            logger.error(e.getMessage());
             throw e;
         } catch (DateFormatException e) {
-            logger.log(Logger.Level.ERROR, "Date Format of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
-            logger.log(Logger.Level.ERROR, e.getMessage());
+            logger.error("Date Format of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
+            logger.error(e.getMessage());
             throw e;
         }
         return "Process createStudent has been finished";
@@ -95,49 +97,49 @@ public class StudentService {
                     logger.log(Logger.Level.INFO, "## Student \"" + student.getFullName() + "\" has been created ##");
                 }
             } catch (AgeException e) {
-                logger.log(Logger.Level.ERROR, "The Age is not valid");
+                logger.error("The Age is not valid");
                 creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
             } catch (DataIntegrityViolationException e) {
-                logger.log(Logger.Level.ERROR, "The integrity of the data has been violated");
+                logger.error("The integrity of the data has been violated");
                 creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
             } catch (PropertyValueException e) {
-                logger.log(Logger.Level.ERROR, "Value property is invalid");
+                logger.error("Value property is invalid");
                 creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
             } catch (DateTimeParseException e) {
-                logger.log(Logger.Level.ERROR, "The date could not be parsed");
+                logger.error("The date could not be parsed");
                 creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
             } catch (NullPointerException e) {
-                logger.log(Logger.Level.ERROR, "Value is null");
+                logger.error("Value is null");
                 creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
             } catch (DateFormatException e) {
-                logger.log(Logger.Level.ERROR, "Date Format is not valid");
+                logger.error("Date Format is not valid");
                 creationFailedRecordList.add(new FailedStudentWrapper(pojo, e));
             }
         }
 
         if (myDebug) {
             if (creationFailedRecordList.size() == 1) {
-                logger.log(Logger.Level.WARN, "Failed record: " + creationFailedRecordList);
+                logger.warn("Failed record: " + creationFailedRecordList);
                 return "Process of creating new students has been completed" +
-                        nl + "Although there was one record out of " + studentPojoList.size() + " records which could not be created" +
-                        nl + "Failed record: " + creationFailedRecordList;
+                        NEWLINE + "Although there was one record out of " + studentPojoList.size() + " records which could not be created" +
+                        NEWLINE + "Failed record: " + creationFailedRecordList;
             }
             if (creationFailedRecordList.size() > 1) {
-                logger.log(Logger.Level.WARN, "Failed records: " + creationFailedRecordList);
+                logger.warn("Failed records: " + creationFailedRecordList);
                 return "Process of creating new students has been completed" +
-                        nl + "Although there were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created" +
-                        nl + "Failed records: " + creationFailedRecordList;
+                        NEWLINE + "Although there were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created" +
+                        NEWLINE + "Failed records: " + creationFailedRecordList;
             }
         }
         if (creationFailedRecordList.size() == 1) {
-            logger.log(Logger.Level.WARN, "Failed record: " + creationFailedRecordList);
+            logger.warn("Failed record: " + creationFailedRecordList);
             return "Process of creating new students has been completed" +
-                    nl + "Although there was one record out of " + studentPojoList.size() + " records which could not be created";
+                    NEWLINE + "Although there was one record out of " + studentPojoList.size() + " records which could not be created";
         }
         if (creationFailedRecordList.size() > 1) {
-            logger.log(Logger.Level.WARN, "Failed records: " + creationFailedRecordList);
+            logger.warn("Failed records: " + creationFailedRecordList);
             return "Process of creating new students has been completed" +
-                    nl + "Although there were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created";
+                    NEWLINE + "Although there were " + creationFailedRecordList.size() + " out of " + studentPojoList.size() + " records which could not be created";
         }
         return "Process of creating new students has been completed";
     }
