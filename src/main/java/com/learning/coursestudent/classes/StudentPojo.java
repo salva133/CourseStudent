@@ -3,6 +3,7 @@ package com.learning.coursestudent.classes;
 import java.util.Objects;
 
 public class StudentPojo {
+    long id;
     String firstName;
     String lastName;
     String dateOfBirth;
@@ -22,6 +23,14 @@ public class StudentPojo {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
