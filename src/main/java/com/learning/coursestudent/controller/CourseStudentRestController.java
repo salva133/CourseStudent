@@ -31,6 +31,12 @@ public class CourseStudentRestController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/course-by-name")
+    public ResponseEntity<List<CourseResponse>> getCourseByName(@RequestBody CoursePojo courseName) {
+        return courseService.getCourseByName(courseName);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "student")
     public ResponseEntity<List<Student>> getAllStudents() {
         return studentService.getAllStudents();
@@ -38,13 +44,13 @@ public class CourseStudentRestController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/student-by-lastname")
-    public ResponseEntity<List<StudentResponse>> getStudentByLastName(StudentPojo studentLastName) {
+    public ResponseEntity<List<StudentResponse>> getStudentByLastName(@RequestBody StudentPojo studentLastName) {
         return studentService.getStudentByLastName(studentLastName);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/student-by-course")
-    public ResponseEntity<List<StudentResponse>> getStudentByCourse(CoursePojo courseName) {
+    public ResponseEntity<List<StudentResponse>> getStudentByCourse(@RequestBody CoursePojo courseName) {
         return studentService.getStudentByCourse(courseName);
     }
     //GETTER
