@@ -2,6 +2,7 @@ package com.learning.coursestudent.classes;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.learning.coursestudent.exception.NameExpectedException;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -39,6 +40,9 @@ public class Course extends University {
     }
 
     public Course(String name) {
+        if (name == null) {
+            throw new NameExpectedException("Name is null");
+        }
         this.name = name;
     }
 
