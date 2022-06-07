@@ -8,7 +8,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @JsonIdentityInfo(
@@ -23,8 +25,10 @@ public class Course extends University {
     private long id;
     @Column(nullable = false)
     private String name;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Student> student;
+    @ManyToMany
+    @JoinTable(name = "course_student", joinColumns = {@JoinColumn(name = "fk_course")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_student")})
+    private Set<Student> student = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime zCreationTime;
     @UpdateTimestamp
@@ -36,14 +40,14 @@ public class Course extends University {
     }
 
     public Course(String name) {
+        if (name == null) {
+            throw new NameExpectedException("Name is null");
+        }
         this.name = name;
     }
 
     public Course(CoursePojo coursePojo) {
-        if (coursePojo.getCourseName() == null || coursePojo.getCourseName().equals("")) {
-            throw new NameExpectedException("A name was expected");
-        }
-        this.name = coursePojo.getCourseName();
+        this(coursePojo.getCourseName());
     }
     //CONSTRUCTORS
 
@@ -64,11 +68,11 @@ public class Course extends University {
         this.name = name;
     }
 
-    public List<Student> getStudent() {
+    public Set<Student> getStudent() {
         return student;
     }
 
-    public void setStudent(List<Student> student) {
+    public void setStudent(Set<Student> student) {
         this.student = student;
     }
 
@@ -80,4 +84,23 @@ public class Course extends University {
         return zUpdateTime;
     }
     //GETTER AND SETTER
+
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id == course.id && Objects.equals(name, course.name) && Objects.equals(student, course.student) && Objects.equals(zCreationTime, course.zCreationTime) && Objects.equals(zUpdateTime, course.zUpdateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, student, zCreationTime, zUpdateTime);
+    }
 }

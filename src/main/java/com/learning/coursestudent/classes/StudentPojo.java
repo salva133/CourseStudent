@@ -9,6 +9,7 @@ public class StudentPojo {
     String dateOfBirth;
     String courseName;
     String mail;
+    String gender;
 
     public StudentPojo() {
 
@@ -71,6 +72,14 @@ public class StudentPojo {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override

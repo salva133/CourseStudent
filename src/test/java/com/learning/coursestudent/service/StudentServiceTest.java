@@ -58,8 +58,9 @@ class StudentServiceTest {
     @Test
     void getStudentByCourse() {
         //GIVEN
-        Course course = new Course(TESTNAME);
-        courseRepository.save(course);
+        Set<Course> course = new HashSet<>();
+        course.add(new Course(TESTNAME));
+        courseRepository.saveAll(course);
         Student student = new Student(TESTNAME);
         student.setCourse(course);
         studentRepository.save(student);
@@ -72,7 +73,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void createStudent() throws Exception {
+    void createStudent() {
         StudentPojo studentPojo = new StudentPojo(TESTNAME, TESTNAME);
         //GIVEN
         when(service.createStudent(studentPojo)).thenReturn(RESPONSE);
@@ -83,7 +84,7 @@ class StudentServiceTest {
     }
 
     @Test
-    void createStudentBatch() throws Exception {
+    void createStudentBatch() {
         Set<StudentPojo> studentPojoSet = new HashSet<>();
         studentPojoSet.add(new StudentPojo("Test1", "Test1"));
         studentPojoSet.add(new StudentPojo("Test2", "Test2"));

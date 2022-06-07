@@ -1,6 +1,7 @@
 package com.learning.coursestudent.classes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class StudentResponse {
@@ -22,7 +23,7 @@ public class StudentResponse {
     }
 
     public StudentResponse(Student student) {
-        this(student.getId(), student.getFirstName(), student.getLastName(), student.getDateOfBirth(), student.getCourse().getName());
+        this(student.getId(), student.getFirstName(), student.getLastName(), student.getDateOfBirth(), String.valueOf(new ArrayList<>(student.getCourse())));
     }
 
     public long getId() {

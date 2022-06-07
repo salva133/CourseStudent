@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CourseService {
-
+    private static final String NEWLINE = System.lineSeparator();
     final static Logger logger = Logger.getLogger(CourseService.class);
     final CourseRepository courseRepository;
 
@@ -42,29 +42,30 @@ public class CourseService {
         try {
             Course course = new Course(coursePojo);
             courseRepository.save(course);
-            logger.severe("## Course \"" + course.getName() + "\" has been created ##");
-        } catch (NameExpectedException e) {
-            logger.severe("A name was expected");
-        } catch (DataIntegrityViolationException e) {
-            logger.severe("Data integrity has been violated, rethrowing to ApiRequestException");
+            logger.info("## Course \"" + course.getName() + "\" has been created ##");
+            return "Process createCourse has been finished";
+        } catch (NameExpectedException | DataIntegrityViolationException e) {
+            logger.severe(e.getMessage());
+            return "The creation of the course failed." +
+                    NEWLINE + "Please see the log or contact your System Administrator for further information.";
         }
-        return "Process createCourse has been finished";
     }
 
     public String createCourseBatch(@RequestBody Set<CoursePojo> coursePojoList) {
         for (CoursePojo pojo : coursePojoList) {
+            int times = 0;
             try {
                 Course course = new Course(pojo);
                 courseRepository.save(course);
                 logger.info("## Course \"" + course.getName() + "\" has been created ##");
-            } catch (NameExpectedException e) {
+                times++;
+                return "Process createCourseBatch has been finished " + times + " times";
+            } catch (NullPointerException | PropertyValueException e) {
                 logger.severe(e.getMessage());
-            } catch (PropertyValueException e) {
-                logger.severe("Value of Property 'Name' is illegal");
-            } catch (NullPointerException e) {
-                logger.severe("Value is null");
+                return "The creation of the courses failed." +
+                        NEWLINE + "Please see the log or contact your System Administrator for further information.";
             }
         }
-        return "Process createCourseBatch has been finished";
+        return null;
     }
 }

@@ -10,7 +10,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.HashSet;
 import java.util.MissingResourceException;
+import java.util.Set;
 
 @Entity
 
@@ -30,8 +32,10 @@ public class Student extends University {
     private LocalDate dateOfBirth;
     private int age;
     private Gender gender;
-    @ManyToOne
-    private Course course;
+    @ManyToMany
+    @JoinTable(name = "student_course", joinColumns = {@JoinColumn(name = "fk_student")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_course")})
+    private Set<Course> course = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime zCreationTime;
     @UpdateTimestamp
@@ -46,20 +50,24 @@ public class Student extends University {
         this.lastName = lastName;
     }
 
-    public Student(String lastName, Course course) {
+    public Student(String lastName, Set<Course> course) {
         this.lastName = lastName;
         this.course = course;
     }
 
-    public Student(StudentPojo studentPojo, short ageLimit, Course course) {
-        if (studentPojo.getMail() != null) {
-            if (!studentPojo.getMail().contains("@")) {
-                logger.debug("Address of record is not valid");
-                throw new InvalidMailValueException("Mail Address must contain the '@'", studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
-            }
+    public Student(StudentPojo studentPojo, short ageLimit, Set<Course> course) {
+        //MAIL
+        if (studentPojo.getMail() == null || studentPojo.getMail().isBlank()) {
+            String firstLetterOfFirstNameLowerCase = String.valueOf(studentPojo.getFirstName().charAt(0));
+            this.mail = firstLetterOfFirstNameLowerCase.concat("." + studentPojo.getLastName().toLowerCase()).concat("@mydomain.com");
+        } else if (!studentPojo.getMail().contains("@")) {
+            throw new InvalidMailValueException("Mail Address must contain the '@'", "Record.Value -> " + studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
+        } else {
+            this.mail = studentPojo.getMail();
         }
+
+        //DATE OF BIRTH
         if (studentPojo.getDateOfBirth() == null) {
-            logger.error("Date of birth is null");
             throw new NullDateException("Date of birth is null");
         }
         String dobStr = studentPojo.getDateOfBirth();
@@ -67,23 +75,23 @@ public class Student extends University {
             logger.warn("dobStr is not " + 10 + " characters long but " + dobStr.length() + ", SELF TREATMENT: trying to add \"19\" to it");
             dobStr = "19" + dobStr;
             if (dobStr.length() != 10) {
-                logger.error("## DATE FORMAT INVALID ##");
-                logger.error("dobStr is still not " + 10 + " characters long");
+                logger.error("dobStr is still not " + 10 + " characters long. Operation will be interrupted...");
                 throw new DateFormatException("Date of birth requires format \"YYYY-MM-DD\"");
             }
         }
         LocalDate dob = LocalDate.parse(dobStr);
         if (dob.isAfter(LocalDate.now())) {
-            logger.error("## DOB IN FUTURE ##");
-            logger.error("dob is after today, and today is " + LocalDate.now());
             throw new DobInFutureException("Date of birth is in the future");
         }
         Period period = Period.between(dob, LocalDate.now());
         this.age = period.getYears();
         if (this.age < ageLimit) {
-            logger.error("## STUDENT IS TOO YOUNG ##");
-            logger.error("Age " + this.age + " is lower than age limit " + ageLimit);
             throw new TooYoungException("Person is too young, limit of Age is " + ageLimit);
+        }
+        //GENDER
+        switch (studentPojo.getGender().toLowerCase()) {
+            case "male" -> this.setGender(Gender.MALE);
+            case "female" -> this.setGender(Gender.FEMALE);
         }
 
         this.firstName = studentPojo.getFirstName();
@@ -91,7 +99,6 @@ public class Student extends University {
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dob;
         this.course = course;
-        this.mail = studentPojo.getMail();
     }
     //CONSTRUCTORS
 
@@ -124,11 +131,11 @@ public class Student extends University {
         return fullName;
     }
 
-    public Course getCourse() {
+    public Set<Course> getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(Set<Course> course) {
         if (course != null) {
             this.course = course;
         } else {
