@@ -3,6 +3,7 @@ package com.learning.coursestudent.service;
 import com.learning.coursestudent.classes.*;
 import com.learning.coursestudent.exception.AgeException;
 import com.learning.coursestudent.exception.DateFormatException;
+import com.learning.coursestudent.exception.InvalidMailValueException;
 import com.learning.coursestudent.exception.NullDateException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
@@ -59,25 +60,14 @@ public class StudentService {
             Set<Course> course = Collections.singleton(courseRepository.findCourseByName(studentPojo.getCourseName()));
             Student student = new Student(studentPojo, ageLimit, course);
             studentRepository.save(student);
-            logger.log(Logger.Level.INFO, "## Student \"" + student.getFullName() + "\" created ##");
-        } catch (NullDateException e) {
-            logger.log(Logger.Level.ERROR, "Date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is null");
-            logger.log(Logger.Level.ERROR, e.getMessage());
-            throw e;
-        } catch (DateTimeParseException e) {
-            logger.log(Logger.Level.ERROR, "The date of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" could not be parsed");
-            logger.log(Logger.Level.ERROR, e.getMessage());
-            throw e;
-        } catch (AgeException e) {
-            logger.log(Logger.Level.ERROR, "The Age of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
-            logger.log(Logger.Level.ERROR, e.getMessage());
-            throw e;
-        } catch (DateFormatException e) {
-            logger.log(Logger.Level.ERROR, "Date Format of \"" + studentPojo.getLastName() + ", " + studentPojo.getFirstName() + "\" is not valid");
-            logger.log(Logger.Level.ERROR, e.getMessage());
-            throw e;
+            logger.info("## Student \"" + student.getFullName() + "\" created ##");
+            return "Process createStudent has been finished";
+        } catch (NullDateException | DateTimeParseException | AgeException | DateFormatException |
+                 InvalidMailValueException e) {
+            logger.error(e.getMessage());
+            return "The creation of the student failed." +
+                    NEWLINE + "Please see the log or contact your System Administrator for further information.";
         }
-        return "Process createStudent has been finished";
     }
 
     public String createStudentBatch(@RequestBody Set<StudentPojo> studentPojoList) {
@@ -92,23 +82,9 @@ public class StudentService {
                 } else if (courses.stream().anyMatch(Objects::isNull)) {
                     logger.log(Logger.Level.INFO, "## Student \"" + student.getFullName() + "\" has been created ##");
                 }
-            } catch (AgeException e) {
-                logger.log(Logger.Level.ERROR, "The Age is not valid");
-                creationFailedRecordList.add(new FailedStudentWrapper(studentPojo, e));
-            } catch (DataIntegrityViolationException e) {
-                logger.log(Logger.Level.ERROR, "The integrity of the data has been violated");
-                creationFailedRecordList.add(new FailedStudentWrapper(studentPojo, e));
-            } catch (PropertyValueException e) {
-                logger.log(Logger.Level.ERROR, "Value property is invalid");
-                creationFailedRecordList.add(new FailedStudentWrapper(studentPojo, e));
-            } catch (DateTimeParseException e) {
-                logger.log(Logger.Level.ERROR, "The date could not be parsed");
-                creationFailedRecordList.add(new FailedStudentWrapper(studentPojo, e));
-            } catch (NullPointerException e) {
-                logger.log(Logger.Level.ERROR, "Value is null");
-                creationFailedRecordList.add(new FailedStudentWrapper(studentPojo, e));
-            } catch (DateFormatException e) {
-                logger.log(Logger.Level.ERROR, "Date Format is not valid");
+            } catch (DateFormatException | NullPointerException | DateTimeParseException |
+                     DataIntegrityViolationException | PropertyValueException e) {
+                logger.error(e.getMessage());
                 creationFailedRecordList.add(new FailedStudentWrapper(studentPojo, e));
             }
         }
