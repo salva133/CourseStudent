@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -84,5 +85,18 @@ public class Course extends University {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id == course.id && Objects.equals(name, course.name) && Objects.equals(student, course.student) && Objects.equals(zCreationTime, course.zCreationTime) && Objects.equals(zUpdateTime, course.zUpdateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, student, zCreationTime, zUpdateTime);
     }
 }
