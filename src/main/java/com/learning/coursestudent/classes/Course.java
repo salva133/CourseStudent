@@ -79,4 +79,10 @@ public class Course extends University {
         return zUpdateTime;
     }
     //GETTER AND SETTER
+
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
