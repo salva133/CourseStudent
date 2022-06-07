@@ -55,14 +55,18 @@ public class Student extends University {
     }
 
     public Student(StudentPojo studentPojo, short ageLimit, Set<Course> course) {
-        if (studentPojo.getMail() != null) {
-            if (!studentPojo.getMail().contains("@")) {
-                logger.debug("Address of record is not valid");
-                throw new InvalidMailValueException("Mail Address must contain the '@'", studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
-            }
+        //MAIL
+        if (studentPojo.getMail() == null || studentPojo.getMail().isBlank()) {
+            String firstLetterOfFirstNameLowerCase = String.valueOf(studentPojo.getFirstName().charAt(0));
+            this.mail = firstLetterOfFirstNameLowerCase.concat("." + studentPojo.getLastName().toLowerCase()).concat("@mydomain.com");
+        } else if (!studentPojo.getMail().contains("@")) {
+            throw new InvalidMailValueException("Mail Address must contain the '@'", "Record.Value -> " + studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
+        } else {
+            this.mail = studentPojo.getMail();
         }
+
+        //DATE OF BIRTH
         if (studentPojo.getDateOfBirth() == null) {
-            logger.error("Date of birth is null");
             throw new NullDateException("Date of birth is null");
         }
         String dobStr = studentPojo.getDateOfBirth();
@@ -70,23 +74,23 @@ public class Student extends University {
             logger.warn("dobStr is not " + 10 + " characters long but " + dobStr.length() + ", SELF TREATMENT: trying to add \"19\" to it");
             dobStr = "19" + dobStr;
             if (dobStr.length() != 10) {
-                logger.error("## DATE FORMAT INVALID ##");
-                logger.error("dobStr is still not " + 10 + " characters long");
+                logger.error("dobStr is still not " + 10 + " characters long. Operation will be interrupted...");
                 throw new DateFormatException("Date of birth requires format \"YYYY-MM-DD\"");
             }
         }
         LocalDate dob = LocalDate.parse(dobStr);
         if (dob.isAfter(LocalDate.now())) {
-            logger.error("## DOB IN FUTURE ##");
-            logger.error("dob is after today, and today is " + LocalDate.now());
             throw new DobInFutureException("Date of birth is in the future");
         }
         Period period = Period.between(dob, LocalDate.now());
         this.age = period.getYears();
         if (this.age < ageLimit) {
-            logger.error("## STUDENT IS TOO YOUNG ##");
-            logger.error("Age " + this.age + " is lower than age limit " + ageLimit);
             throw new TooYoungException("Person is too young, limit of Age is " + ageLimit);
+        }
+        //GENDER
+        switch (studentPojo.getGender().toLowerCase()) {
+            case "male" -> this.setGender(Gender.MALE);
+            case "female" -> this.setGender(Gender.FEMALE);
         }
 
         this.firstName = studentPojo.getFirstName();
@@ -94,7 +98,6 @@ public class Student extends University {
         this.fullName = lastName + ", " + firstName;
         this.dateOfBirth = dob;
         this.course = course;
-        this.mail = studentPojo.getMail();
     }
     //CONSTRUCTORS
 
