@@ -174,14 +174,5 @@ public class Student extends University {
     public void setMail(String mail) {
         this.mail = mail;
     }
-
-    public LocalDateTime getzCreationTime() {
-        return zCreationTime;
-    }
-
-    public LocalDateTime getzUpdateTime() {
-        return zUpdateTime;
-    }
-
     //GETTER AND SETTER
 }
