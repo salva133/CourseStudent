@@ -58,7 +58,7 @@ public class Student extends University {
     public Student(StudentPojo studentPojo, short ageLimit, Set<Course> course) {
         //MAIL
         if (studentPojo.getMail() == null || studentPojo.getMail().isBlank()) {
-            String firstLetterOfFirstNameLowerCase = String.valueOf(studentPojo.getFirstName().charAt(0));
+            String firstLetterOfFirstNameLowerCase = String.valueOf(studentPojo.getFirstName().charAt(0)).toLowerCase();
             this.mail = firstLetterOfFirstNameLowerCase.concat("." + studentPojo.getLastName().toLowerCase()).concat("@mydomain.com");
         } else if (!studentPojo.getMail().contains("@")) {
             throw new InvalidMailValueException("Mail Address must contain the '@'", "Record.Value -> " + studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
