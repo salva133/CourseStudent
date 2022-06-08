@@ -1,16 +1,14 @@
 package com.learning.coursestudent.classes;
 
+import org.hibernate.PropertyValueException;
+
 public enum Gender {
     MALE, FEMALE;
 
-    public String getGender() {
-        switch (this) {
-            case MALE:
-                return "Male";
-            case FEMALE:
-                return "Female";
-            default:
-                return null;
-        }
+    public String getGender() throws NullPointerException, PropertyValueException {
+        return switch (this) {
+            case MALE -> "Male";
+            case FEMALE -> "Female";
+        };
     }
 }
