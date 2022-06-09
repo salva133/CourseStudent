@@ -58,7 +58,7 @@ public class Student extends University {
     public Student(StudentPojo studentPojo, short ageLimit, Set<Course> course) {
         // USERNAME
         String firstLetterOfFirstName = String.valueOf(studentPojo.getFirstName().charAt(0));    // getting first letter of first name
-        this.userName = firstLetterOfFirstName.concat(studentPojo.getLastName()).toLowerCase(); // concating last name to first letter of first name
+        this.userName = firstLetterOfFirstName.concat(studentPojo.getLastName()).toLowerCase(); // concatenating last name to first letter of first name
         //MAIL
         if (studentPojo.getMail() == null || studentPojo.getMail().isBlank()) {
             this.mail = this.userName + getUniversityMailDomain();

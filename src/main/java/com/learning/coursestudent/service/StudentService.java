@@ -5,7 +5,6 @@ import com.learning.coursestudent.exception.*;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.DuplicateMappingException;
 import org.hibernate.PropertyValueException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.jboss.logging.Logger;
@@ -66,6 +65,12 @@ public class StudentService {
         try {
             Set<Course> course = Collections.singleton(courseRepository.findCourseByName(studentPojo.getCourseName()));
             Student student = new Student(studentPojo, ageLimit, course);
+            if (!studentRepository.findByMail(student.getMail()).isEmpty()) {
+                throw new DuplicateObjectException("The requested mail address '" + student.getMail() + "' is already existing, " +
+                        "either through the similarity of names " +
+                        "or through manual input." +
+                        "Please use the manual input to choose a mail address that is not already existing.");
+            }
             studentRepository.save(student);
             logger.info("## Student \"" + student.getFullName() + "\" created ##");
             return "Process createStudent has been finished";
