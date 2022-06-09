@@ -53,6 +53,13 @@ public class CourseStudentRestController {
     public ResponseEntity<List<StudentResponse>> getStudentByCourse(@RequestBody CoursePojo courseName) {
         return studentService.getStudentByCourse(courseName);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/student-by-mail")
+    public ResponseEntity<List<StudentResponse>> getStudentByMail(@RequestBody StudentPojo studentMail) {
+        return studentService.getStudentByMail(studentMail);
+    }
+
     //GETTER
 
     //POSTER

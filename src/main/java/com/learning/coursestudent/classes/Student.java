@@ -27,6 +27,7 @@ public class Student extends University {
     private String firstName;
     private String lastName;
     private String fullName;
+    private String mailUserName;
     private String mail;
     private LocalDate dateOfBirth;
     private int age;
@@ -58,9 +59,8 @@ public class Student extends University {
         //MAIL
         if (studentPojo.getMail() == null || studentPojo.getMail().isBlank()) {
             String firstLetterOfFirstName = String.valueOf(studentPojo.getFirstName().charAt(0));     // getting first letter of first name
-            String mailUserName = firstLetterOfFirstName.concat("." + studentPojo.getLastName()); // concating last name to first letter of first name
-            String generatedMail = mailUserName.concat(University.getUniversityMailDomain());         // concating domain to Mail Username
-            this.mail = generatedMail.toLowerCase();                                                  // lower-casing
+            this.mailUserName = firstLetterOfFirstName.concat("." + studentPojo.getLastName()).toLowerCase(); // concating last name to first letter of first name
+            this.mail = this.mailUserName + getUniversityMailDomain();
         } else if (!studentPojo.getMail().contains("@")) {
             throw new InvalidMailValueException("Mail Address must contain the '@'", "Record.Value -> " + studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
         } else {
@@ -164,20 +164,20 @@ public class Student extends University {
         this.gender = gender;
     }
 
+    public String getMailUserName() {
+        return mailUserName;
+    }
+
+    public void setMailUserName(String mailUserName) {
+        this.mailUserName = mailUserName;
+    }
+
     public String getMail() {
         return mail;
     }
 
     public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    public LocalDateTime getzCreationTime() {
-        return zCreationTime;
-    }
-
-    public LocalDateTime getzUpdateTime() {
-        return zUpdateTime;
     }
 
     //GETTER AND SETTER
