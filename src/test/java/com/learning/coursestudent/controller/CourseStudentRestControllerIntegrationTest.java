@@ -79,7 +79,7 @@ class CourseStudentRestControllerIntegrationTest {
         assert Arni.getFirstName().equals("Arnold");
         assert Arni.getLastName().equals("Schwarzenegger");
         assert Arni.getDateOfBirth().toString().equals("1947-07-30");
-        assert Arni.getMailUserName().equals("a.schwarzenegger@skynet.com");
+        assert Arni.getMail().equals("a.schwarzenegger@skynet.com");
     }
 
     @Test
@@ -88,7 +88,7 @@ class CourseStudentRestControllerIntegrationTest {
         Student student = new Student(TESTNAME);
         student.setFirstName(TESTNAME);
         student.setGender(Gender.MALE);
-        student.setMailUserName("test@test.com");
+        student.setMail("test@test.com");
         studentRepository.save(student);
         //THEN
         mvc.perform(get("/student")

@@ -27,7 +27,7 @@ public class Student extends University {
     private String firstName;
     private String lastName;
     private String fullName;
-    private String mailUserName;
+    private String userName;
     private String mail;
     private LocalDate dateOfBirth;
     private int age;
@@ -56,11 +56,12 @@ public class Student extends University {
     }
 
     public Student(StudentPojo studentPojo, short ageLimit, Set<Course> course) {
+        // USERNAME
+        String firstLetterOfFirstName = String.valueOf(studentPojo.getFirstName().charAt(0));    // getting first letter of first name
+        this.userName = firstLetterOfFirstName.concat(studentPojo.getLastName()).toLowerCase(); // concating last name to first letter of first name
         //MAIL
         if (studentPojo.getMail() == null || studentPojo.getMail().isBlank()) {
-            String firstLetterOfFirstName = String.valueOf(studentPojo.getFirstName().charAt(0));     // getting first letter of first name
-            this.mailUserName = firstLetterOfFirstName.concat("." + studentPojo.getLastName()).toLowerCase(); // concating last name to first letter of first name
-            this.mail = this.mailUserName + getUniversityMailDomain();
+            this.mail = this.userName + getUniversityMailDomain();
         } else if (!studentPojo.getMail().contains("@")) {
             throw new InvalidMailValueException("Mail Address must contain the '@'", "Record.Value -> " + studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
         } else {
@@ -164,12 +165,12 @@ public class Student extends University {
         this.gender = gender;
     }
 
-    public String getMailUserName() {
-        return mailUserName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setMailUserName(String mailUserName) {
-        this.mailUserName = mailUserName;
+    public void setUserName(String mailUserName) {
+        this.userName = mailUserName;
     }
 
     public String getMail() {
