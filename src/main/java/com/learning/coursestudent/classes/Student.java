@@ -57,12 +57,14 @@ public class Student extends University {
     public Student(StudentPojo studentPojo, short ageLimit, Set<Course> course) {
         //MAIL
         if (studentPojo.getMail() == null || studentPojo.getMail().isBlank()) {
-            String firstLetterOfFirstNameLowerCase = String.valueOf(studentPojo.getFirstName().charAt(0));
-            this.mail = firstLetterOfFirstNameLowerCase.concat("." + studentPojo.getLastName().toLowerCase()).concat("@uni-glasgow.scot");
+            String firstLetterOfFirstName = String.valueOf(studentPojo.getFirstName().charAt(0));     // getting first letter of first name
+            String mailUserName = firstLetterOfFirstName.concat("." + studentPojo.getLastName()); // concating last name to first letter of first name
+            String generatedMail = mailUserName.concat(University.getUniversityMailDomain());         // concating domain to Mail Username
+            this.mail = generatedMail.toLowerCase();                                                  // lower-casing
         } else if (!studentPojo.getMail().contains("@")) {
             throw new InvalidMailValueException("Mail Address must contain the '@'", "Record.Value -> " + studentPojo.getFirstName() + ", " + studentPojo.getLastName(), studentPojo.getMail());
         } else {
-            this.mail = studentPojo.getMail();
+            this.mail = studentPojo.getMail().toLowerCase();
         }
 
         //DATE OF BIRTH
