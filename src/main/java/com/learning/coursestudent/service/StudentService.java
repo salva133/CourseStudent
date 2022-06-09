@@ -1,7 +1,9 @@
 package com.learning.coursestudent.service;
 
 import com.learning.coursestudent.classes.*;
-import com.learning.coursestudent.exception.*;
+import com.learning.coursestudent.exception.DateFormatException;
+import com.learning.coursestudent.exception.DuplicateObjectException;
+import com.learning.coursestudent.exception.InvalidMailValueException;
 import com.learning.coursestudent.repository.CourseRepository;
 import com.learning.coursestudent.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.learning.coursestudent.classes.University.getUniversityMailDomain;
 
 @Service
 @RequiredArgsConstructor
@@ -65,17 +69,20 @@ public class StudentService {
         try {
             Set<Course> course = Collections.singleton(courseRepository.findCourseByName(studentPojo.getCourseName()));
             Student student = new Student(studentPojo, ageLimit, course);
-            if (!studentRepository.findByMail(student.getMail()).isEmpty()) {
-                throw new DuplicateObjectException("The requested mail address '" + student.getMail() + "' is already existing, " +
-                        "either through the similarity of names " +
-                        "or through manual input." +
-                        "Please use the manual input to choose a mail address that is not already existing.");
+            String username = student.getUserName();
+            String mail = student.getMail();
+            for (int i = 1; !studentRepository.findByMail(student.getMail()).isEmpty(); i++) {
+                username = student.getUserName() + i;
+                mail = username + getUniversityMailDomain();
+                student.setMail(mail);
             }
+            student.setUserName(username);
+            student.setMail(mail);
             studentRepository.save(student);
             logger.info("## Student \"" + student.getFullName() + "\" created ##");
             return "Process createStudent has been finished";
-        } catch (NullDateException | DateTimeParseException | AgeException | DateFormatException |
-                 InvalidMailValueException e) {
+        } catch (DateTimeParseException | DateFormatException |
+                 InvalidMailValueException | NullPointerException e) {
             logger.error(e.getMessage());
             return "The creation of the student failed." +
                     NEWLINE + "Please see the log or contact your System Administrator for further information.";
@@ -88,12 +95,15 @@ public class StudentService {
             try {
                 Set<Course> courses = Collections.singleton(courseRepository.findCourseByName(studentPojo.getCourseName()));
                 Student student = new Student(studentPojo, ageLimit, courses);
-                if (!studentRepository.findByMail(student.getMail()).isEmpty()) {
-                    throw new DuplicateObjectException("The requested mail address '" + student.getMail() + "' is already existing, " +
-                                    "either through the similarity of names " +
-                                    "or through manual input." +
-                                    "Please use the manual input to choose a mail address that is not already existing.");
+                String username = student.getUserName();
+                String mail = student.getMail();
+                for (int i = 1; !studentRepository.findByMail(student.getMail()).isEmpty(); i++) {
+                    username = student.getUserName() + i;
+                    mail = username + getUniversityMailDomain();
+                    student.setMail(mail);
                 }
+                student.setUserName(username);
+                student.setMail(mail);
                 studentRepository.save(student);
                 if (courses.stream().anyMatch(Objects::nonNull)) {
                     logger.info("## Student \"" + student.getFullName() + "\" has been created and assigned to course " + courses + " ##");
